@@ -13,7 +13,7 @@ router.get('/', wrap(async function(req, res, next) {
         return ;
     }
 
-    res.render('temp', {});		 
+    res.render('profile', {});		 
 })) ;
 
 module.exports = router;
