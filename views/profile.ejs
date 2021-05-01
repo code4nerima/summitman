@@ -16,23 +16,23 @@
 			<h1>プロフィール</h1>
 
 			<form method="POST" action="/profile">
-				<div class="form-group">
-					<label for="name">名前（日本語）<span class="badge badge-danger">必須</span></label>
+				<div class="mb-3">
+					<label for="name" class="form-label">名前（日本語）<span class="badge badge-danger">必須</span></label>
 					<input maxlength="50" required type="text" class="form-control" id="ja_name" name="ja_name" value="<%= data.name.ja %>">
 				</div>
-				<div class="form-group">
-					<label for="name">名前（英語）<span class="badge badge-danger">必須</span></label>
+				<div class="mb-3">
+					<label for="name" class="form-label">名前（英語）<span class="badge badge-danger">必須</span></label>
 					<input maxlength="50" required type="text" class="form-control" id="en_name" name="en_name" value="<%= data.name.en %>">
 				</div>
-				<div class="form-group">
-					<label for="name">名前（繁体中国語）</label>
+				<div class="mb-3">
+					<label for="name" class="form-label">名前（繁体中国語）</label>
 					<input maxlength="50" type="text" class="form-control" id="zh-TW_name" name="zh-TW_name" value="<%= data.name['zh-TW'] %>">
 				</div>
-				<div class="form-group">
-					<label for="name">名前（簡体中国語）</label>
+				<div class="mb-3">
+					<label for="name" class="form-label">名前（簡体中国語）</label>
 					<input maxlength="50" type="text" class="form-control" id="zh-CN_name" name="zh-CN_name" value="<%= data.name['zh-CN'] %>">
 				</div>
-				<div class="form-group">
+				<div class="mb-3">
 					<button type="submit" class="btn btn-primary" style="width: 100px;">更新</button>
 					<button class="btn btn-danger" onclick="javascript:window.history.back(-1);return false;">キャンセル</button>
 				</div>

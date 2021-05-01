@@ -1,4 +1,5 @@
 let fetch = require("node-fetch") ;
+let admin = require('firebase-admin');
 
 class clientAdapter {
 
@@ -9,6 +10,9 @@ class clientAdapter {
         let currentUser = req.session.user ;
         let URL = this._URL + "CreateUserProfile" ;
 
+        //await admin.firestore().collection("users").doc(data.uid).set(data) ;
+
+        //return {result: 1} ;
         return this.internalFetch(URL, currentUser.uid, data) ;
     }
 
@@ -19,6 +23,10 @@ class clientAdapter {
         let data = {
             uid: targetUid,
         } ;
+
+        //let resultData = (await admin.firestore().collection("users").doc(data.uid).get()).data() ;
+
+        //return {result: 1, data: resultData} ;
 
         return this.internalFetch(URL, currentUser.uid, data) ;
     }
@@ -39,6 +47,10 @@ class clientAdapter {
     async updateUserProfile(req, data) {
         let currentUser = req.session.user ;
         let URL = this._URL + "UpdateUserProfile" ;
+
+        //await admin.firestore().collection("users").doc(data.uid).update(data) ;
+
+        //return {result: 1} ;
 
         return this.internalFetch(URL, currentUser.uid, data) ;
     }
@@ -108,7 +120,7 @@ class clientAdapter {
             res = await fetch(URL, param)
             .then(response => response.json()) ;
         } catch (e) {
-            return {result: -1, data: {}} ;
+            return {result: 0, data: {}} ;
         }
 
         return res ;
