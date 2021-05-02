@@ -24,13 +24,21 @@ router.get('/', wrap(async function(req, res, next) {
 	let data ;
 
 	if (recv.data == null) {
+		let user = null ;
+
+		try {
+			user = await admin.auth().getUser(uid) ;
+		} catch (error) {
+			return null ;
+		}
+
 		data = {
 			"uid": currentUser.uid,
 			"name": 
 				{
-					"ja": "",
+					"ja": user != null ? user.displayName : '',
 					"ja_kana": "",
-					"en": "",
+					"en": user != null ? user.displayName : '',
 					"zh-TW": "",
 					"zh-CN": "",
 				},

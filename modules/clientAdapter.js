@@ -60,7 +60,7 @@ class clientAdapter {
                 users.push(snapshot.docs[key].data()) ;
             }
 
-            return {result: 1, data: users} ;
+            return {result: 1, data: {totalCount: users.length, userProfiles: users}} ;
         } else {
             return await this.internalFetch(URL, currentUser.uid, data) ;
         }

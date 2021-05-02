@@ -60,23 +60,36 @@ router.post('/', wrap(async function(req, res, next) {
 
     let uid = req.body.uid ;
 
-    let data = {
-        "uid": uid,
-        "name": 
-            {
-                "ja": req.body.ja_name,
-                "ja_kana": req.body.ja_name_kana,
-                "en": req.body.en_name,
-                "zh-TW": req.body["zh-TW_name"],
-                "zh-CN": req.body["zh-CN_name"],
-            },
-        "role": req.body.role,
-    } ;
+    let data ;
+
+    {
+        let recv = await clientAdapter.getUserProfile(req, uid) ;
+
+        if (recv.result == 1) {
+            data = recv.data ;
+        } else {
+            data = {} ;
+        }
+
+        data.name['ja'] = req.body.ja_name ;
+        data.name['ja_kana'] = req.body.ja_name_kana ;
+        data.name['en'] = req.body.en_name ;
+        data.name['zh-TW'] = req.body["zh-TW_name"] ;
+        data.name['h-CN'] = req.body["zh-CN_name"] ;
+    }
+
+    if (req.body.role != undefined) {
+        data.role = req.body.role ;
+    }
 
     let recv = await clientAdapter.updateUserProfile(req, data) ;
 
     if (recv.result == 1) {
-        res.redirect('/');
+        if (req.body.uid != undefined) {
+            res.redirect('/users');
+        } else {
+            res.redirect('/');
+        }
     } else {
         res.redirect('/profile');
     }
