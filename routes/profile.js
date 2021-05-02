@@ -75,7 +75,7 @@ router.post('/', wrap(async function(req, res, next) {
         data.name['ja_kana'] = req.body.ja_name_kana ;
         data.name['en'] = req.body.en_name ;
         data.name['zh-TW'] = req.body["zh-TW_name"] ;
-        data.name['h-CN'] = req.body["zh-CN_name"] ;
+        data.name['zh-CN'] = req.body["zh-CN_name"] ;
     }
 
     if (req.body.role != undefined) {
@@ -85,7 +85,7 @@ router.post('/', wrap(async function(req, res, next) {
     let recv = await clientAdapter.updateUserProfile(req, data) ;
 
     if (recv.result == 1) {
-        if (req.body.adminAccess) {
+        if (req.body.adminAccess == '1') {
             res.redirect('/users');
         } else {
             res.redirect('/');
