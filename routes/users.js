@@ -15,7 +15,7 @@ router.get('/', wrap(async function(req, res, next) {
 
     let recv = await clientAdapter.listUserProfile(req, 0, -1, 2) ;
 
-    res.render('users', {users: recv.data});		 
+    res.render('users', {users: recv.data.userProfiles});		 
 })) ;
 
 router.get('/user', wrap(async function(req, res, next) {

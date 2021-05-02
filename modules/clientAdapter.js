@@ -1,5 +1,6 @@
 let fetch = require("node-fetch") ;
 let admin = require('firebase-admin');
+let uuid = require('node-uuid')
 
 class clientAdapter {
 
@@ -10,9 +11,9 @@ class clientAdapter {
         let currentUser = req.session.user ;
         let URL = this._URL + "CreateUserProfile" ;
 
-        if (process.env.USE_FIREBASE) {
+        if (false) {
             await admin.firestore().collection("users").doc(data.uid).set(data) ;
-
+            
             return {result: 1} ;
         } else {
             return await this.internalFetch(URL, currentUser.uid, data) ;
@@ -27,7 +28,7 @@ class clientAdapter {
             uid: targetUid,
         } ;
 
-        if (process.env.USE_FIREBASE) {
+        if (false) {
             let resultData = (await admin.firestore().collection("users").doc(data.uid).get()).data() ;
 
             if (resultData != null) {
@@ -50,7 +51,7 @@ class clientAdapter {
             role: role,
         } ;
 
-        if (process.env.USE_FIREBASE) {
+        if (false) {
             let snapshot = await admin.firestore().collection("users").where("role", "<=", role).get() ;
 
             let users = [] ;
@@ -69,7 +70,7 @@ class clientAdapter {
         let currentUser = req.session.user ;
         let URL = this._URL + "UpdateUserProfile" ;
 
-        if (process.env.USE_FIREBASE) {
+        if (false) {
             await admin.firestore().collection("users").doc(data.uid).update(data) ;
 
             return {result: 1} ;
@@ -83,7 +84,14 @@ class clientAdapter {
         let currentUser = req.session.user ;
         let URL = this._URL + "CreateProgram" ;
 
-        return await this.internalFetch(URL, currentUser.uid, data) ;
+        if (process.env.USE_FIREBASE) {
+            data.programId = uuid.v4() ;
+            await admin.firestore().collection("programs").doc(data.programId).set(data) ;
+
+            return {result: 1} ;
+        } else {
+            return await this.internalFetch(URL, currentUser.uid, data) ;
+        }
     }
 
     async getProgram(req, programId) {
@@ -94,7 +102,17 @@ class clientAdapter {
             programId: programId,
         } ;
 
-        return await this.internalFetch(URL, currentUser.uid, data) ;
+        if (process.env.USE_FIREBASE) {
+            let resultData = (await admin.firestore().collection("programs").doc(data.programId).get()).data() ;
+
+            if (resultData != null) {
+                return {result: 1, data: resultData} ;
+            } else {
+                return {result: 0} ;
+            }
+        } else {
+            return await this.internalFetch(URL, currentUser.uid, data) ;
+        }    
     }
 
     async listProgram(req, start, limit) {
@@ -106,14 +124,32 @@ class clientAdapter {
             limit: limit,
         } ;
 
-        return await this.internalFetch(URL, currentUser.uid, data) ;
+        if (process.env.USE_FIREBASE) {
+            let snapshot = await admin.firestore().collection("programs").get() ;
+
+            let programs = [] ;
+
+            for (let key in snapshot.docs) {
+                programs.push(snapshot.docs[key].data()) ;
+            }
+
+            return {result: 1, data: programs} ;
+        } else {
+            return await this.internalFetch(URL, currentUser.uid, data) ;
+        }
     }
 
     async updateProgram(req, data) {
         let currentUser = req.session.user ;
         let URL = this._URL + "UpdateProgram" ;
 
-        return this.internalFetch(URL, currentUser.uid, data) ;
+        if (process.env.USE_FIREBASE) {
+            await admin.firestore().collection("programs").doc(data.programId).update(data) ;
+
+            return {result: 1} ;
+        } else {
+            return await this.internalFetch(URL, currentUser.uid, data) ;
+        }
     }
 
     async deleteProgram(req, programId) {
@@ -124,9 +160,15 @@ class clientAdapter {
             programId: programId,
         } ;
 
-        return await this.internalFetch(URL, currentUser.uid, data) ;
-    }
+        if (process.env.USE_FIREBASE) {
+            await admin.firestore().collection("programs").doc(data.programId).delete() ;
 
+            return {result: 1} ;
+        } else {
+            return await this.internalFetch(URL, currentUser.uid, data) ;
+        }
+    }
+ 
     async internalFetch(URL, uid, data) {
         let param = {
             method: "POST",

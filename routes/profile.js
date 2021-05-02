@@ -14,6 +14,7 @@ router.get('/', wrap(async function(req, res, next) {
     }
 
     let currentUser = req.session.user ;
+    let adminAccess = false ;
     let data = null ;
 
     if (req.query.uid != undefined) {
@@ -27,6 +28,7 @@ router.get('/', wrap(async function(req, res, next) {
 
                 if (recv.result == 1) {
                     data = recv.data ;
+                    adminAccess = true ;
                 }
             }
         }
@@ -39,7 +41,10 @@ router.get('/', wrap(async function(req, res, next) {
     }
 
     if (data != null) {
-        res.render('profile', {data: data});		 
+        res.render('profile', {
+            data: data,
+            adminAccess: adminAccess,
+        });		 
     } else {
         res.redirect("/") ; 
     }
@@ -60,10 +65,12 @@ router.post('/', wrap(async function(req, res, next) {
         "name": 
             {
                 "ja": req.body.ja_name,
+                "ja_kana": req.body.ja_name_kana,
                 "en": req.body.en_name,
                 "zh-TW": req.body["zh-TW_name"],
                 "zh-CN": req.body["zh-CN_name"],
             },
+        "role": req.body.role,
     } ;
 
     let recv = await clientAdapter.updateUserProfile(req, data) ;

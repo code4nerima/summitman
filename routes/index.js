@@ -23,10 +23,18 @@ router.get('/', wrap(async function(req, res, next) {
     let recv = await clientAdapter.getUserProfile(req, currentUser.uid) ;
 	let data ;
 
-	if (recv.result != 1) {
+	if (recv.data == null) {
 		data = {
 			"uid": currentUser.uid,
 			"name": 
+				{
+					"ja": "",
+					"ja_kana": "",
+					"en": "",
+					"zh-TW": "",
+					"zh-CN": "",
+				},
+			"introduction": 
 				{
 					"ja": "",
 					"en": "",

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ja">
+	<head>
+		<% if (program.programId != undefined) { %>
+			<%- include('parts/head', {title: 'プログラム編集'}) %>
+		<% } else { %>
+			<%- include('parts/head', {title: 'プログラム作成'}) %>
+		<% } %>
+
+	</head>
+	<body>
+		<%- include('parts/navbar', {}) %>
+
+		<div class="container p-2">
+			<% if (program.programId != undefined) { %>
+				<h1>プログラム作成</h1>
+			<% } else { %>
+				<h1>プログラム編集</h1>
+			<% } %>
+			<form method="POST" action="/programs/edit">
+				<div class="row mb-3">
+					<div class="col-sm">
+						<label for="name" class="form-label">タイトル（日本語）<span class="badge badge-danger">必須</span></label>
+						<input maxlength="50" required type="text" class="form-control" id="ja_title" name="ja_title" value="<%= program.title['ja'] %>">
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label">タイトル（英語）<span class="badge badge-danger">必須</span></label>
+						<input maxlength="50" required type="text" class="form-control" id="en_title" name="en_title" value="<%= program.title['en'] %>">
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label">タイトル（繁体中国語）</label>
+						<input maxlength="50" type="text" class="form-control" id="zh-TW_title" name="zh-TW_title" value="<%= program.title['zh-TW'] %>">
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label">タイトル（簡体中国語）</label>
+						<input maxlength="50" type="text" class="form-control" id="zh-CN_title" name="zh-CN_title" value="<%= program.title['zh-CN'] %>">
+					</div>
+				</div>
+				<% if (program.programId != undefined) { %>
+					<input type="hidden" name="uid" value="<%= program.programId %>">
+				<% } %>
+				<div class="mb-3">
+					<% if (program.programId != undefined) { %>
+						<button type="submit" class="btn btn-primary" style="width: 130px;">更新</button>
+					<% } else { %>
+						<button type="submit" class="btn btn-primary" style="width: 130px;">作成</button>
+					<% } %>
+					<button type="button" class="btn btn-danger" style="width: 130px;" onclick="window.history.back(-1);return false;">キャンセル</button>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>
