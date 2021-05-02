@@ -13,17 +13,17 @@
 			<form method="POST" action="/profile">
 				<div class="row mb-3">
 					<div class="col-sm">
-						<label for="name" class="form-label">名前（日本語）<span class="badge badge-danger">必須</span></label>
+						<label for="name" class="form-label">名前（日本語）<span class="badge bg-danger">必須</span></label>
 						<input maxlength="50" required type="text" class="form-control" id="ja_name" name="ja_name" value="<%= data.name.ja %>">
 					</div>
 					<div class="col-sm">
-						<label for="name" class="form-label">名前（ふりがな）<span class="badge badge-danger">必須</span></label>
+						<label for="name" class="form-label">名前（ふりがな）<span class="badge bg-danger">必須</span></label>
 						<input maxlength="50" required type="text" class="form-control" id="ja_name_kana" name="ja_name_kana" value="<%= data.name.ja_kana %>">
 					</div>
 				</div>
 				<div class="row mb-3">
 					<div class="col-sm">
-						<label for="name" class="form-label">名前（英語）<span class="badge badge-danger">必須</span></label>
+						<label for="name" class="form-label">名前（英語）<span class="badge bg-danger">必須</span></label>
 						<input maxlength="50" required type="text" class="form-control" id="en_name" name="en_name" value="<%= data.name.en %>">
 					</div>
 					<div class="col-sm">

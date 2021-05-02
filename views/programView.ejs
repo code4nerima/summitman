@@ -17,13 +17,56 @@
 			<% } %>
 
 			<div class="card my-1">
-				<div class="card-body">
-					<div class="row">
-						<div class="col-sm">
-							<%= program.title.ja %>
-						</div>
-					</div>
+				<div class="card-header h5 fw-bold">
+					タイトル
 				</div>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item"><%= program.title.ja %></li>
+					<li class="list-group-item"><%= program.title.en %></li>
+					<li class="list-group-item"><%= program.title["zh-TW"] %></li>
+					<li class="list-group-item"><%= program.title["zh-CN"] %></li>
+				</ul>
+				<div class="card-header h5 fw-bold">
+					詳細
+				</div>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item"><%= program.description.ja %></li>
+					<li class="list-group-item"><%= program.description.en %></li>
+					<li class="list-group-item"><%= program.description["zh-TW"] %></li>
+					<li class="list-group-item"><%= program.description["zh-CN"] %></li>
+				</ul>
+				<div class="card-header h5 fw-bold">
+					その他
+				</div>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-sm">
+								<i class="me-2 bi bi-calendar"></i><%= program.date %>
+							</div>
+							<div class="col-sm">
+								<i class="me-2 bi bi-clock"></i>
+								<% if (program.startTime != undefined && program.startTime != '' && program.endTime != undefined && program.endTime != '') { %>
+									<%= program.startTime %> 〜 <%= program.endTime %>
+								<% } else if (program.startTime != undefined && program.startTime != '') { %>
+									<%= program.startTime %> 〜
+								<% } else if (program.endTime != undefined && program.endTime != '') { %>
+									〜 <%= program.endTime %>
+								<% } %>
+							</div>
+						</div>
+					</li>
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-sm">
+								<i class="me-2 bi bi-house-door"></i><%= program.trackId %>
+							</div>
+							<div class="col-sm">
+								<i class="me-2 bi bi-tags"></i><%= program.category %>
+							</div>
+						</div>
+					</li>
+				</ul>
 			</div>
 
 			<div class="my-3">

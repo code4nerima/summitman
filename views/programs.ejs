@@ -16,16 +16,51 @@
 				</div>
 			<% } %>
 
+			<div class="my-3">
+				<a class="btn btn-success" style="width: 130px;" href="/programs?lang=ja">日本語</a>
+				<a class="btn btn-success" style="width: 130px;" href="/programs?lang=en">英語</a>
+				<a class="btn btn-success" style="width: 130px;" href="/programs?lang=zh-TW">繁体中国語</a>
+				<a class="btn btn-success" style="width: 130px;" href="/programs?lang=zh-CN">簡体中国語</a>
+			</div>
+
 			<% for (let index in programs) { %>
 				<% let program = programs[index] ; %>
 				<div class="card my-1">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-sm">
-								<a href="/programs/view?programId=<%= program.programId %>"><%= program.title.ja %></a>
-							</div>
-						</div>
+					<div class="card-header h5 fw-bold">
+						<a href="/programs/view?programId=<%= program.programId %>"><%= program.title[lang] %></a>
 					</div>
+					<div class="card-body">
+						<%= program.description[lang] %>
+					</div>
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">
+							<div class="row">
+								<div class="col-sm">
+									<i class="me-2 bi bi-calendar"></i><%= program.date %>
+								</div>
+								<div class="col-sm">
+									<i class="me-2 bi bi-clock"></i>
+									<% if (program.startTime != undefined && program.startTime != '' && program.endTime != undefined && program.endTime != '') { %>
+										<%= program.startTime %> 〜 <%= program.endTime %>
+									<% } else if (program.startTime != undefined && program.startTime != '') { %>
+										<%= program.startTime %> 〜
+									<% } else if (program.endTime != undefined && program.endTime != '') { %>
+										〜 <%= program.endTime %>
+									<% } %>
+								</div>
+							</div>
+						</li>
+						<li class="list-group-item">
+							<div class="row">
+								<div class="col-sm">
+									<i class="me-2 bi bi-house-door"></i><%= program.track %>
+								</div>
+								<div class="col-sm">
+									<i class="me-2 bi bi-tags"></i><%= program.category %>
+								</div>
+							</div>
+						</li>
+					</ul>
 				</div>
 			<% } %>
 		</div>

@@ -20,29 +20,10 @@ router.get('/', wrap(async function(req, res, next) {
     let recv = await clientAdapter.listProgram(req, 0, -1) ;
 
     res.render('programs', {
+        lang: req.query.lang == undefined ? 'ja' : req.query.lang,
         programs: recv.data,
         editable: currentUserProfile.role == 2 ? true : false,
     });		 
-})) ;
-
-router.get('/program', wrap(async function(req, res, next) {
-    let result = await firebaseSession.enter(req, res) ;
-
-    if (result != 0) {
-        res.redirect('/signin');
-        return ;
-    }
-
-    let currentUser = req.session.user ;
-
-    let currentUserProfile = (await clientAdapter.getUserProfile(req, currentUser.uid)).data ;
-
-    let recv = await clientAdapter.getProgram(req, req.query.programId) ;
-
-    res.render('program', {
-        user: recv.data,
-        editable: currentUserProfile.role == 2 ? true : false,
-    });	
 })) ;
 
 router.get('/edit', wrap(async function(req, res, next) {
@@ -54,7 +35,8 @@ router.get('/edit', wrap(async function(req, res, next) {
     }
 
     let program = {
-        title: {}
+        title: {},
+        description: {}
     } ;
 
     if (req.query.programId != undefined) {
@@ -82,8 +64,21 @@ router.post('/edit', wrap(async function(req, res, next) {
             "en": req.body.en_title,
             "zh-TW": req.body['zh-TW_title'],
             "zh-CN": req.body['zh-CN_title'],
-        }
-    }
+        },
+        date: req.body.date,
+        startTime: req.body.startTime,
+        endTime: req.body.endTime,
+        trackId: req.body.trackId,
+        category: req.body.category,
+        description: {
+            "ja": req.body.ja_description,
+            "en": req.body.en_description,
+            "zh-TW": req.body['zh-TW_description'],
+            "zh-CN": req.body['zh-CN_description'],
+        },
+    } ;
+
+    console.log(program) ;
 
     if (req.body.programId != undefined) {
         program.programId = req.body.programId ;
@@ -124,6 +119,17 @@ router.get('/view', wrap(async function(req, res, next) {
         program: program,
         editable: currentUserProfile.role >= 1 ? true : false,
     });	
+})) ;
+
+router.get('/delete', wrap(async function(req, res, next) {
+    let result = await firebaseSession.enter(req, res) ;
+
+    if (result != 0) {
+        res.redirect('/signin');
+        return ;
+    }
+
+    res.redirect("/programs") ;
 })) ;
 
 module.exports = router;
