@@ -79,13 +79,13 @@ router.post('/', wrap(async function(req, res, next) {
     }
 
     if (req.body.role != undefined) {
-        data.role = req.body.role ;
+        data.role = Number(req.body.role) ;
     }
 
     let recv = await clientAdapter.updateUserProfile(req, data) ;
 
     if (recv.result == 1) {
-        if (req.body.uid != undefined) {
+        if (req.body.adminAccess) {
             res.redirect('/users');
         } else {
             res.redirect('/');

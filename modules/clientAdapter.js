@@ -177,8 +177,6 @@ class clientAdapter {
             body: JSON.stringify({v: process.env.SUMMITMAN_API_VERSION, uid: uid, data: data})
         } ;
 
-        console.log(param) ;
-
         let res ;
 
         try {
