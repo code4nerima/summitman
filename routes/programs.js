@@ -85,7 +85,13 @@ router.post('/edit', wrap(async function(req, res, next) {
         }
     }
 
-    clientAdapter.createProgram(req, program) ;
+    if (req.body.programId != undefined) {
+        program.programId = req.body.programId ;
+
+        clientAdapter.updateProgram(req, program) ;
+    } else {
+        clientAdapter.createProgram(req, program) ;
+    }
 
     res.redirect('/programs');
 })) ;
