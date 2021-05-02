@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ja">
+	<head>
+		<%- include('parts/head', {title: 'プロフィール'}) %>
+	</head>
+	<body>
+		<%- include('parts/navbar', {}) %>
+
+		<div class="container">
+
+			<h1>プロフィール</h1>
+				<div class="card">
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item"><%= user.name.ja %></li>
+						<li class="list-group-item"><%= user.name.en %></li>
+						<li class="list-group-item"><%= user.name['zh-TW'] %></li>
+						<li class="list-group-item"><%= user.name['zh-CN'] %></li>
+					</ul>
+				</div>
+			<% if (editable) { %>
+			<div class="my-3">
+				<a class="btn btn-primary" style="width: 130px;" href="/profile?uid=<%= user.uid %>">編集する</a>
+			</div>
+			<% } %>
+			<div class="my-3">
+				<button type="button" class="btn btn-danger" style="width: 130px;" onclick="window.history.back(-1);return false;">戻る</button>
+			</div>
+		</div>
+	</body>
+</html>

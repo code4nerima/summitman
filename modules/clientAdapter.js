@@ -10,10 +10,13 @@ class clientAdapter {
         let currentUser = req.session.user ;
         let URL = this._URL + "CreateUserProfile" ;
 
-        //await admin.firestore().collection("users").doc(data.uid).set(data) ;
+        if (process.env.USE_FIREBASE) {
+            await admin.firestore().collection("users").doc(data.uid).set(data) ;
 
-        //return {result: 1} ;
-        return this.internalFetch(URL, currentUser.uid, data) ;
+            return {result: 1} ;
+        } else {
+            return await this.internalFetch(URL, currentUser.uid, data) ;
+        }
     }
 
     async getUserProfile(req, targetUid) {
@@ -24,11 +27,17 @@ class clientAdapter {
             uid: targetUid,
         } ;
 
-        //let resultData = (await admin.firestore().collection("users").doc(data.uid).get()).data() ;
+        if (process.env.USE_FIREBASE) {
+            let resultData = (await admin.firestore().collection("users").doc(data.uid).get()).data() ;
 
-        //return {result: 1, data: resultData} ;
-
-        return this.internalFetch(URL, currentUser.uid, data) ;
+            if (resultData != null) {
+                return {result: 1, data: resultData} ;
+            } else {
+                return {result: 0} ;
+            }
+        } else {
+            return await this.internalFetch(URL, currentUser.uid, data) ;
+        }
     }
 
     async listUserProfile(req, start, limit, role) {
@@ -41,18 +50,32 @@ class clientAdapter {
             role: role,
         } ;
 
-        return this.internalFetch(URL, currentUser.uid, data) ;
+        if (process.env.USE_FIREBASE) {
+            let snapshot = await admin.firestore().collection("users").where("role", "<=", role).get() ;
+
+            let users = [] ;
+
+            for (let key in snapshot.docs) {
+                users.push(snapshot.docs[key].data()) ;
+            }
+
+            return {result: 1, data: users} ;
+        } else {
+            return await this.internalFetch(URL, currentUser.uid, data) ;
+        }
     }
 
     async updateUserProfile(req, data) {
         let currentUser = req.session.user ;
         let URL = this._URL + "UpdateUserProfile" ;
 
-        //await admin.firestore().collection("users").doc(data.uid).update(data) ;
+        if (process.env.USE_FIREBASE) {
+            await admin.firestore().collection("users").doc(data.uid).update(data) ;
 
-        //return {result: 1} ;
-
-        return this.internalFetch(URL, currentUser.uid, data) ;
+            return {result: 1} ;
+        } else {
+            return await this.internalFetch(URL, currentUser.uid, data) ;
+        }
     }
 
     // operating program.
@@ -60,7 +83,7 @@ class clientAdapter {
         let currentUser = req.session.user ;
         let URL = this._URL + "CreateProgram" ;
 
-        return this.internalFetch(URL, currentUser.uid, data) ;
+        return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
     async getProgram(req, programId) {
@@ -71,7 +94,7 @@ class clientAdapter {
             programId: programId,
         } ;
 
-        return this.internalFetch(URL, currentUser.uid, data) ;
+        return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
     async listProgram(req, start, limit) {
@@ -83,7 +106,7 @@ class clientAdapter {
             limit: limit,
         } ;
 
-        return this.internalFetch(URL, currentUser.uid, data) ;
+        return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
     async updateProgram(req, data) {
@@ -101,7 +124,7 @@ class clientAdapter {
             programId: programId,
         } ;
 
-        return this.internalFetch(URL, currentUser.uid, data) ;
+        return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
     async internalFetch(URL, uid, data) {

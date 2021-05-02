@@ -1,5 +1,5 @@
 var express = require('express');
-let admin = require('firebase-admin');
+let clientAdapter = require('../modules/clientAdapter') ;
 let firebaseSession = require('../modules/firebase_session.js') ;
 var router = express.Router() ;
 

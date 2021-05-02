@@ -1,40 +1,38 @@
 <!doctype html>
 <html lang="ja">
 	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-
-		<title>プロフィール</title>
-
-		<%- include('parts/head', {}) %>
-
-		<link rel='stylesheet' href='/stylesheets/style.css' />
+		<%- include('parts/head', {title: 'プロフィールの編集'}) %>
 	</head>
 	<body>
+		<%- include('parts/navbar', {}) %>
+
 		<div class="container">
 
-			<h1>プロフィール</h1>
+			<h1>プロフィールの編集</h1>
 
 			<form method="POST" action="/profile">
-				<div class="mb-3">
-					<label for="name" class="form-label">名前（日本語）<span class="badge badge-danger">必須</span></label>
-					<input maxlength="50" required type="text" class="form-control" id="ja_name" name="ja_name" value="<%= data.name.ja %>">
+				<div class="row mb-3">
+					<div class="col-sm">
+						<label for="name" class="form-label">名前（日本語）<span class="badge badge-danger">必須</span></label>
+						<input maxlength="50" required type="text" class="form-control" id="ja_name" name="ja_name" value="<%= data.name.ja %>">
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label">名前（英語）<span class="badge badge-danger">必須</span></label>
+						<input maxlength="50" required type="text" class="form-control" id="en_name" name="en_name" value="<%= data.name.en %>">
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label">名前（繁体中国語）</label>
+						<input maxlength="50" type="text" class="form-control" id="zh-TW_name" name="zh-TW_name" value="<%= data.name['zh-TW'] %>">
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label">名前（簡体中国語）</label>
+						<input maxlength="50" type="text" class="form-control" id="zh-CN_name" name="zh-CN_name" value="<%= data.name['zh-CN'] %>">
+					</div>
 				</div>
+				<input type="hidden" name="uid" value="<%= data.uid %>">
 				<div class="mb-3">
-					<label for="name" class="form-label">名前（英語）<span class="badge badge-danger">必須</span></label>
-					<input maxlength="50" required type="text" class="form-control" id="en_name" name="en_name" value="<%= data.name.en %>">
-				</div>
-				<div class="mb-3">
-					<label for="name" class="form-label">名前（繁体中国語）</label>
-					<input maxlength="50" type="text" class="form-control" id="zh-TW_name" name="zh-TW_name" value="<%= data.name['zh-TW'] %>">
-				</div>
-				<div class="mb-3">
-					<label for="name" class="form-label">名前（簡体中国語）</label>
-					<input maxlength="50" type="text" class="form-control" id="zh-CN_name" name="zh-CN_name" value="<%= data.name['zh-CN'] %>">
-				</div>
-				<div class="mb-3">
-					<button type="submit" class="btn btn-primary" style="width: 100px;">更新</button>
-					<button class="btn btn-danger" onclick="javascript:window.history.back(-1);return false;">キャンセル</button>
+					<button type="submit" class="btn btn-primary" style="width: 130px;">更新</button>
+					<button type="button" class="btn btn-danger" style="width: 130px;" onclick="window.history.back(-1);return false;">キャンセル</button>
 				</div>
 			</form>
 		</div>

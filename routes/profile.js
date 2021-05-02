@@ -14,30 +14,35 @@ router.get('/', wrap(async function(req, res, next) {
     }
 
     let currentUser = req.session.user ;
+    let data = null ;
 
-    let recv = await clientAdapter.getUserProfile(req, currentUser.uid) ;
+    if (req.query.uid != undefined) {
+        let recv = await clientAdapter.getUserProfile(req, currentUser.uid) ;
 
-    let data ;
+        if (recv.result == 1) {
+            data = recv.data ;
 
-    if (recv.result == 1) {
-        data = recv.data ;
+            if (data.role == 2) {
+                let recv = await clientAdapter.getUserProfile(req, req.query.uid) ;
+
+                if (recv.result == 1) {
+                    data = recv.data ;
+                }
+            }
+        }
     } else {
-        data = {
-            "uid": currentUser.uid,
-            "name": 
-                {
-                    "ja": "",
-                    "en": "",
-                    "zh-TW": "",
-                    "zh-CN": "",
-                },
-            "role": 0,
-        } ;
+        let recv = await clientAdapter.getUserProfile(req, currentUser.uid) ;
 
-        await clientAdapter.createUserProfile(req, data) ;
+        if (recv.result == 1) {
+            data = recv.data ;
+        }
     }
 
-    res.render('profile', {data: data});		 
+    if (data != null) {
+        res.render('profile', {data: data});		 
+    } else {
+        res.redirect("/") ; 
+    }
 })) ;
 
 router.post('/', wrap(async function(req, res, next) {
@@ -48,10 +53,10 @@ router.post('/', wrap(async function(req, res, next) {
         return ;
     }
 
-    let currentUser = req.session.user ;
+    let uid = req.body.uid ;
 
     let data = {
-        "uid": currentUser.uid,
+        "uid": uid,
         "name": 
             {
                 "ja": req.body.ja_name,
@@ -59,7 +64,6 @@ router.post('/', wrap(async function(req, res, next) {
                 "zh-TW": req.body["zh-TW_name"],
                 "zh-CN": req.body["zh-CN_name"],
             },
-        "role": 0,
     } ;
 
     let recv = await clientAdapter.updateUserProfile(req, data) ;

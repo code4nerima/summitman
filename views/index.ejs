@@ -1,16 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja">
 	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-
-		<title>サミットマネージャー</title>
-
-		<%- include('parts/head', {}) %>
-
-		<link rel='stylesheet' href='/stylesheets/style.css' />
+		<%- include('parts/head', {title: 'トップページ'}) %>
 	</head>
 	<body>
+		<%- include('parts/navbar', {}) %>
+
 		<div class="container">
 
 			<h1>サミットマネージャー</h1>
@@ -22,14 +17,9 @@
 							<a href="/profile">プロフィール</a>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col">
-							<a href="/signout">サインアウト</a>
-						</div>
-					</div>
 				</div>
 				<div class="col-sm">
-					<h2>だっしゅぼーど</h2>
+					<h2>ようこそ <%= userProfile.name.ja %> さん</h2>
 				</div>
 			</div>
 		</div>
