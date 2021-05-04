@@ -21,7 +21,7 @@ router.get('/', wrap(async function(req, res, next) {
 
     res.render('programs', {
         lang: req.query.lang == undefined ? 'ja' : req.query.lang,
-        programs: recv.data,
+        programs: recv.data.programs,
         editable: currentUserProfile.role == 2 ? true : false,
     });		 
 })) ;
@@ -77,8 +77,6 @@ router.post('/edit', wrap(async function(req, res, next) {
             "zh-CN": req.body['zh-CN_description'],
         },
     } ;
-
-    console.log(program) ;
 
     if (req.body.programId != undefined) {
         program.programId = req.body.programId ;

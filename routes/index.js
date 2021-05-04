@@ -1,6 +1,7 @@
 var express = require('express');
 let clientAdapter = require('../modules/clientAdapter') ;
 let firebaseSession = require('../modules/firebase_session.js') ;
+let admin = require('firebase-admin');
 var router = express.Router() ;
 
 const wrap = fn => (...args) => fn(...args).catch(args[2]) ;
@@ -27,9 +28,9 @@ router.get('/', wrap(async function(req, res, next) {
 		let user = null ;
 
 		try {
-			user = await admin.auth().getUser(uid) ;
+			user = await admin.auth().getUser(currentUser.uid) ;
 		} catch (error) {
-			return null ;
+			
 		}
 
 		data = {

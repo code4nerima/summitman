@@ -90,6 +90,8 @@ class clientAdapter {
 
             return {result: 1} ;
         } else {
+            data.category = Number(data.category) ;
+
             return await this.internalFetch(URL, currentUser.uid, data) ;
         }
     }
@@ -117,7 +119,7 @@ class clientAdapter {
 
     async listProgram(req, start, limit) {
         let currentUser = req.session.user ;
-        let URL = this._URL + "GetProgram" ;
+        let URL = this._URL + "ListProgram" ;
 
         let data = {
             start: start,
@@ -133,7 +135,7 @@ class clientAdapter {
                 programs.push(snapshot.docs[key].data()) ;
             }
 
-            return {result: 1, data: programs} ;
+            return {result: 1, data: {totalCount: programs.length, programs: programs}} ;
         } else {
             return await this.internalFetch(URL, currentUser.uid, data) ;
         }
@@ -183,8 +185,10 @@ class clientAdapter {
             res = await fetch(URL, param)
             .then(response => response.json()) ;
         } catch (e) {
-            return {result: 0, data: {}} ;
+            res = {result: 0, data: {}} ;
         }
+
+        console.log(res) ;
 
         return res ;
     }
