@@ -84,7 +84,7 @@ class clientAdapter {
         let currentUser = req.session.user ;
         let URL = this._URL + "CreateProgram" ;
 
-        if (process.env.USE_FIREBASE) {
+        if (false) {
             data.programId = uuid.v4() ;
             await admin.firestore().collection("programs").doc(data.programId).set(data) ;
 
@@ -104,7 +104,7 @@ class clientAdapter {
             programId: programId,
         } ;
 
-        if (process.env.USE_FIREBASE) {
+        if (false) {
             let resultData = (await admin.firestore().collection("programs").doc(data.programId).get()).data() ;
 
             if (resultData != null) {
@@ -126,7 +126,7 @@ class clientAdapter {
             limit: limit,
         } ;
 
-        if (process.env.USE_FIREBASE) {
+        if (false) {
             let snapshot = await admin.firestore().collection("programs").get() ;
 
             let programs = [] ;
@@ -145,11 +145,13 @@ class clientAdapter {
         let currentUser = req.session.user ;
         let URL = this._URL + "UpdateProgram" ;
 
-        if (process.env.USE_FIREBASE) {
+        if (false) {
             await admin.firestore().collection("programs").doc(data.programId).update(data) ;
 
             return {result: 1} ;
         } else {
+            data.category = Number(data.category) ;
+
             return await this.internalFetch(URL, currentUser.uid, data) ;
         }
     }
@@ -162,7 +164,7 @@ class clientAdapter {
             programId: programId,
         } ;
 
-        if (process.env.USE_FIREBASE) {
+        if (false) {
             await admin.firestore().collection("programs").doc(data.programId).delete() ;
 
             return {result: 1} ;

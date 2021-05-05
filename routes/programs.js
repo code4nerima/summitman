@@ -43,6 +43,7 @@ router.get('/edit', wrap(async function(req, res, next) {
         let recv = await clientAdapter.getProgram(req, req.query.programId) ;
         
         program = recv.data ;
+        program.programId = req.query.programId ;
     }
 
     res.render('programEdit', {
@@ -103,6 +104,7 @@ router.get('/view', wrap(async function(req, res, next) {
         let recv = await clientAdapter.getProgram(req, req.query.programId) ;
         
         program = recv.data ;
+        program.programId = req.query.programId ;
     }
 
     if (program == null) {
@@ -126,6 +128,8 @@ router.get('/delete', wrap(async function(req, res, next) {
         res.redirect('/signin');
         return ;
     }
+
+    await clientAdapter.deleteProgram(req, req.query.programId) ;
 
     res.redirect("/programs") ;
 })) ;
