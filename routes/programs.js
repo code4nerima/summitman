@@ -14,16 +14,24 @@ router.get('/', wrap(async function(req, res, next) {
     }
 
     let currentUser = req.session.user ;
-
     let currentUserProfile = (await clientAdapter.getUserProfile(req, currentUser.uid)).data ;
 
-    let recv = await clientAdapter.listProgram(req, 0, -1) ;
-
     res.render('programs', {
-        lang: req.query.lang == undefined ? 'ja' : req.query.lang,
-        programs: recv.data.programs,
         editable: currentUserProfile.role == 2 ? true : false,
     });		 
+})) ;
+
+router.get('/data', wrap(async function(req, res, next) {
+ 
+    let recv = await clientAdapter.listProgram(req, 0, -1) ;
+
+    let data = {
+        lang: req.query.lang == undefined ? 'ja' : req.query.lang,
+        programs: recv.data.programs
+    } ;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(data));
 })) ;
 
 router.get('/edit', wrap(async function(req, res, next) {

@@ -8,29 +8,75 @@
 
 		<div class="container p-2">
 			<h1>ユーザー一覧</h1>
-
-			<% for (let index in users) { %>
-				<% let user = users[index] ; %>
-				<div class="card my-1">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-sm">
-								<a href="/users/user?uid=<%= user.uid %>"><%= user.name.ja %></a>
-							</div>
-							<div class="col-sm">
-								<% if (user.role == 0) { %>
-									<div>スタッフ</div>
-								<% } else if (user.role == 1) { %>
-									<div>プログラムオーナー</div>
-								<% } else if (user.role == 2) { %>
-									<div>管理者</div>
-								<% } %>
-							</div>
-						</div>
-						
-					</div>
-				</div>
-			<% } %>
+			<div id="users"></div>
 		</div>
+		<script>
+			$(function () {
+				reloadRequest(0) ;
+			}) ;
+
+			async function reloadRequest(page) {
+				
+				let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>' ;
+				
+				$("#users").empty() ;
+				$("#users").append(spinner) ;
+				$("#pagenation").empty() ;
+				
+				let data = await fetch("/users/data?page=" + page).then(response => response.json()) ;
+				
+				$("#users").empty() ;
+				$("#pagenation").empty() ;
+				
+				for (let key in data.users) {
+					let user = data.users[key] ;
+					$("#users").append(userBlock(user)) ;
+				}
+
+				let ul = $('<ul class="pagination">') ;
+
+				ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(0);">最初</a></li>') ;
+
+				for (let i=0; i<data.pageCount; i++) {
+					if (i == data.page) {
+						ul.append('<li class="page-item active"><a class="page-link" onclick="reloadRequest(' + i + ');">' + (i + 1) +'</a></li>') ;
+					} else {
+						ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(' + i + ');">' + (i + 1) +'</a></li>') ;
+					}
+				}
+
+				ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(' + (data.pageCount - 1) + ');">最後</a></li>') ;
+
+				$("#pagenation").append('<nav aria-label="Page navigation example">')
+					.append('<ul class="pagination">').append(ul) ;
+			}
+
+			function userBlock(user) {
+				
+				let roleString = '' ;
+
+				if (user.role == 0) {
+					roleString = '<div>スタッフ</div>' ;
+				} else if (user.role == 1) {
+					roleString = '<div>プログラムオーナー</div>' ;
+				} else if (user.role == 2) {
+					roleString = '<div>管理者</div>' ;
+				}
+
+				return `<div class="card my-1">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm">
+										<a href="/users/user?uid=${user.uid}">${user.name.ja}</a>
+									</div>
+									<div class="col-sm">
+										${roleString}
+									</div>
+								</div>
+								
+							</div>
+						</div>` ;
+			}
+		</script>
 	</body>
 </html>

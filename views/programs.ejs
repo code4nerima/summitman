@@ -17,52 +17,100 @@
 			<% } %>
 
 			<div class="d-grid gap-2 d-md-block">
-				<a class="btn btn-success btn-sm" style="width: 130px;" href="/programs?lang=ja">日本語</a>
-				<a class="btn btn-success btn-sm" style="width: 130px;" href="/programs?lang=en">英語</a>
-				<a class="btn btn-success btn-sm" style="width: 130px;" href="/programs?lang=zh-TW">繁体中国語</a>
-				<a class="btn btn-success btn-sm" style="width: 130px;" href="/programs?lang=zh-CN">簡体中国語</a>
+				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("ja", 0);'>日本語</a>
+				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("en", 0);'>英語</a>
+				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("zh-TW", 0);'>繁体中国語</a>
+				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("zh-CN", 0);'>簡体中国語</a>
 			</div>
 
-			<% for (let index in programs) { %>
-				<% let program = programs[index] ; %>
-				<div class="card my-1">
-					<div class="card-header h5 fw-bold">
-						<a href="/programs/view?programId=<%= program.programId %>"><%= program.title[lang] %></a>
-					</div>
-					<div class="card-body">
-						<%= program.description[lang] %>
-					</div>
-					<ul class="list-group list-group-flush">
-						<li class="list-group-item">
-							<div class="row">
-								<div class="col-sm">
-									<i class="me-2 bi bi-calendar"></i><%= program.date %>
-								</div>
-								<div class="col-sm">
-									<i class="me-2 bi bi-clock"></i>
-									<% if (program.startTime != undefined && program.startTime != '' && program.endTime != undefined && program.endTime != '') { %>
-										<%= program.startTime %> 〜 <%= program.endTime %>
-									<% } else if (program.startTime != undefined && program.startTime != '') { %>
-										<%= program.startTime %> 〜
-									<% } else if (program.endTime != undefined && program.endTime != '') { %>
-										〜 <%= program.endTime %>
-									<% } %>
-								</div>
-							</div>
-						</li>
-						<li class="list-group-item">
-							<div class="row">
-								<div class="col-sm">
-									<i class="me-2 bi bi-house-door"></i><%= program.track %>
-								</div>
-								<div class="col-sm">
-									<i class="me-2 bi bi-tags"></i><%= program.category %>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</div>
-			<% } %>
+			<div id="programs"></div>
 		</div>
+		<script>
+			$(function () {
+				reloadRequest("ja", 0) ;
+			}) ;
+
+			async function reloadRequest(lang, page) {
+				
+				let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>' ;
+				
+				$("#programs").empty() ;
+				$("#programs").append(spinner) ;
+				$("#pagenation").empty() ;
+				
+				let data = await fetch("/programs/data?page=" + page).then(response => response.json()) ;
+				
+				$("#programs").empty() ;
+				$("#pagenation").empty() ;
+				
+				for (let key in data.programs) {
+					let program = data.programs[key] ;
+					$("#programs").append(programBlock(lang, program)) ;
+				}
+
+				let ul = $('<ul class="pagination">') ;
+
+				ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(0);">最初</a></li>') ;
+
+				for (let i=0; i<data.pageCount; i++) {
+					if (i == data.page) {
+						ul.append('<li class="page-item active"><a class="page-link" onclick="reloadRequest(' + i + ');">' + (i + 1) +'</a></li>') ;
+					} else {
+						ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(' + i + ');">' + (i + 1) +'</a></li>') ;
+					}
+				}
+
+				ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(' + (data.pageCount - 1) + ');">最後</a></li>') ;
+
+				$("#pagenation").append('<nav aria-label="Page navigation example">')
+					.append('<ul class="pagination">').append(ul) ;
+			}
+
+			function programBlock(lang, program) {
+
+				let timeString = '' ;
+
+				if (program.startTime != undefined && program.startTime != '' && program.endTime != undefined && program.endTime != '') {
+					timeString = program.startTime + "〜" + program.endTime ;
+				} else if (program.startTime != undefined && program.startTime != '') {
+					timeString = program.startTime + "〜" ;
+				} else if (program.endTime != undefined && program.endTime != '') {
+					timeString = "〜" + program.endTime ;
+				}
+
+				return `<div class="card my-1">
+							<div class="card-header h5 fw-bold">
+								<a href="/programs/view?programId=${program.programId}">${program.title[lang]}</a>
+							</div>
+							<div class="card-body">
+								${program.description[lang]}
+							</div>
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">
+									<div class="row">
+										<div class="col-sm">
+											<i class="me-2 bi bi-calendar"></i>${program.date}
+										</div>
+										<div class="col-sm">
+											<i class="me-2 bi bi-clock"></i>${timeString}
+											
+										</div>
+									</div>
+								</li>
+								<li class="list-group-item">
+									<div class="row">
+										<div class="col-sm">
+											<i class="me-2 bi bi-house-door"></i>${program.track}
+										</div>
+										<div class="col-sm">
+											<i class="me-2 bi bi-tags"></i>${program.category}
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>` ;
+			}
+
+		</script>
 	</body>
 </html>

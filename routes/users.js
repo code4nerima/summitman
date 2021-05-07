@@ -13,9 +13,19 @@ router.get('/', wrap(async function(req, res, next) {
         return ;
     }
 
+    res.render('users', {});		 
+})) ;
+
+router.get('/data', wrap(async function(req, res, next) {
+
     let recv = await clientAdapter.listUserProfile(req, 0, -1, 2) ;
 
-    res.render('users', {users: recv.data.userProfiles});		 
+    let data = {
+        users: recv.data.userProfiles
+    } ;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(data));
 })) ;
 
 router.get('/user', wrap(async function(req, res, next) {
