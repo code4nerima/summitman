@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ja">
+	<head>
+		<%- include('parts/head', {title: 'トラック詳細'}) %>
+	</head>
+	<body>
+		<%- include('parts/navbar', {}) %>
+
+		<div class="container p-2">
+
+			<h1>トラック詳細</h1>
+
+			<% if (editable) { %>
+				<div class="my-3">
+					<a class="btn btn-primary" style="width: 130px;" href="/tracks/edit?trackId=<%= track.trackId %>">編集</a>
+				</div>
+			<% } %>
+
+			<div class="card my-1">
+				<div class="card-header h5 fw-bold">
+					名前
+				</div>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item"><%= track.name.ja %></li>
+					<li class="list-group-item"><%= track.name.en %></li>
+					<li class="list-group-item"><%= track.name["zh-TW"] %></li>
+					<li class="list-group-item"><%= track.name["zh-CN"] %></li>
+				</ul>
+			</div>
+
+			<div class="my-3">
+				<button type="button" class="btn btn-danger" style="width: 130px;" onclick="window.history.back(-1);return false;">戻る</button>
+			</div>
+		</div>
+	</body>
+</html>

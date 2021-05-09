@@ -11,13 +11,7 @@ class clientAdapter {
         let currentUser = req.session.user ;
         let URL = this._URL + "CreateUserProfile" ;
 
-        if (false) {
-            await admin.firestore().collection("users").doc(data.uid).set(data) ;
-            
-            return {result: 1} ;
-        } else {
-            return await this.internalFetch(URL, currentUser.uid, data) ;
-        }
+        return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
     async getUserProfile(req, targetUid) {
@@ -28,17 +22,7 @@ class clientAdapter {
             uid: targetUid,
         } ;
 
-        if (false) {
-            let resultData = (await admin.firestore().collection("users").doc(data.uid).get()).data() ;
-
-            if (resultData != null) {
-                return {result: 1, data: resultData} ;
-            } else {
-                return {result: 0} ;
-            }
-        } else {
-            return await this.internalFetch(URL, currentUser.uid, data) ;
-        }
+        return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
     async listUserProfile(req, start, limit, role) {
@@ -51,32 +35,14 @@ class clientAdapter {
             role: role,
         } ;
 
-        if (false) {
-            let snapshot = await admin.firestore().collection("users").where("role", "<=", role).get() ;
-
-            let users = [] ;
-
-            for (let key in snapshot.docs) {
-                users.push(snapshot.docs[key].data()) ;
-            }
-
-            return {result: 1, data: {totalCount: users.length, userProfiles: users}} ;
-        } else {
-            return await this.internalFetch(URL, currentUser.uid, data) ;
-        }
+        return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
     async updateUserProfile(req, data) {
         let currentUser = req.session.user ;
         let URL = this._URL + "UpdateUserProfile" ;
 
-        if (false) {
-            await admin.firestore().collection("users").doc(data.uid).update(data) ;
-
-            return {result: 1} ;
-        } else {
-            return await this.internalFetch(URL, currentUser.uid, data) ;
-        }
+        return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
     // operating program.
@@ -84,16 +50,9 @@ class clientAdapter {
         let currentUser = req.session.user ;
         let URL = this._URL + "CreateProgram" ;
 
-        if (false) {
-            data.programId = uuid.v4() ;
-            await admin.firestore().collection("programs").doc(data.programId).set(data) ;
+        data.category = Number(data.category) ;
 
-            return {result: 1} ;
-        } else {
-            data.category = Number(data.category) ;
-
-            return await this.internalFetch(URL, currentUser.uid, data) ;
-        }
+        return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
     async getProgram(req, programId) {
@@ -104,17 +63,7 @@ class clientAdapter {
             programId: programId,
         } ;
 
-        if (false) {
-            let resultData = (await admin.firestore().collection("programs").doc(data.programId).get()).data() ;
-
-            if (resultData != null) {
-                return {result: 1, data: resultData} ;
-            } else {
-                return {result: 0} ;
-            }
-        } else {
-            return await this.internalFetch(URL, currentUser.uid, data) ;
-        }    
+        return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
     async listProgram(req, start, limit) {
@@ -126,34 +75,16 @@ class clientAdapter {
             limit: limit,
         } ;
 
-        if (false) {
-            let snapshot = await admin.firestore().collection("programs").get() ;
-
-            let programs = [] ;
-
-            for (let key in snapshot.docs) {
-                programs.push(snapshot.docs[key].data()) ;
-            }
-
-            return {result: 1, data: {totalCount: programs.length, programs: programs}} ;
-        } else {
-            return await this.internalFetch(URL, currentUser.uid, data) ;
-        }
+        return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
     async updateProgram(req, data) {
         let currentUser = req.session.user ;
         let URL = this._URL + "UpdateProgram" ;
 
-        if (false) {
-            await admin.firestore().collection("programs").doc(data.programId).update(data) ;
+        data.category = Number(data.category) ;
 
-            return {result: 1} ;
-        } else {
-            data.category = Number(data.category) ;
-
-            return await this.internalFetch(URL, currentUser.uid, data) ;
-        }
+        return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
     async deleteProgram(req, programId) {
@@ -164,13 +95,56 @@ class clientAdapter {
             programId: programId,
         } ;
 
-        if (false) {
-            await admin.firestore().collection("programs").doc(data.programId).delete() ;
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
 
-            return {result: 1} ;
-        } else {
-            return await this.internalFetch(URL, currentUser.uid, data) ;
-        }
+    // operating track.
+    async createTrack(req, data) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "CreateTrack" ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
+    async getTrack(req, trackId) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "GetTrack" ;
+
+        let data = {
+            trackId: trackId,
+        } ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
+    async listTrack(req, start, limit) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "ListTrack" ;
+
+        let data = {
+            start: start,
+            limit: limit,
+        } ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
+    async updateTrack(req, data) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "UpdateTrack" ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
+    async deleteTrack(req, trackId) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "DeleteTrack" ;
+
+        let data = {
+            trackId: trackId,
+        } ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
     }
  
     async internalFetch(URL, uid, data) {
