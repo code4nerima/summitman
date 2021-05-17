@@ -22,12 +22,25 @@ router.get('/', wrap(async function(req, res, next) {
 })) ;
 
 router.get('/data', wrap(async function(req, res, next) {
- 
+
+    let trackIdMap = {} ;
+
+    {
+        let recv = await clientAdapter.listTrack(req, 0, -1) ;
+
+        for (let key in recv.data.tracks) {
+            let track = recv.data.tracks[key] ;
+
+            trackIdMap[track.trackId] = track ;
+        }
+    }
+
     let recv = await clientAdapter.listProgram(req, 0, -1) ;
 
     let data = {
         lang: req.query.lang == undefined ? 'ja' : req.query.lang,
-        programs: recv.data.programs
+        programs: recv.data.programs,
+        trackIdMap: trackIdMap,
     } ;
 
     res.setHeader('Content-Type', 'application/json');
@@ -54,8 +67,11 @@ router.get('/edit', wrap(async function(req, res, next) {
         program.programId = req.query.programId ;
     }
 
+    let recv = await clientAdapter.listTrack(req, 0, -1) ;
+
     res.render('programEdit', {
         program: program,
+        tracks: recv.data.tracks,
     });	
 })) ;
 
@@ -119,12 +135,27 @@ router.get('/view', wrap(async function(req, res, next) {
         res.redirect("/programs") ;
     }
 
+    let trackIdMap = {} ;
+
+    {
+        let recv = await clientAdapter.listTrack(req, 0, -1) ;
+
+        for (let key in recv.data.tracks) {
+            let track = recv.data.tracks[key] ;
+
+            trackIdMap[track.trackId] = track ;
+        }
+    }
+
+    program.trackName = trackIdMap[program.trackId].name ;
+
     let currentUser = req.session.user ;
 
     let currentUserProfile = (await clientAdapter.getUserProfile(req, currentUser.uid)).data ;
 
     res.render('programView', {
         program: program,
+        trackIdMap: trackIdMap,
         editable: currentUserProfile.role >= 1 ? true : false,
     });	
 })) ;

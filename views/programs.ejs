@@ -45,7 +45,7 @@
 				
 				for (let key in data.programs) {
 					let program = data.programs[key] ;
-					$("#programs").append(programBlock(lang, program)) ;
+					$("#programs").append(programBlock(lang, program, data.trackIdMap)) ;
 				}
 
 				let ul = $('<ul class="pagination">') ;
@@ -66,7 +66,7 @@
 					.append('<ul class="pagination">').append(ul) ;
 			}
 
-			function programBlock(lang, program) {
+			function programBlock(lang, program, trackIdMap) {
 
 				let timeString = '' ;
 
@@ -77,6 +77,8 @@
 				} else if (program.endTime != undefined && program.endTime != '') {
 					timeString = "〜" + program.endTime ;
 				}
+
+				let trackName = trackIdMap[program.trackId].name[lang] ;
 
 				return `<div class="card my-1">
 							<div class="card-header h5 fw-bold">
@@ -100,7 +102,7 @@
 								<li class="list-group-item">
 									<div class="row">
 										<div class="col-sm">
-											<i class="me-2 bi bi-house-door"></i>${program.trackId}
+											<i class="me-2 bi bi-house-door"></i>${trackName}
 										</div>
 										<div class="col-sm">
 											<i class="me-2 bi bi-tags"></i>${program.category}

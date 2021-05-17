@@ -71,6 +71,9 @@
 						<label for="track" class="form-label">トラック</label>
 						<select class="form-select" name="trackId" aria-label="トラック">
 							<option value="" <% if (program.trackId == '') { %>selected<% } %>>未定</option>
+							<% for (let key in tracks) { %>
+								<option value="<%= tracks[key].trackId %>" <% if (program.trackId == tracks[key].trackId) { %>selected<% } %>><%= tracks[key].name.ja %></option>
+							<% }  %>
 						</select>
 					</div>
 					<div class="col-sm">
