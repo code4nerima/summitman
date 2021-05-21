@@ -147,6 +147,50 @@ class clientAdapter {
         return await this.internalFetch(URL, currentUser.uid, data) ;
     }
  
+    async updateProgramOwners(req, trackId) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "UpdateProgramOwners" ;
+
+        let data = {
+            trackId: trackId,
+        } ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
+    async getProgramOwners(req, trackId) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "GetProgramOwners" ;
+
+        let data = {
+            trackId: trackId,
+        } ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
+    async updateProgramMembers(req, trackId) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "UpdateProgramMembers" ;
+
+        let data = {
+            trackId: trackId,
+        } ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
+    async getProgramMembers(req, trackId) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "GetProgramMembers" ;
+
+        let data = {
+            trackId: trackId,
+        } ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
     async internalFetch(URL, uid, data) {
         let param = {
             method: "POST",
