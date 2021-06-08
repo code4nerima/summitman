@@ -9,10 +9,133 @@
 		<div class="container p-2">
 
 			<h1>プログラムオーナー登録</h1>
-		
+			<h2>オーナー一覧</h2>
+			<div id="owners"></div>
+
+			<h2>ユーザー一覧</h2>
+			<div id="userProfiles"></div>
+
 			<div class="my-3">
 				<button type="button" class="btn btn-danger" style="width: 130px;" onclick="window.history.back(-1);return false;">戻る</button>
 			</div>
 		</div>
+
+		<script>
+			$(function () {
+				reloadRequest("<%= programId %>") ;
+			}) ;
+
+			async function reloadRequest(programId) {
+				
+				let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>' ;
+				
+				$("#owners").empty() ;
+				$("#owners").append(spinner) ;
+				$("#userProfiles").empty() ;
+				$("#userProfiles").append(spinner) ;
+				$("#pagenation").empty() ;
+				
+				let data = await fetch("/programOwners/data?programId=" + programId).then(response => response.json()) ;
+				
+				$("#owners").empty() ;
+				$("#userProfiles").empty() ;
+				$("#pagenation").empty() ;
+				
+				for (let key in data.owners) {
+					let owner = data.owners[key] ;
+					$("#owners").append(ownerBlock(owner)) ;
+				}
+
+				for (let key in data.userProfiles) {
+					let userProfile = data.userProfiles[key] ;
+					$("#userProfiles").append(userBlock(userProfile)) ;
+				}
+
+				let ul = $('<ul class="pagination">') ;
+
+				ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(0);">最初</a></li>') ;
+
+				for (let i=0; i<data.pageCount; i++) {
+					if (i == data.page) {
+						ul.append('<li class="page-item active"><a class="page-link" onclick="reloadRequest(' + i + ');">' + (i + 1) +'</a></li>') ;
+					} else {
+						ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(' + i + ');">' + (i + 1) +'</a></li>') ;
+					}
+				}
+
+				ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(' + (data.pageCount - 1) + ');">最後</a></li>') ;
+
+				$("#pagenation").append('<nav aria-label="Page navigation example">')
+					.append('<ul class="pagination">').append(ul) ;
+			}
+
+			async function onClickRemoveButton(uid) {
+				let data = await fetch("/programOwners/remove?uid=" + uid + "&programId=<%= programId %>").then(response => response.json()) ;
+				
+				reloadRequest("<%= programId %>") ;
+			}
+
+			async function onClickAddButton(uid) {
+				let data = await fetch("/programOwners/add?uid=" + uid + "&programId=<%= programId %>").then(response => response.json()) ;
+				
+				reloadRequest("<%= programId %>") ;
+			}
+
+			function ownerBlock(user) {
+				let roleString = '' ;
+
+				if (user.role == 0) {
+					roleString = '<div>スタッフ</div>' ;
+				} else if (user.role == 1) {
+					roleString = '<div>プログラムオーナー</div>' ;
+				} else if (user.role == 2) {
+					roleString = '<div>管理者</div>' ;
+				}
+
+				return `<div class="card my-1">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm">
+										${user.name.ja}
+									</div>
+									<div class="col-sm">
+										${roleString}
+									</div>
+									<div class="col-sm">
+										<button type="button" class="btn btn-danger" style="width: 100%;" onclick="onClickRemoveButton('${user.uid}');">削除</button>
+									</div>
+								</div>
+							</div>
+						</div>` ;				
+			}
+
+			function userBlock(user) {
+				let roleString = '' ;
+
+				if (user.role == 0) {
+					roleString = '<div>スタッフ</div>' ;
+				} else if (user.role == 1) {
+					roleString = '<div>プログラムオーナー</div>' ;
+				} else if (user.role == 2) {
+					roleString = '<div>管理者</div>' ;
+				}
+
+				return `<div class="card my-1">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm">
+										${user.name.ja}
+									</div>
+									<div class="col-sm">
+										${roleString}
+									</div>
+									<div class="col-sm">
+										<button type="button" class="btn btn-primary" style="width: 100%;" onclick="onClickAddButton('${user.uid}');">追加</button>
+									</div>
+								</div>
+							</div>
+						</div>` ;				
+			}
+		</script>
 	</body>
 </html>

@@ -66,7 +66,7 @@ class clientAdapter {
         return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
-    async listProgram(req, start, limit) {
+    async listProgram(req, start, limit, ownerUid, memberUid) {
         let currentUser = req.session.user ;
         let URL = this._URL + "ListProgram" ;
 
@@ -74,6 +74,14 @@ class clientAdapter {
             start: start,
             limit: limit,
         } ;
+
+        if (ownerUid != '') {
+            data['ownerUid'] = ownerUid ;
+        }
+
+        if (memberUid != '') {
+            data['memberUid'] = memberUid ;
+        }
 
         return await this.internalFetch(URL, currentUser.uid, data) ;
     }
@@ -147,45 +155,47 @@ class clientAdapter {
         return await this.internalFetch(URL, currentUser.uid, data) ;
     }
  
-    async updateProgramOwners(req, trackId) {
+    async updateProgramOwners(req, programId, owners) {
         let currentUser = req.session.user ;
         let URL = this._URL + "UpdateProgramOwners" ;
 
         let data = {
-            trackId: trackId,
+            programId: programId,
+            owners: owners
         } ;
 
         return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
-    async getProgramOwners(req, trackId) {
+    async getProgramOwners(req, programId) {
         let currentUser = req.session.user ;
         let URL = this._URL + "GetProgramOwners" ;
 
         let data = {
-            trackId: trackId,
+            programId: programId,
         } ;
 
         return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
-    async updateProgramMembers(req, trackId) {
+    async updateProgramMembers(req, programId, members) {
         let currentUser = req.session.user ;
         let URL = this._URL + "UpdateProgramMembers" ;
 
         let data = {
-            trackId: trackId,
+            programId: programId,
+            members: members,
         } ;
 
         return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
-    async getProgramMembers(req, trackId) {
+    async getProgramMembers(req, programId) {
         let currentUser = req.session.user ;
         let URL = this._URL + "GetProgramMembers" ;
 
         let data = {
-            trackId: trackId,
+            programId: programId,
         } ;
 
         return await this.internalFetch(URL, currentUser.uid, data) ;

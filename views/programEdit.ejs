@@ -22,16 +22,16 @@
 			<form method="POST" action="/programs/edit">
 				<div class="row mb-3">
 					<div class="col-sm">
-						<button type="button" class="btn btn-primary" onclick="location.href='/programOwners';" style="width: 100%;">プログラムオーナー登録</button>
+						<button type="button" class="btn btn-primary" onclick="location.href='/programOwners?programId=<%= program.programId %>';" style="width: 100%;">プログラムオーナー登録</button>
 					</div>
 					<div class="col-sm">
-						<button type="button" class="btn btn-primary" onclick="location.href='/presenters';" style="width: 100%;">登壇者登録</button>
+						<button type="button" class="btn btn-primary" onclick="location.href='/presenters?programId=<%= program.programId %>';" style="width: 100%;">登壇者登録</button>
 					</div>
 					<div class="col-sm">
-						<button type="button" class="btn btn-primary" onclick="location.href='/staffMembers';" style="width: 100%;">スタッフ登録</button>
+						<button type="button" class="btn btn-primary" onclick="location.href='/staffMembers?programId=<%= program.programId %>';" style="width: 100%;">スタッフ登録</button>
 					</div>
 					<div class="col-sm">
-						<button type="button" class="btn btn-primary" onclick="location.href='/graphigRecordings';" style="width: 100%;">グラレコアップロード</button>
+						<button type="button" class="btn btn-primary" onclick="location.href='/graphigRecordings?programId=<%= program.programId %>';" style="width: 100%;">グラレコアップロード</button>
 					</div>
 				</div>
 				<div class="row row-cols-1 row-cols-md-2 g-2 mb-3">
