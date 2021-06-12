@@ -11,17 +11,107 @@
 			<h1>サミットマネージャー</h1>
 
 			<div class="row">
-				<div class="col-sm border">
-					<div class="row">
-						<div class="col">
-							<a href="/profile">プロフィール</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm">
+				<div class="col mb-3">
 					<h2>ようこそ <%= userProfile.name.ja %> さん</h2>
+					<a href="/profile">プロフィール</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col mb-3">
+					<h2>あなたの担当プログラム</h2>
+					<div id="programs"></div>
 				</div>
 			</div>
 		</div>
+
+		<script>
+			$(function () {
+				reloadRequest("ja", 0) ;
+			}) ;
+
+			async function reloadRequest(lang, page) {
+				
+				let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>' ;
+				
+				$("#programs").empty() ;
+				$("#programs").append(spinner) ;
+				$("#pagenation").empty() ;
+				
+				let data = await fetch("/data?page=" + page).then(response => response.json()) ;
+				
+				$("#programs").empty() ;
+				$("#pagenation").empty() ;
+				
+				for (let key in data.programs) {
+					let program = data.programs[key] ;
+					$("#programs").append(programBlock(lang, program, data.trackIdMap)) ;
+				}
+
+				let ul = $('<ul class="pagination">') ;
+
+				ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(0);">最初</a></li>') ;
+
+				for (let i=0; i<data.pageCount; i++) {
+					if (i == data.page) {
+						ul.append('<li class="page-item active"><a class="page-link" onclick="reloadRequest(' + i + ');">' + (i + 1) +'</a></li>') ;
+					} else {
+						ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(' + i + ');">' + (i + 1) +'</a></li>') ;
+					}
+				}
+
+				ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(' + (data.pageCount - 1) + ');">最後</a></li>') ;
+
+				$("#pagenation").append('<nav aria-label="Page navigation example">')
+					.append('<ul class="pagination">').append(ul) ;
+			}
+
+			function programBlock(lang, program, trackIdMap) {
+
+				let timeString = '' ;
+
+				if (program.startTime != undefined && program.startTime != '' && program.endTime != undefined && program.endTime != '') {
+					timeString = program.startTime + "〜" + program.endTime ;
+				} else if (program.startTime != undefined && program.startTime != '') {
+					timeString = program.startTime + "〜" ;
+				} else if (program.endTime != undefined && program.endTime != '') {
+					timeString = "〜" + program.endTime ;
+				}
+
+				let trackName = trackIdMap[program.trackId].name[lang] ;
+
+				return `<div class="card my-1">
+							<div class="card-header h5 fw-bold">
+								<a href="/programs/view?programId=${program.programId}">${program.title[lang]}</a>
+							</div>
+							<div class="card-body">
+								${program.description[lang]}
+							</div>
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">
+									<div class="row">
+										<div class="col-sm">
+											<i class="me-2 bi bi-calendar"></i>${program.date}
+										</div>
+										<div class="col-sm">
+											<i class="me-2 bi bi-clock"></i>${timeString}
+											
+										</div>
+									</div>
+								</li>
+								<li class="list-group-item">
+									<div class="row">
+										<div class="col-sm">
+											<i class="me-2 bi bi-house-door"></i>${trackName}
+										</div>
+										<div class="col-sm">
+											<i class="me-2 bi bi-tags"></i>${program.category}
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>` ;
+			}
+
+		</script>
 	</body>
 </html>

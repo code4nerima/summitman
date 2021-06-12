@@ -13,6 +13,7 @@
 			<% if (editable) { %>
 				<div class="my-3">
 					<a class="btn btn-primary" style="width: 130px;" href="/programs/edit?programId=<%= program.programId %>">編集</a>
+					<button type="button" class="btn btn-danger" style="width: 130px;" onclick="location.href='/programs/delete?programId=<%= program.programId %>'; return false;">削除</button>
 				</div>
 			<% } %>
 
@@ -21,19 +22,19 @@
 					タイトル
 				</div>
 				<ul class="list-group list-group-flush">
-					<li class="list-group-item"><%= program.title.ja %></li>
-					<li class="list-group-item"><%= program.title.en %></li>
-					<li class="list-group-item"><%= program.title["zh-TW"] %></li>
-					<li class="list-group-item"><%= program.title["zh-CN"] %></li>
+					<li class="list-group-item"><i class="me-2 bi bi-bookmark"></i><%= program.title.ja %></li>
+					<li class="list-group-item"><i class="me-2 bi bi-bookmark"></i><%= program.title.en %></li>
+					<li class="list-group-item"><i class="me-2 bi bi-bookmark"></i><%= program.title["zh-TW"] %></li>
+					<li class="list-group-item"><i class="me-2 bi bi-bookmark"></i><%= program.title["zh-CN"] %></li>
 				</ul>
 				<div class="card-header h5 fw-bold">
 					詳細
 				</div>
 				<ul class="list-group list-group-flush">
-					<li class="list-group-item"><%= program.description.ja %></li>
-					<li class="list-group-item"><%= program.description.en %></li>
-					<li class="list-group-item"><%= program.description["zh-TW"] %></li>
-					<li class="list-group-item"><%= program.description["zh-CN"] %></li>
+					<li class="list-group-item"><i class="me-2 bi bi-card-text"></i><%= program.description.ja %></li>
+					<li class="list-group-item"><i class="me-2 bi bi-card-text"></i><%= program.description.en %></li>
+					<li class="list-group-item"><i class="me-2 bi bi-card-text"></i><%= program.description["zh-TW"] %></li>
+					<li class="list-group-item"><i class="me-2 bi bi-card-text"></i><%= program.description["zh-CN"] %></li>
 				</ul>
 				<div class="card-header h5 fw-bold">
 					その他
@@ -59,7 +60,7 @@
 					<li class="list-group-item">
 						<div class="row">
 							<div class="col-sm">
-								<i class="me-2 bi bi-tags"></i><%= program.category %>
+								<i class="me-2 bi bi-tags"></i><% if (program.category == 0) {%>未定<% } else if (program.category == 1) { %>セッション<% } else if (program.category == 2) { %>ワークショップ<% } %>
 							</div>
 						</div>
 					</li>

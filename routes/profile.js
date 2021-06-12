@@ -23,7 +23,7 @@ router.get('/', wrap(async function(req, res, next) {
         if (recv.result == 1) {
             data = recv.data ;
 
-            if (data.role == 2) {
+            if (data.role == 1) {
                 let recv = await clientAdapter.getUserProfile(req, req.query.uid) ;
 
                 if (recv.result == 1) {

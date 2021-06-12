@@ -82,15 +82,6 @@
 			}
 
 			function ownerBlock(user) {
-				let roleString = '' ;
-
-				if (user.role == 0) {
-					roleString = '<div>スタッフ</div>' ;
-				} else if (user.role == 1) {
-					roleString = '<div>プログラムオーナー</div>' ;
-				} else if (user.role == 2) {
-					roleString = '<div>管理者</div>' ;
-				}
 
 				return `<div class="card my-1">
 							<div class="card-body">
@@ -99,7 +90,7 @@
 										${user.name.ja}
 									</div>
 									<div class="col-sm">
-										${roleString}
+										
 									</div>
 									<div class="col-sm">
 										<button type="button" class="btn btn-danger" style="width: 100%;" onclick="onClickRemoveButton('${user.uid}');">削除</button>
@@ -110,15 +101,7 @@
 			}
 
 			function userBlock(user) {
-				let roleString = '' ;
-
-				if (user.role == 0) {
-					roleString = '<div>スタッフ</div>' ;
-				} else if (user.role == 1) {
-					roleString = '<div>プログラムオーナー</div>' ;
-				} else if (user.role == 2) {
-					roleString = '<div>管理者</div>' ;
-				}
+				let roleString = getRoleString(user.role) ;
 
 				return `<div class="card my-1">
 							<div class="card-body">

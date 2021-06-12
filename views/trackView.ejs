@@ -13,6 +13,7 @@
 			<% if (editable) { %>
 				<div class="my-3">
 					<a class="btn btn-primary" style="width: 130px;" href="/tracks/edit?trackId=<%= track.trackId %>">編集</a>
+					<button type="button" class="btn btn-danger" style="width: 130px;" onclick="location.href='/tracks/delete?trackId=<%= track.trackId %>'; return false;">削除</button>
 				</div>
 			<% } %>
 
@@ -25,6 +26,37 @@
 					<li class="list-group-item"><%= track.name.en %></li>
 					<li class="list-group-item"><%= track.name["zh-TW"] %></li>
 					<li class="list-group-item"><%= track.name["zh-CN"] %></li>
+				</ul>
+			</div>
+
+			<div class="card my-1">
+				<div class="card-header h5 fw-bold">
+					Zoomミーティング情報
+				</div>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item"><%= track.meetingURL %></li>
+					<li class="list-group-item"><%= track.meetingId %></li>
+					<li class="list-group-item"><%= track.meetingPasscode %></li>
+				</ul>
+			</div>
+
+			<div class="card my-1">
+				<div class="card-header h5 fw-bold">
+					カスタムストリーミングサービスを設定
+				</div>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item"><%= track.streamURL %></li>
+					<li class="list-group-item"><%= track.streamKey %></li>
+					<li class="list-group-item"><%= track.broadcastingURL %></li>
+				</ul>
+			</div>
+
+			<div class="card my-1">
+				<div class="card-header h5 fw-bold">
+					その他
+				</div>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item"><%= track.station %></li>
 				</ul>
 			</div>
 

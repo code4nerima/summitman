@@ -18,7 +18,7 @@ router.get('/', wrap(async function(req, res, next) {
 
 router.get('/data', wrap(async function(req, res, next) {
 
-    let recv = await clientAdapter.listUserProfile(req, 0, -1, 2) ;
+    let recv = await clientAdapter.listUserProfile(req, 0, -1) ;
 
     let data = {
         users: recv.data.userProfiles
@@ -44,7 +44,7 @@ router.get('/user', wrap(async function(req, res, next) {
 
     res.render('user', {
         user: recv.data,
-        editable: currentUserProfile.role == 2 ? true : false,
+        editable: currentUserProfile.role == 1 ? true : false,
     });	
 })) ;
 

@@ -11,10 +11,10 @@
 			<h1>プロフィール</h1>
 				<div class="card">
 					<ul class="list-group list-group-flush">
-						<li class="list-group-item"><%= user.name.ja %></li>
-						<li class="list-group-item"><%= user.name.en %></li>
-						<li class="list-group-item"><%= user.name['zh-TW'] %></li>
-						<li class="list-group-item"><%= user.name['zh-CN'] %></li>
+						<li class="list-group-item"><i class="me-2 bi bi-person"></i><%= user.name.ja %></li>
+						<li class="list-group-item"><i class="me-2 bi bi-person"></i><%= user.name.en %></li>
+						<li class="list-group-item"><i class="me-2 bi bi-person"></i><%= user.name['zh-TW'] %></li>
+						<li class="list-group-item"><i class="me-2 bi bi-person"></i><%= user.name['zh-CN'] %></li>
 					</ul>
 				</div>
 			<% if (editable) { %>

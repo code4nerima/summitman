@@ -40,13 +40,60 @@
 						<input maxlength="50" type="text" class="form-control" id="zh-CN_name" name="zh-CN_name" value="<%= track.name['zh-CN'] %>">
 					</div>
 				</div>
+
+				<div class="row">
+					<div class="col-sm">
+						<label class="form-label h3">Zoomミーティング情報</label>
+						<div class="mb-3">
+							<label for="meetingURL" class="form-label">招待リンク</label>
+							<input type="text" class="form-control" id="meetingURL" name="meetingURL" value="">
+						</div>
+						<div class="mb-3">
+							<label for="meetingId" class="form-label">ミーティングID</label>
+							<input type="text" class="form-control" id="meetingId" name="meetingId" value="">
+						</div>
+						<div class="mb-3">
+							<label for="meetingPasscode" class="form-label">パスコード</label>
+							<input type="text" class="form-control" id="meetingPasscode" name="meetingPasscode" value="">
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-sm">
+						<label class="form-label h3">カスタムストリーミングサービスを設定</label>
+						<div class="mb-3">
+							<label for="streamURL" class="form-label">ストリームURL</label>
+							<input type="text" class="form-control" id="streamURL" name="streamURL" value="">
+						</div>
+						<div class="mb-3">
+							<label for="streamKey" class="form-label">ストリームキー</label>
+							<input type="text" class="form-control" id="streamKey" name="streamKey" value="">
+						</div>
+						<div class="mb-3">
+							<label for="broadcastingURL" class="form-label">ライブストリーム配信ページのURL</label>
+							<input type="text" class="form-control" id="broadcastingURL" name="broadcastingURL" value="">
+						</div>
+						
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm">
+						<label class="form-label h3">その他</label>
+						<div class="mb-3">
+							<label for="station" class="form-label">担当拠点</label>
+							<input type="text" class="form-control" id="station" name="station" value="">
+						</div>
+					</div>
+				</div>
+
 				<% if (track.trackId != undefined) { %>
 					<input type="hidden" name="trackId" value="<%= track.trackId %>">
 				<% } %>
 				<div class="mb-3">
 					<% if (track.trackId != undefined) { %>
 						<button type="submit" class="btn btn-primary" style="width: 130px;">更新</button>
-						<button type="button" class="btn btn-danger" style="width: 130px;" onclick="location.href='/tracks/delete?trackId=<%= track.trackId %>'; return false;">削除</button>
 					<% } else { %>
 						<button type="submit" class="btn btn-primary" style="width: 130px;">作成</button>
 					<% } %>

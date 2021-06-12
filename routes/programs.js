@@ -17,7 +17,7 @@ router.get('/', wrap(async function(req, res, next) {
     let currentUserProfile = (await clientAdapter.getUserProfile(req, currentUser.uid)).data ;
 
     res.render('programs', {
-        editable: currentUserProfile.role == 2 ? true : false,
+        editable: currentUserProfile.role == 1 ? true : false,
     });		 
 })) ;
 

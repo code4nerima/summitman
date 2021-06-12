@@ -17,7 +17,7 @@ router.get('/', wrap(async function(req, res, next) {
     let currentUserProfile = (await clientAdapter.getUserProfile(req, currentUser.uid)).data ;
 
     res.render('tracks', {
-        editable: currentUserProfile.role == 2 ? true : false,
+        editable: currentUserProfile.role == 1 ? true : false,
     });		 
 })) ;
 
@@ -73,7 +73,16 @@ router.post('/edit', wrap(async function(req, res, next) {
             "zh-TW": req.body['zh-TW_name'],
             "zh-CN": req.body['zh-CN_name'],
         },
+        meetingURL: req.body.meetingURL,
+        meetingId: req.body.meetingId,
+        meetingPasscode: req.body.meetingPasscode,
+        streamURL: req.body.streamURL,
+        streamKey: req.body.streamKey,
+        broadcastingURL: req.body.broadcastingURL,
+        station: req.body.station,
     } ;
+
+    console.log(track) ;
 
     if (req.body.trackId != undefined) {
         track.trackId = req.body.trackId ;

@@ -61,6 +61,34 @@ router.get('/', wrap(async function(req, res, next) {
     res.render('index', {userProfile: data});		 
 })) ;
 
+router.get('/data', wrap(async function(req, res, next) {
+
+	let currentUser = req.session.user ;
+
+    let trackIdMap = {} ;
+
+    {
+        let recv = await clientAdapter.listTrack(req, 0, -1) ;
+
+        for (let key in recv.data.tracks) {
+            let track = recv.data.tracks[key] ;
+
+            trackIdMap[track.trackId] = track ;
+        }
+    }
+
+    let recv = await clientAdapter.listProgram(req, 0, -1, currentUser.uid, currentUser.uid) ;
+
+    let data = {
+        lang: req.query.lang == undefined ? 'ja' : req.query.lang,
+        programs: recv.data.programs,
+        trackIdMap: trackIdMap,
+    } ;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(data));
+})) ;
+
 router.get('/signout', wrap(async function(req, res, next) {
 	delete req.session.errorMessage;
 

@@ -28,7 +28,7 @@ router.get('/data', wrap(async function(req, res, next) {
     }
 
     {
-        let recv = await clientAdapter.listUserProfile(req, 0, -1, 2) ;
+        let recv = await clientAdapter.listUserProfile(req, 0, -1) ;
 
         userProfiles = recv.data.userProfiles ;
     }

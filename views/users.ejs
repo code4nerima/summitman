@@ -53,15 +53,7 @@
 
 			function userBlock(user) {
 				
-				let roleString = '' ;
-
-				if (user.role == 0) {
-					roleString = '<div>スタッフ</div>' ;
-				} else if (user.role == 1) {
-					roleString = '<div>プログラムオーナー</div>' ;
-				} else if (user.role == 2) {
-					roleString = '<div>管理者</div>' ;
-				}
+				let roleString = getRoleString(user.role) ;
 
 				return `<div class="card my-1">
 							<div class="card-body">

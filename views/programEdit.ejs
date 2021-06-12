@@ -21,16 +21,16 @@
 			<% } %>
 			<form method="POST" action="/programs/edit">
 				<div class="row mb-3">
-					<div class="col-sm">
+					<div class="col-sm mb-1">
 						<button type="button" class="btn btn-primary" onclick="location.href='/programOwners?programId=<%= program.programId %>';" style="width: 100%;">プログラムオーナー登録</button>
 					</div>
-					<div class="col-sm">
+					<div class="col-sm mb-1">
 						<button type="button" class="btn btn-primary" onclick="location.href='/presenters?programId=<%= program.programId %>';" style="width: 100%;">登壇者登録</button>
 					</div>
-					<div class="col-sm">
+					<div class="col-sm mb-1">
 						<button type="button" class="btn btn-primary" onclick="location.href='/staffMembers?programId=<%= program.programId %>';" style="width: 100%;">スタッフ登録</button>
 					</div>
-					<div class="col-sm">
+					<div class="col-sm mb-1">
 						<button type="button" class="btn btn-primary" onclick="location.href='/graphigRecordings?programId=<%= program.programId %>';" style="width: 100%;">グラレコアップロード</button>
 					</div>
 				</div>
@@ -110,7 +110,6 @@
 				<div class="mb-3">
 					<% if (program.programId != undefined) { %>
 						<button type="submit" class="btn btn-primary" style="width: 130px;">更新</button>
-						<button type="button" class="btn btn-danger" style="width: 130px;" onclick="location.href='/programs/delete?programId=<%= program.programId %>'; return false;">削除</button>
 					<% } else { %>
 						<button type="submit" class="btn btn-primary" style="width: 130px;">作成</button>
 					<% } %>

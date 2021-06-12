@@ -25,14 +25,14 @@ class clientAdapter {
         return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
-    async listUserProfile(req, start, limit, role) {
+    async listUserProfile(req, start, limit) {
         let currentUser = req.session.user ;
         let URL = this._URL + "ListUserProfile" ;
 
         let data = {
             start: start,
             limit: limit,
-            role: role,
+            roles: [0, 1, 2, 3],
         } ;
 
         return await this.internalFetch(URL, currentUser.uid, data) ;
@@ -66,7 +66,7 @@ class clientAdapter {
         return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
-    async listProgram(req, start, limit, ownerUid, memberUid) {
+    async listProgram(req, start, limit, programOwnerUid, programMemberUid) {
         let currentUser = req.session.user ;
         let URL = this._URL + "ListProgram" ;
 
@@ -75,12 +75,12 @@ class clientAdapter {
             limit: limit,
         } ;
 
-        if (ownerUid != '') {
-            data['ownerUid'] = ownerUid ;
+        if (programOwnerUid != '') {
+            data['programOwnerUid'] = programOwnerUid ;
         }
 
-        if (memberUid != '') {
-            data['memberUid'] = memberUid ;
+        if (programMemberUid != '') {
+            data['programMemberUid'] = programMemberUid ;
         }
 
         return await this.internalFetch(URL, currentUser.uid, data) ;
