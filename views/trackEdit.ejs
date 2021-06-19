@@ -46,15 +46,15 @@
 						<label class="form-label h3">Zoomミーティング情報</label>
 						<div class="mb-3">
 							<label for="meetingURL" class="form-label">招待リンク</label>
-							<input type="text" class="form-control" id="meetingURL" name="meetingURL" value="">
+							<input type="text" class="form-control" id="meetingURL" name="meetingURL" value="<%= track.meetingURL %>">
 						</div>
 						<div class="mb-3">
 							<label for="meetingId" class="form-label">ミーティングID</label>
-							<input type="text" class="form-control" id="meetingId" name="meetingId" value="">
+							<input type="text" class="form-control" id="meetingId" name="meetingId" value="<%= track.meetingId %>">
 						</div>
 						<div class="mb-3">
 							<label for="meetingPasscode" class="form-label">パスコード</label>
-							<input type="text" class="form-control" id="meetingPasscode" name="meetingPasscode" value="">
+							<input type="text" class="form-control" id="meetingPasscode" name="meetingPasscode" value="<%= track.meetingPasscode %>">
 						</div>
 					</div>
 				</div>
@@ -64,15 +64,15 @@
 						<label class="form-label h3">カスタムストリーミングサービスを設定</label>
 						<div class="mb-3">
 							<label for="streamURL" class="form-label">ストリームURL</label>
-							<input type="text" class="form-control" id="streamURL" name="streamURL" value="">
+							<input type="text" class="form-control" id="streamURL" name="streamURL" value="<%= track.streamURL %>">
 						</div>
 						<div class="mb-3">
 							<label for="streamKey" class="form-label">ストリームキー</label>
-							<input type="text" class="form-control" id="streamKey" name="streamKey" value="">
+							<input type="text" class="form-control" id="streamKey" name="streamKey" value="<%= track.streamKey %>">
 						</div>
 						<div class="mb-3">
 							<label for="broadcastingURL" class="form-label">ライブストリーム配信ページのURL</label>
-							<input type="text" class="form-control" id="broadcastingURL" name="broadcastingURL" value="">
+							<input type="text" class="form-control" id="broadcastingURL" name="broadcastingURL" value="<%= track.broadcastingURL %>">
 						</div>
 						
 					</div>
@@ -83,7 +83,7 @@
 						<label class="form-label h3">その他</label>
 						<div class="mb-3">
 							<label for="station" class="form-label">担当拠点</label>
-							<input type="text" class="form-control" id="station" name="station" value="">
+							<input type="text" class="form-control" id="station" name="station" value="<%= track.station %>">
 						</div>
 					</div>
 				</div>
