@@ -8,7 +8,7 @@
 
 		<div class="container p-2">
 
-			<h1>プログラム詳細</h1>
+			<h1 class="mb-5">プログラム詳細</h1>
 
 			<% if (editable) { %>
 				<div class="my-3">
@@ -60,7 +60,22 @@
 					<li class="list-group-item">
 						<div class="row">
 							<div class="col-sm">
-								<i class="me-2 bi bi-tags"></i><% if (program.category == 0) {%>未定<% } else if (program.category == 1) { %>セッション<% } else if (program.category == 2) { %>ワークショップ<% } %>
+								<i class="me-2 bi bi-tags"></i>
+								<% if (program.category == 0) {%>
+									未定
+								<% } else if (program.category == 1) { %>
+									セッション
+								<% } else if (program.category == 2) { %>
+									ワークショップ
+								<% } %>
+							</div>
+							<div class="col-sm">
+								<i class="me-2 bi bi-tags"></i>
+								<% if (program.genre == 0) {%>
+									未定
+								<% } else { %>
+									<%= program.genre %>
+								<% } %>
 							</div>
 						</div>
 					</li>
