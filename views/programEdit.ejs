@@ -85,22 +85,60 @@
 						</select>
 					</div>
 					<div class="col-sm">
-						<label for="genre" class="form-label">ジャンル</label>
-						<select class="form-select" name="genre" aria-label="ジャンル">
-							<option value="0" <% if (program.genre == 0) { %>selected<% } %>>未定</option>
-							<option value="1" <% if (program.genre == 1) { %>selected<% } %>>新型コロナウィスル感染症対策</option>
-							<option value="2" <% if (program.genre == 2) { %>selected<% } %>>シビックテック活動</option>
-							<option value="3" <% if (program.genre == 3) { %>selected<% } %>>インターナショナル</option>
-							<option value="4" <% if (program.genre == 4) { %>selected<% } %>>行政</option>
-							<option value="5" <% if (program.genre == 5) { %>selected<% } %>>研究・アカデミア</option>
-							<option value="6" <% if (program.genre == 6) { %>selected<% } %>>災害対策</option>
-							<option value="7" <% if (program.genre == 7) { %>selected<% } %>>オープンデータ活用</option>
-							<option value="8" <% if (program.genre == 8) { %>selected<% } %>>SDGs</option>
-							<option value="9" <% if (program.genre == 9) { %>selected<% } %>>スマートシティ</option>
-							<option value="10" <% if (program.genre == 10) { %>selected<% } %>>プログラミング</option>
-							<option value="11" <% if (program.genre == 11) { %>selected<% } %>>テクノロジー</option>
-							<option value="12" <% if (program.genre == 12) { %>selected<% } %>>その他</option>
-						</select>
+						
+					</div>
+				</div>
+				<div class="row">
+					<label for="category" class="form-label">ジャンル</label>
+				</div>
+				<div class="row row-cols-3 row-cols-md-2 g-2 mb-3">
+					<div class="form-check col-sm">
+						<input name="genre" class="form-check-input" type="checkbox" value="1" id="genre01">
+						<label class="form-check-label" for="genre01">新型コロナウィスル感染症対策</label>
+					</div>
+					<div class="form-check col-sm">
+						<input name="genre" class="form-check-input" type="checkbox" value="2" id="genre02">
+						<label class="form-check-label" for="genre01">シビックテック活動</label>
+					</div>
+					<div class="form-check col-sm">
+						<input name="genre" class="form-check-input" type="checkbox" value="3" id="genre03">
+						<label class="form-check-label" for="genre01">インターナショナル</label>
+					</div>
+					<div class="form-check col-sm">
+						<input name="genre" class="form-check-input" type="checkbox" value="4" id="genre04">
+						<label class="form-check-label" for="genre01">行政</label>
+					</div>
+					<div class="form-check col-sm">
+						<input name="genre" class="form-check-input" type="checkbox" value="5" id="genre05">
+						<label class="form-check-label" for="genre01">研究・アカデミア</label>
+					</div>
+					<div class="form-check col-sm">
+						<input name="genre" class="form-check-input" type="checkbox" value="6" id="genre06">
+						<label class="form-check-label" for="genre01">災害対策</label>
+					</div>
+					<div class="form-check col-sm">
+						<input name="genre" class="form-check-input" type="checkbox" value="7" id="genre07">
+						<label class="form-check-label" for="genre01">オープンデータ活用</label>
+					</div>
+					<div class="form-check col-sm">
+						<input name="genre" class="form-check-input" type="checkbox" value="8" id="genre08">
+						<label class="form-check-label" for="genre01">SDGs</label>
+					</div>
+					<div class="form-check col-sm">
+						<input name="genre" class="form-check-input" type="checkbox" value="9" id="genre09">
+						<label class="form-check-label" for="genre01">スマートシティ</label>
+					</div>
+					<div class="form-check col-sm">
+						<input name="genre" class="form-check-input" type="checkbox" value="10" id="genre010">
+						<label class="form-check-label" for="genre01">プログラミング</label>
+					</div>
+					<div class="form-check col-sm">
+						<input name="genre" class="form-check-input" type="checkbox" value="11" id="genre11">
+						<label class="form-check-label" for="genre01">テクノロジー</label>
+					</div>
+					<div class="form-check col-sm">
+						<input name="genre" class="form-check-input" type="checkbox" value="12" id="genre12">
+						<label class="form-check-label" for="genre01">その他</label>
 					</div>
 				</div>
 				<div class="row row-cols-1 row-cols-md-2 g-2 mb-3">
