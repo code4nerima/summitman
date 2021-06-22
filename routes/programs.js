@@ -95,6 +95,7 @@ router.post('/edit', wrap(async function(req, res, next) {
         endTime: req.body.endTime,
         trackId: req.body.trackId,
         category: req.body.category,
+        genre: req.body.genre,
         description: {
             "ja": req.body.ja_description,
             "en": req.body.en_description,
