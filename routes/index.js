@@ -77,7 +77,21 @@ router.get('/data', wrap(async function(req, res, next) {
         }
     }
 
-    let recv = await clientAdapter.listProgram(req, 0, -1, currentUser.uid, currentUser.uid) ;
+	let firebaseUser = null ;
+
+	try {
+		firebaseUser = await admin.auth().getUser(currentUser.uid) ;
+	} catch (error) {
+		
+	}
+
+    let recv = await clientAdapter.listProgram(
+		req, 
+		0, 
+		-1, 
+		currentUser.uid, 
+		currentUser.uid,
+		firebaseUser.email) ;
 
     let data = {
         lang: req.query.lang == undefined ? 'ja' : req.query.lang,

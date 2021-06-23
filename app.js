@@ -12,7 +12,7 @@ var usersRouter = require('./routes/users');
 var programsRouter = require('./routes/programs');
 var tracksRouter = require('./routes/tracks');
 var programOwnersRouter = require('./routes/programOwners');
-var presentersRouter = require('./routes/presenters');
+var programPresentersRouter = require('./routes/programPresenters');
 var programMembersRouter = require('./routes/programMembers');
 var graphigRecordingsRouter = require('./routes/graphigRecordings');
 
@@ -49,7 +49,7 @@ app.use('/users', usersRouter);
 app.use('/programs', programsRouter);
 app.use('/tracks', tracksRouter);
 app.use('/programOwners', programOwnersRouter);
-app.use('/presenters', presentersRouter);
+app.use('/programPresenters', programPresentersRouter);
 app.use('/programMembers', programMembersRouter);
 app.use('/graphigRecordings', graphigRecordingsRouter);
 
@@ -101,7 +101,8 @@ var serviceAccount = {
 } ;
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
+  credential: admin.credential.cert(serviceAccount),
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
 });
 
 module.exports = app;

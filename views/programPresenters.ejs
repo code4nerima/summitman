@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ja">
+	<head>
+		<%- include('parts/head', {title: '登壇者登録'}) %>
+	</head>
+	<body>
+		<%- include('parts/navbar', {}) %>
+
+		<div class="container p-2">
+
+			<h1 class="mb-5">登壇者登録</h1>
+			<h2>登壇者一覧</h2>
+			<div id="presenters"></div>
+
+			<hr />
+
+			<div class="my-3">
+				<button type="button" class="btn btn-danger" style="width: 130px;" onclick="window.history.back(-1);return false;">戻る</button>
+			</div>
+		</div>
+
+		<script>
+			$(function () {
+				reloadRequest("<%= programId %>") ;
+			}) ;
+
+			async function reloadRequest(programId) {
+				
+				let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>' ;
+				
+				$("#presenters").empty() ;
+				$("#presenters").append(spinner) ;
+				$("#pagenation").empty() ;
+				
+				let data = await fetch("/programMembers/data?programId=" + programId).then(response => response.json()) ;
+				
+				$("#presenters").empty() ;
+				$("#pagenation").empty() ;
+				
+				for (let key in data.presenters) {
+					let presenter = data.presenters[key] ;
+					$("#presenters").append(presenterBlock(presenter)) ;
+				}
+
+				let ul = $('<ul class="pagination">') ;
+
+				ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(0);">最初</a></li>') ;
+
+				for (let i=0; i<data.pageCount; i++) {
+					if (i == data.page) {
+						ul.append('<li class="page-item active"><a class="page-link" onclick="reloadRequest(' + i + ');">' + (i + 1) +'</a></li>') ;
+					} else {
+						ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(' + i + ');">' + (i + 1) +'</a></li>') ;
+					}
+				}
+
+				ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(' + (data.pageCount - 1) + ');">最後</a></li>') ;
+
+				$("#pagenation").append('<nav aria-label="Page navigation example">')
+					.append('<ul class="pagination">').append(ul) ;
+			}
+
+			async function onClickRemoveButton(uid) {
+				let data = await fetch("/programMembers/remove?uid=" + uid + "&programId=<%= programId %>").then(response => response.json()) ;
+				
+				reloadRequest("<%= programId %>") ;
+			}
+
+			async function onClickAddButton(uid) {
+				let data = await fetch("/programMembers/add?uid=" + uid + "&programId=<%= programId %>").then(response => response.json()) ;
+				
+				reloadRequest("<%= programId %>") ;
+			}
+
+			function presenterBlock(user) {
+
+				return `<div class="card my-1">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm">
+										${user.name.ja}
+									</div>
+									<div class="col-sm">
+										
+									</div>
+									<div class="col-sm">
+										<button type="button" class="btn btn-danger" style="width: 100%;" onclick="onClickRemoveButton('${user.uid}');">削除</button>
+									</div>
+								</div>
+							</div>
+						</div>` ;				
+			}
+		</script>
+	</body>
+</html>

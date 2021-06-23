@@ -10,6 +10,33 @@
 
 			<h1 class="mb-5">プロフィールの編集</h1>
 
+			<div class="row py-1">
+				<div class="col">
+					<label for="name" class="form-label">プロフィール画像</label>
+					<% if (data.photoURL == '') { %>
+						<div id="profilePhoto"><div width="200" height="200"></div></div>
+					<% } else { %>
+						<div id="profilePhoto"><img class="border rounded img-thumbnai" src="<%= data.photoURL %>" width="200"></div>
+					<% } %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<form id="photo">
+						<input type="hidden" name="uid" value="<%= data.uid %>">
+						<div class="mb-3">
+							<input type="file" class="form-control" id="file" name="file" accept="image/*" aria-describedby="fileHelp">
+							<label class="form-label small">ファイルサイズは1MB以内の画像を選択してください。</label>
+						</div>
+					</form>
+
+					<div class="mb-3">
+						<button type="button" id="photoUploadButton" class="btn btn-primary">アップロード</button>
+						<button type="button" id="photoDeleteButton" class="btn btn-danger">削除</button>
+					</div>
+				</div>
+			</div>
+
 			<form method="POST" action="/profile">
 				<div class="row mb-3">
 					<div class="col-sm">
@@ -57,5 +84,53 @@
 				</div>
 			</form>
 		</div>
+
+		<script>
+			$(window).on('load', async () => {
+				$('#photoUploadButton').on('click', () => {
+
+					var fileList = $('#file').get(0).files;
+
+					for (let key in fileList) {
+						let file = fileList[key] ;
+
+						if (file.size > 1024 * 1024) {
+							alert("ファイルサイズは1MB以内のものを選んでください") ;
+							return ;
+						}
+					}
+
+					const formData = new FormData($('#photo').get(0));
+
+					const param = {
+						method: "POST",
+						body: formData
+					}
+
+					$('#photoUploadButton').prop('disabled', true);
+
+					fetch("/profile/photo", param)
+						.then(response => response.json())
+						.then(data => {
+							$('#profilePhoto').empty() ;
+							$('#profilePhoto').append('<img class="border rounded img-thumbnai" src="' + data["publicUrl"] + '" width="200">') 
+							$('#photoUploadButton').prop('disabled', false);
+						});
+				}) ;
+
+				$('#photoDeleteButton').on('click', () => {
+					$('#photoDeleteButton').prop('disabled', true);
+
+					fetch("/profile/photoDelete")
+						.then(response => response.json())
+						.then(data => {
+							$('#profilePhoto').empty() ;
+							$('#profilePhoto').append('<div width="200" height="200"></div>') ;
+							$('#photoDeleteButton').prop('disabled', false);
+						});
+				}) ;
+			}) ;
+		</script>
+
 	</body>
 </html>

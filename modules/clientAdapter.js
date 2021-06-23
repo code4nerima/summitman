@@ -66,7 +66,7 @@ class clientAdapter {
         return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
-    async listProgram(req, start, limit, programOwnerUid, programMemberUid) {
+    async listProgram(req, start, limit, programOwnerUid, programMemberUid, email) {
         let currentUser = req.session.user ;
         let URL = this._URL + "ListProgram" ;
 
@@ -81,6 +81,10 @@ class clientAdapter {
 
         if (programMemberUid != '') {
             data['programMemberUid'] = programMemberUid ;
+        }
+
+        if (email != undefined && email != "") {
+            data['email'] = email ;
         }
 
         return await this.internalFetch(URL, currentUser.uid, data) ;
