@@ -80,7 +80,6 @@ router.post('/', wrap(async function(req, res, next) {
         data.name['en'] = req.body.en_name ;
         data.name['zh-TW'] = req.body["zh-TW_name"] ;
         data.name['zh-CN'] = req.body["zh-CN_name"] ;
-        data["photoURL"] = req.body.photoURL ;
     }
 
     if (req.body.role != undefined) {

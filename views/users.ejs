@@ -54,15 +54,27 @@
 			function userBlock(user) {
 				
 				let roleString = getRoleString(user.role) ;
+				let photoURLString = user.photoURL ;
+
+				if (photoURLString == null || photoURLString == undefined) {
+					photoURLString = "images/profile.png" ;
+				}
 
 				return `<div class="card my-3">
 							<div class="card-body">
 								<div class="row">
-									<div class="col-sm">
-										<a href="/users/user?uid=${user.uid}">${user.name.ja}</a>
+									<div class="col-auto">
+										<div id="profilePhoto"><img class="border rounded img-thumbnai" src="${photoURLString}" width="50"></div>
 									</div>
-									<div class="col-sm">
-										${roleString}
+									<div class="col">
+										<div class="row">
+											<div class="col-sm">
+												<a href="/users/user?uid=${user.uid}">${user.name.ja}</a>
+											</div>
+											<div class="col-sm">
+												${roleString}
+											</div>
+										</div>
 									</div>
 								</div>
 								

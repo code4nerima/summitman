@@ -13,6 +13,7 @@
 			<div class="row">
 				<div class="col mb-3">
 					<h2>ようこそ <%= userProfile.name.ja %> さん</h2>
+					<div id="profilePhoto"><img class="border rounded img-thumbnai" src="<% if (userProfile.photoURL != undefined) { %><%= userProfile.photoURL %><% } else { %>images/profile.png<% } %>" width="100"></div>
 					<a href="/profile">プロフィール</a>
 				</div>
 			</div>

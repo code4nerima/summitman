@@ -83,18 +83,30 @@
 			}
 
 			function ownerBlock(user) {
+				let photoURLString = user.photoURL ;
+
+				if (photoURLString == null || photoURLString == undefined) {
+					photoURLString = "images/profile.png" ;
+				}
 
 				return `<div class="card my-1">
 							<div class="card-body">
 								<div class="row">
-									<div class="col-sm">
-										${user.name.ja}
+									<div class="col-auto">
+										<div id="profilePhoto"><img class="border rounded img-thumbnai" src="${photoURLString}" width="50"></div>
 									</div>
-									<div class="col-sm">
-										
-									</div>
-									<div class="col-sm">
-										<button type="button" class="btn btn-danger" style="width: 100%;" onclick="onClickRemoveButton('${user.uid}');">削除</button>
+									<div class="col">
+										<div class="row">
+											<div class="col-sm">
+												${user.name.ja}
+											</div>
+											<div class="col-sm">
+												
+											</div>
+											<div class="col-sm">
+												<button type="button" class="btn btn-danger" style="width: 100%;" onclick="onClickRemoveButton('${user.uid}');">削除</button>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -103,18 +115,30 @@
 
 			function userBlock(user) {
 				let roleString = getRoleString(user.role) ;
+				let photoURLString = user.photoURL ;
+
+				if (photoURLString == null || photoURLString == undefined) {
+					photoURLString = "images/profile.png" ;
+				}
 
 				return `<div class="card my-1">
 							<div class="card-body">
 								<div class="row">
-									<div class="col-sm">
-										${user.name.ja}
+									<div class="col-auto">
+										<div id="profilePhoto"><img class="border rounded img-thumbnai" src="${photoURLString}" width="50"></div>
 									</div>
-									<div class="col-sm">
-										${roleString}
-									</div>
-									<div class="col-sm">
-										<button type="button" class="btn btn-primary" style="width: 100%;" onclick="onClickAddButton('${user.uid}');">追加</button>
+									<div class="col">
+										<div class="row">
+											<div class="col-sm">
+												${user.name.ja}
+											</div>
+											<div class="col-sm">
+												${roleString}
+											</div>
+											<div class="col-sm">
+												<button type="button" class="btn btn-primary" style="width: 100%;" onclick="onClickAddButton('${user.uid}');">追加</button>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
