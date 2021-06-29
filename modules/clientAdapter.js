@@ -205,6 +205,55 @@ class clientAdapter {
         return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
+    // operating genre
+    async createGenre(req, data) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "CreateGenre" ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
+    async getGenre(req, genreId) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "GetGenre" ;
+
+        let data = {
+            genreId: genreId,
+        } ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
+    async listGenre(req, start, limit) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "ListGenre" ;
+
+        let data = {
+            start: start,
+            limit: limit,
+        } ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
+    async updateGenre(req, data) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "UpdateGenre" ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
+    async deleteGenre(req, genreId) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "DeleteGenre" ;
+
+        let data = {
+            genreId: genreId,
+        } ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
     async internalFetch(URL, uid, data) {
         let param = {
             method: "POST",

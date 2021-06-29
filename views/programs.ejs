@@ -80,6 +80,16 @@
 
 				let trackName = trackIdMap[program.trackId].name[lang] ;
 
+				let categoryString = "" ;
+
+				if (program.category == 0) {
+					categoryString = "未定" ;
+				} else if (program.category == 1) {
+					categoryString = "セッション" ;
+				} else if (program.category == 2) {
+					categoryString = "ワークショップ" ;
+				}
+
 				return `<div class="card my-3">
 							<div class="card-header h5 fw-bold">
 								<a href="/programs/view?programId=${program.programId}">${program.title[lang]}</a>
@@ -105,7 +115,7 @@
 											<i class="me-2 bi bi-house-door"></i>${trackName}
 										</div>
 										<div class="col-sm">
-											<i class="me-2 bi bi-tags"></i>${program.category}
+											<i class="me-2 bi bi-tags"></i>${categoryString}
 										</div>
 									</div>
 								</li>

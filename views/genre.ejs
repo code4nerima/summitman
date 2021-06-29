@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ja">
+	<head>
+		<%- include('parts/head', {title: 'ジャンル設定'}) %>
+	</head>
+	<body>
+		<%- include('parts/navbar', {}) %>
+
+		<div class="container p-2">
+
+			<h1 class="mb-5">ジャンル設定</h1>
+
+			<div class="my-3">
+				<a class="btn btn-primary" style="width: 130px;" href="/genre/edit">新規作成</a>
+			</div>
+
+			<div class="d-grid gap-2 d-md-block">
+				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("ja", 0);'>日本語</a>
+				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("en", 0);'>英語</a>
+				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("zh-TW", 0);'>繁体中国語</a>
+				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("zh-CN", 0);'>簡体中国語</a>
+			</div>
+
+			<div id="genres"></div>
+		</div>
+		<script>
+			$(function () {
+				reloadRequest("ja", 0) ;
+			}) ;
+
+			async function reloadRequest(lang, page) {
+				
+				let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>' ;
+				
+				$("#genres").empty() ;
+				$("#genres").append(spinner) ;
+				$("#pagenation").empty() ;
+				
+				let data = await fetch("/genre/data?page=" + page).then(response => response.json()) ;
+				
+				$("#genres").empty() ;
+				$("#pagenation").empty() ;
+				
+				for (let key in data.genres) {
+					let genre = data.genres[key] ;
+					$("#genres").append(genreBlock(lang, genre)) ;
+				}
+
+				let ul = $('<ul class="pagination">') ;
+
+				ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(0);">最初</a></li>') ;
+
+				for (let i=0; i<data.pageCount; i++) {
+					if (i == data.page) {
+						ul.append('<li class="page-item active"><a class="page-link" onclick="reloadRequest(' + i + ');">' + (i + 1) +'</a></li>') ;
+					} else {
+						ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(' + i + ');">' + (i + 1) +'</a></li>') ;
+					}
+				}
+
+				ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(' + (data.pageCount - 1) + ');">最後</a></li>') ;
+
+				$("#pagenation").append('<nav aria-label="Page navigation example">')
+					.append('<ul class="pagination">').append(ul) ;
+			}
+
+			function genreBlock(lang, genre) {
+
+				return `<div class="card my-3">
+							<div class="card-body">
+								<div class="row">
+									<div class="col">
+										<a href="/genre/edit?genreId=${genre.genreId}">${genre.name[lang]}</a>
+									</div>
+									<div class="col-auto">
+										<button type="button" class="btn btn-danger" style="width: 130px;" onclick="onClickDeleteGenreButton('${genre.genreId}')">削除</button>
+									</div>
+								</div>								
+							</div>
+						</div>` ;
+			}
+
+			async function onClickDeleteGenreButton(genreId) {
+				await fetch("/genre/delete?genreId=" + genreId).then(response => response.json()) ;
+
+				reloadRequest("ja", 0) ;
+			}
+
+		</script>
+	</body>
+</html>

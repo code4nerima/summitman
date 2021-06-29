@@ -65,13 +65,37 @@ router.get('/edit', wrap(async function(req, res, next) {
         
         program = recv.data ;
         program.programId = req.query.programId ;
+
+        /*
+        let genreIds = [] ;
+
+        for (let key in program.genres) {
+            let genre = program.genres[key] ;
+
+            genreIds.push(genre.genreId) ;
+        }
+
+        program.genreIds = genreIds ;
+        */
     }
 
-    let recv = await clientAdapter.listTrack(req, 0, -1) ;
+    let tracks = [] ;
+    let genres = [] ;
+    
+    {
+        let recv = await clientAdapter.listTrack(req, 0, -1) ;
+        tracks = recv.data.tracks ;
+    }
+
+    {
+        let recv = await clientAdapter.listGenre(req, 0, -1) ;
+        genres = recv.data.genres ;
+    }
 
     res.render('programEdit', {
         program: program,
-        tracks: recv.data.tracks,
+        tracks: tracks,
+        genres: genres,
     });	
 })) ;
 
@@ -95,7 +119,7 @@ router.post('/edit', wrap(async function(req, res, next) {
         endTime: req.body.endTime,
         trackId: req.body.trackId,
         category: req.body.category,
-        genre: req.body.genre,
+        genreIds: req.body.genreIds,
         description: {
             "ja": req.body.ja_description,
             "en": req.body.en_description,
@@ -149,6 +173,40 @@ router.get('/view', wrap(async function(req, res, next) {
     }
 
     program.trackName = trackIdMap[program.trackId].name ;
+
+    let genreIdMap = {} ;
+
+    {
+        let recv = await clientAdapter.listGenre(req, 0, -1) ;
+
+        for (let key in recv.data.genres) {
+            let genre = recv.data.genres[key] ;
+
+            genreIdMap[genre.trackId] = genre ;
+        }
+    }
+
+    program.genreName = {
+        "ja": "",
+        "en": "",
+        "zh-TW": "",
+        "zh-CN": "",
+    } ;
+
+    for (let key in program.genreIds) {
+        let genreId = program.genreIds[key] ;
+        let genre = genreIdMap[genreId] ;
+
+        program.genreName["ja"] += genre.name["ja"] + " " ;
+        program.genreName["en"] += genre.name["en"] + " " ;
+        program.genreName["zh-TW"] += genre.name["zh-TW"] + " " ;
+        program.genreName["zh-CN"] += genre.name["zh-CN"] + " " ;
+    }
+
+    program.genreName["ja"] = program.genreName["ja"].trim() ;
+    program.genreName["en"] = program.genreName["en"].trim() ;
+    program.genreName["zh-TW"] = program.genreName["zh-TW"].trim() ;
+    program.genreName["zh-CN"] = program.genreName["zh-CN"].trim() ;
 
     let currentUser = req.session.user ;
 

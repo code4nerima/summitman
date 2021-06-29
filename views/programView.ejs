@@ -60,6 +60,8 @@
 					<li class="list-group-item">
 						<div class="row">
 							<div class="col-sm">
+							</div>
+							<div class="col-sm">
 								<i class="me-2 bi bi-tags"></i>
 								<% if (program.category == 0) {%>
 									未定
@@ -68,16 +70,6 @@
 								<% } else if (program.category == 2) { %>
 									ワークショップ
 								<% } %>
-							</div>
-							<div class="col-sm">
-								
-							</div>
-						</div>
-					</li>
-					<li class="list-group-item">
-						<div class="row">
-							<div class="col-sm">
-								<%= program.genre %>
 							</div>
 						</div>
 					</li>
@@ -90,6 +82,15 @@
 					<li class="list-group-item"><i class="me-2 bi bi-house-door"></i><%= program.trackName.en %></li>
 					<li class="list-group-item"><i class="me-2 bi bi-house-door"></i><%= program.trackName["zh-TW"] %></li>
 					<li class="list-group-item"><i class="me-2 bi bi-house-door"></i><%= program.trackName["zh-CN"] %></li>
+				</ul>
+				<div class="card-header h5 fw-bold">
+					ジャンル
+				</div>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item"><i class="me-2 bi bi-collection"></i><%= program.genreName.ja %></li>
+					<li class="list-group-item"><i class="me-2 bi bi-collection"></i><%= program.genreName.en %></li>
+					<li class="list-group-item"><i class="me-2 bi bi-collection"></i><%= program.genreName["zh-TW"] %></li>
+					<li class="list-group-item"><i class="me-2 bi bi-collection"></i><%= program.genreName["zh-CN"] %></li>
 				</ul>
 			</div>
 

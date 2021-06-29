@@ -15,6 +15,7 @@ var programOwnersRouter = require('./routes/programOwners');
 var programPresentersRouter = require('./routes/programPresenters');
 var programMembersRouter = require('./routes/programMembers');
 var graphigRecordingsRouter = require('./routes/graphigRecordings');
+var genreRouter = require('./routes/genre');
 
 var app = express();
 
@@ -52,6 +53,7 @@ app.use('/programOwners', programOwnersRouter);
 app.use('/programPresenters', programPresentersRouter);
 app.use('/programMembers', programMembersRouter);
 app.use('/graphigRecordings', graphigRecordingsRouter);
+app.use('/genre', genreRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
