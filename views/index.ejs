@@ -27,8 +27,20 @@
 			<% } %>
 			<div class="row">
 				<div class="col mb-3">
-					<h2>あなたの担当プログラム</h2>
-					<div id="programs"></div>
+					<h2>あなたが申請したプログラム</h2>
+					<div id="submittedPrograms"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col mb-3">
+					<h2>あなたのオーナーのプログラム</h2>
+					<div id="ownerOfPrograms"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col mb-3">
+					<h2>スタッフとして加わるプログラム</h2>
+					<div id="memberOfPrograms"></div>
 				</div>
 			</div>
 		</div>
@@ -42,18 +54,30 @@
 				
 				let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>' ;
 				
-				$("#programs").empty() ;
-				$("#programs").append(spinner) ;
+				$("#submittedPrograms").empty() ;
+				$("#submittedPrograms").append(spinner) ;
+				$("#ownerOfPrograms").empty() ;
+				$("#ownerOfPrograms").append(spinner) ;
+				$("#memberOfPrograms").empty() ;
+				$("#memberOfPrograms").append(spinner) ;
+
 				$("#pagenation").empty() ;
 				
 				let data = await fetch("/data?page=" + page).then(response => response.json()) ;
 				
-				$("#programs").empty() ;
+				$("#submittedPrograms").empty() ;
+				$("#ownerOfPrograms").empty() ;
+				$("#memberOfPrograms").empty() ;
 				$("#pagenation").empty() ;
 				
-				for (let key in data.programs) {
-					let program = data.programs[key] ;
-					$("#programs").append(programBlock(lang, program, data.trackIdMap)) ;
+				for (let key in data.ownerOfPrograms) {
+					let program = data.ownerOfPrograms[key] ;
+					$("#ownerOfPrograms").append(programBlock(lang, program, data.trackIdMap)) ;
+				}
+
+				for (let key in data.memberOfPrograms) {
+					let program = data.memberOfPrograms[key] ;
+					$("#memberOfPrograms").append(programBlock(lang, program, data.trackIdMap)) ;
 				}
 
 				let ul = $('<ul class="pagination">') ;

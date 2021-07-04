@@ -57,7 +57,8 @@ router.get('/edit', wrap(async function(req, res, next) {
 
     let program = {
         title: {},
-        description: {}
+        description: {},
+        genreIds: [],
     } ;
 
     if (req.query.programId != undefined) {
@@ -65,18 +66,6 @@ router.get('/edit', wrap(async function(req, res, next) {
         
         program = recv.data ;
         program.programId = req.query.programId ;
-
-        /*
-        let genreIds = [] ;
-
-        for (let key in program.genres) {
-            let genre = program.genres[key] ;
-
-            genreIds.push(genre.genreId) ;
-        }
-
-        program.genreIds = genreIds ;
-        */
     }
 
     let tracks = [] ;
@@ -182,7 +171,7 @@ router.get('/view', wrap(async function(req, res, next) {
         for (let key in recv.data.genres) {
             let genre = recv.data.genres[key] ;
 
-            genreIdMap[genre.trackId] = genre ;
+            genreIdMap[genre.genreId] = genre ;
         }
     }
 

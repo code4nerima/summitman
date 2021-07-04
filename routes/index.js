@@ -85,17 +85,16 @@ router.get('/data', wrap(async function(req, res, next) {
 		
 	}
 
-    let recv = await clientAdapter.listProgram(
+    let recv = await clientAdapter.listRelatedProgram(
 		req, 
-		0, 
-		-1, 
 		currentUser.uid, 
 		currentUser.uid,
 		firebaseUser.email) ;
 
     let data = {
         lang: req.query.lang == undefined ? 'ja' : req.query.lang,
-        programs: recv.data.programs,
+		ownerOfPrograms: recv.data.ownerOfPrograms,
+        memberOfPrograms: recv.data.memberOfPrograms,
         trackIdMap: trackIdMap,
     } ;
 
