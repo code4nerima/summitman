@@ -93,6 +93,7 @@ router.get('/data', wrap(async function(req, res, next) {
 
     let data = {
         lang: req.query.lang == undefined ? 'ja' : req.query.lang,
+		submittedPrograms: recv.data.submittedPrograms,
 		ownerOfPrograms: recv.data.ownerOfPrograms,
         memberOfPrograms: recv.data.memberOfPrograms,
         trackIdMap: trackIdMap,
