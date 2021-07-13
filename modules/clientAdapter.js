@@ -264,6 +264,59 @@ class clientAdapter {
         return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
+    // operating presenter
+    async createPresenter(req, programId, data) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "CreatePresenter" ;
+
+        data.programId = programId ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
+    async getPresenter(req, presenterId) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "GetPresenter" ;
+
+        let data = {
+            presenterId: presenterId,
+        } ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
+    async listPresenter(req, start, limit) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "ListPresenter" ;
+
+        let data = {
+            start: start,
+            limit: limit,
+        } ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
+    async updatePresenter(req, programId, data) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "UpdatePresenter" ;
+
+        data.programId = programId ;
+        
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
+    async deletePresenter(req, presenterId) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "DeletePresenter" ;
+
+        let data = {
+            presenterId: presenterId,
+        } ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
     async internalFetch(URL, uid, data) {
         let param = {
             method: "POST",

@@ -13,35 +13,80 @@ router.get('/', wrap(async function(req, res, next) {
         return ;
     }
 
-    res.render('programPresenters', {programId: req.query.programId});		 
+    res.render('presenters', {programId: req.query.programId});		 
 })) ;
 
 router.get('/data', wrap(async function(req, res, next) {
 
-    let presenters = [] ;
+    let recv = await clientAdapter.listPresenter(req, 0, -1) ;
 
-    /*
-    {
-        let recv = await clientAdapter.getProgramPresenters(req, req.query.programId) ;
-
-        presenters = recv.data.presenters ;
-    }
-    */
-   
     let data = {
-        presenters: presenters ,
+        presenters: recv.data.presenters
     } ;
-
+    
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(data));
 })) ;
 
-router.get('/add', wrap(async function(req, res, next) {
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify({}));
+router.get('/edit', wrap(async function(req, res, next) {
+    let result = await firebaseSession.enter(req, res) ;
+
+    if (result != 0) {
+        res.redirect('/signin');
+        return ;
+    }
+
+    let presenter = {
+        name: {},
+    } ;
+
+    if (req.query.presenterId != undefined) {
+        let recv = await clientAdapter.getPresenter(req, req.query.presenterId) ;
+        
+        presenter = recv.data ;
+        presenter.presenterId = req.query.presenterId ;
+    }
+
+    res.render('presenterEdit', {
+        programId: req.query.programId,
+        presenter: presenter,
+    });		 
 })) ;
 
-router.get('/remove', wrap(async function(req, res, next) {
+router.post('/edit', wrap(async function(req, res, next) {
+    let result = await firebaseSession.enter(req, res) ;
+
+    if (result != 0) {
+        res.redirect('/signin');
+        return ;
+    }
+
+    let presenter = {
+        name: {
+            "ja": req.body.ja_name,
+            "en": req.body.en_name,
+            "zh-TW": req.body['zh-TW_name'],
+            "zh-CN": req.body['zh-CN_name'],
+        },
+    } ;
+
+    let programId = req.body.programId ;
+
+    if (req.body.presentersId != undefined) {
+        presenter.presenterId = req.body.presenterId ;
+
+        clientAdapter.updatePresenter(req, programId, presenter) ;
+    } else {
+        clientAdapter.createPresenter(req, programId, presenter) ;
+    }
+
+    res.redirect('/programPresenters');
+})) ;
+
+router.get('/delete', wrap(async function(req, res, next) {
+
+    let recv = await clientAdapter.deletePresenter(req, req.query.presenterId) ;
+    
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify({}));
 })) ;

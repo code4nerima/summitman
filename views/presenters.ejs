@@ -9,10 +9,83 @@
 		<div class="container p-2">
 
 			<h1 class="mb-5">登壇者登録</h1>
-		
+
 			<div class="my-3">
-				<button type="button" class="btn btn-danger" style="width: 130px;" onclick="window.history.back(-1);return false;">戻る</button>
+				<a class="btn btn-primary" style="width: 130px;" href="/programPresenters/edit?programId=<%= programId %>">新規作成</a>
 			</div>
+
+			<div class="d-grid gap-2 d-md-block">
+				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("ja", 0);'>日本語</a>
+				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("en", 0);'>英語</a>
+				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("zh-TW", 0);'>繁体中国語</a>
+				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("zh-CN", 0);'>簡体中国語</a>
+			</div>
+
+			<div id="presenters"></div>
 		</div>
+		<script>
+			$(function () {
+				reloadRequest("ja", 0) ;
+			}) ;
+
+			async function reloadRequest(lang, page) {
+				
+				let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>' ;
+				
+				$("#presenters").empty() ;
+				$("#presenters").append(spinner) ;
+				$("#pagenation").empty() ;
+				
+				let data = await fetch("/programPresenters/data?page=" + page).then(response => response.json()) ;
+				
+				$("#presenters").empty() ;
+				$("#pagenation").empty() ;
+				
+				for (let key in data.presenters) {
+					let presenters = data.presenters[key] ;
+					$("#presenters").append(presentersBlock(lang, presenters)) ;
+				}
+
+				let ul = $('<ul class="pagination">') ;
+
+				ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(0);">最初</a></li>') ;
+
+				for (let i=0; i<data.pageCount; i++) {
+					if (i == data.page) {
+						ul.append('<li class="page-item active"><a class="page-link" onclick="reloadRequest(' + i + ');">' + (i + 1) +'</a></li>') ;
+					} else {
+						ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(' + i + ');">' + (i + 1) +'</a></li>') ;
+					}
+				}
+
+				ul.append('<li class="page-item"><a class="page-link" onclick="reloadRequest(' + (data.pageCount - 1) + ');">最後</a></li>') ;
+
+				$("#pagenation").append('<nav aria-label="Page navigation example">')
+					.append('<ul class="pagination">').append(ul) ;
+			}
+
+			function presentersBlock(lang, presenters) {
+
+				return `<div class="card my-3">
+							<div class="card-body">
+								<div class="row">
+									<div class="col">
+										<a href="/presenters/edit?presentersId=${presenters.presentersId}">${presenters.name[lang]}</a>
+									</div>
+									<div class="col-auto">
+										<button type="button" class="btn btn-danger" style="width: 130px;" onclick="onClickDeletepresentersButton('${presenters.presentersId}')">削除</button>
+									</div>
+								</div>								
+							</div>
+						</div>` ;
+			}
+
+			async function onClickDeletepresentersButton(presentersId) {
+				await fetch("/presenters/delete?presentersId=" + presentersId).then(response => response.json()) ;
+
+				reloadRequest("ja", 0) ;
+			}
+
+		</script>
 	</body>
 </html>
