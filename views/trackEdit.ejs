@@ -20,6 +20,7 @@
 				<h1 class="mb-5">トラック作成</h1>
 			<% } %>
 			<form method="POST" action="/tracks/edit">
+				<h2>名前</h2>
 				<div class="row mb-3">
 					<div class="col-sm">
 						<label for="name" class="form-label">名前（日本語）<span class="badge bg-danger">必須</span></label>
@@ -41,9 +42,9 @@
 					</div>
 				</div>
 
+				<h2>Zoomミーティング情報</h2>
 				<div class="row">
 					<div class="col-sm">
-						<label class="form-label h3">Zoomミーティング情報</label>
 						<div class="mb-3">
 							<label for="meetingURL" class="form-label">招待リンク</label>
 							<input type="text" class="form-control" id="meetingURL" name="meetingURL" value="<%= track.meetingURL %>">
@@ -59,9 +60,9 @@
 					</div>
 				</div>
 				
+				<h2>カスタムストリーミングサービスを設定</h2>
 				<div class="row">
 					<div class="col-sm">
-						<label class="form-label h3">カスタムストリーミングサービスを設定</label>
 						<div class="mb-3">
 							<label for="streamURL" class="form-label">ストリームURL</label>
 							<input type="text" class="form-control" id="streamURL" name="streamURL" value="<%= track.streamURL %>">
@@ -78,9 +79,9 @@
 					</div>
 				</div>
 
+				<h2>その他</h2>
 				<div class="row">
 					<div class="col-sm">
-						<label class="form-label h3">その他</label>
 						<div class="mb-3">
 							<label for="station" class="form-label">担当拠点</label>
 							<input type="text" class="form-control" id="station" name="station" value="<%= track.station %>">

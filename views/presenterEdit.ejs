@@ -19,7 +19,9 @@
 			<% } else { %>
 				<h1 class="mb-5">登壇者作成</h1>
 			<% } %>
+			
 			<form method="POST" action="/programPresenters/edit">
+				<h2>名前</h2>
 				<div class="row mb-3">
 					<div class="col-sm">
 						<label for="name" class="form-label">名前（日本語）<span class="badge bg-danger">必須</span></label>
@@ -27,9 +29,8 @@
 					</div>
 					<div class="col-sm">
 						<label for="name" class="form-label">名前（ふりがな）<span class="badge bg-danger">必須</span></label>
-						<input maxlength="50" required type="text" class="form-control" id="ja_name" name="ja_name" value="<%= presenter.name['kana'] %>">
+						<input maxlength="50" required type="text" class="form-control" id="ja_name_kana" name="ja_name_kana" value="<%= presenter.name['ja_kana'] %>">
 					</div>
-					
 				</div>
 				<div class="row mb-3">
 					<div class="col-sm">
@@ -44,6 +45,53 @@
 						<label for="name" class="form-label">名前（簡体中国語）</label>
 						<input maxlength="50" type="text" class="form-control" id="zh-CN_name" name="zh-CN_name" value="<%= presenter.name['zh-CN'] %>">
 					</div>
+				</div>
+
+				<h2>所属</h2>
+				<div class="row row-cols-1 row-cols-md-2 g-2 mb-3">
+					<div class="col-sm">
+						<label for="name" class="form-label">所属（日本語）</label>
+						<input maxlength="50" type="text" class="form-control" id="ja_organization" name="ja_organization" value="<%= presenter.organization['ja'] %>">
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label">所属（英語）</label>
+						<input maxlength="50" type="text" class="form-control" id="en_organization" name="en_organization" value="<%= presenter.organization['en'] %>">
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label">所属（繁体中国語）</label>
+						<input maxlength="50" type="text" class="form-control" id="zh-TW_organization" name="zh-TW_organization" value="<%= presenter.organization['zh-TW'] %>">
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label">所属（簡体中国語）</label>
+						<input maxlength="50" type="text" class="form-control" id="zh-CN_organization" name="zh-CN_organization" value="<%= presenter.organization['zh-CN'] %>">
+					</div>
+				</div>
+
+				<h2>プロフィール</h2>
+				<div class="row row-cols-1 row-cols-md-2 g-2 mb-3">
+					<div class="col-sm">
+						<label for="ja_description" class="form-label">プロフィール（日本語）</label>
+						<textarea maxlength="1000" class="form-control" style="height: 300px;" id="ja_description" name="ja_description" placeholder=""><%= presenter.description["ja"] %></textarea>
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label">プロフィール（英語）</label>
+						<textarea maxlength="1000" class="form-control" style="height: 300px;" id="en_description" name="en_description" placeholder=""><%= presenter.description["en"] %></textarea>
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label">プロフィール（繁体中国語）</label>
+						<textarea maxlength="1000" class="form-control" style="height: 300px;" id="zh-TW_description" name="zh-TW_description" placeholder=""><%= presenter.description["zh-TW"] %></textarea>
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label">プロフィール（簡体中国語）</label>
+						<textarea maxlength="1000" class="form-control" style="height: 300px;" id="zh-CN_description" name="zh-CN_description" placeholder=""><%= presenter.description["zh-CN"] %></textarea>
+					</div>
+				</div>
+
+				<h2>その他</h2>
+				<div class="row row-cols-1 row-cols-md-2 g-2 mb-3">
+					<label for="name" class="form-label">並び順</label>
+					<input maxlength="50" type="number" class="form-control" id="sortOrder" name="sortOrder" value="<%= presenter.sortOrder %>">
+					<label class="form-label small">0から始まる並び順です。同じ番号のときはふりがな順に並びます。</label>
 				</div>
 
 				<input type="hidden" name="programId" value="<%= programId %>">

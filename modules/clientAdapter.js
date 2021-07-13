@@ -274,22 +274,24 @@ class clientAdapter {
         return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
-    async getPresenter(req, presenterId) {
+    async getPresenter(req, programId, presenterId) {
         let currentUser = req.session.user ;
         let URL = this._URL + "GetPresenter" ;
 
         let data = {
+            programId: programId,
             presenterId: presenterId,
         } ;
 
         return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
-    async listPresenter(req, start, limit) {
+    async listPresenter(req, programId, start, limit) {
         let currentUser = req.session.user ;
         let URL = this._URL + "ListPresenter" ;
 
         let data = {
+            programId: programId,
             start: start,
             limit: limit,
         } ;
@@ -306,11 +308,12 @@ class clientAdapter {
         return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
-    async deletePresenter(req, presenterId) {
+    async deletePresenter(req, programId, presenterId) {
         let currentUser = req.session.user ;
         let URL = this._URL + "DeletePresenter" ;
 
         let data = {
+            programId: programId,
             presenterId: presenterId,
         } ;
 

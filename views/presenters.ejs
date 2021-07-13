@@ -36,7 +36,7 @@
 				$("#presenters").append(spinner) ;
 				$("#pagenation").empty() ;
 				
-				let data = await fetch("/programPresenters/data?page=" + page).then(response => response.json()) ;
+				let data = await fetch("/programPresenters/data?programId=<%= programId %>&page=" + page).then(response => response.json()) ;
 				
 				$("#presenters").empty() ;
 				$("#pagenation").empty() ;
@@ -64,24 +64,24 @@
 					.append('<ul class="pagination">').append(ul) ;
 			}
 
-			function presentersBlock(lang, presenters) {
+			function presentersBlock(lang, presenter) {
 
 				return `<div class="card my-3">
 							<div class="card-body">
 								<div class="row">
 									<div class="col">
-										<a href="/presenters/edit?presentersId=${presenters.presentersId}">${presenters.name[lang]}</a>
+										<a href="/programPresenters/edit?presenterId=${presenter.presenterId}&programId=<%= programId %>">${presenter.name[lang]}</a>
 									</div>
 									<div class="col-auto">
-										<button type="button" class="btn btn-danger" style="width: 130px;" onclick="onClickDeletepresentersButton('${presenters.presentersId}')">削除</button>
+										<button type="button" class="btn btn-danger" style="width: 130px;" onclick="onClickDeletepresentersButton('${presenter.presenterId}')">削除</button>
 									</div>
 								</div>								
 							</div>
 						</div>` ;
 			}
 
-			async function onClickDeletepresentersButton(presentersId) {
-				await fetch("/presenters/delete?presentersId=" + presentersId).then(response => response.json()) ;
+			async function onClickDeletepresentersButton(presenterId) {
+				await fetch("/programPresenters/delete?presenterId=" + presenterId + "&programId=<%= programId %>").then(response => response.json()) ;
 
 				reloadRequest("ja", 0) ;
 			}
