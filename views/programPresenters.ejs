@@ -9,22 +9,30 @@
 		<div class="container p-2">
 
 			<h1 class="mb-5">登壇者登録</h1>
-			<h2>登壇者一覧</h2>
-			<div id="presenters"></div>
-
-			<hr />
 
 			<div class="my-3">
-				<button type="button" class="btn btn-danger" style="width: 130px;" onclick="window.history.back(-1);return false;">戻る</button>
+				<a href="/programs/edit?programId=<%= programId %>">プログラムの編集に戻る</a>
 			</div>
-		</div>
 
+			<div class="my-3">
+				<a class="btn btn-primary" style="width: 130px;" href="/programPresenters/edit?programId=<%= programId %>">新規作成</a>
+			</div>
+
+			<div class="d-grid gap-2 d-md-block">
+				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("ja", 0);'>日本語</a>
+				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("en", 0);'>英語</a>
+				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("zh-TW", 0);'>繁体中国語</a>
+				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("zh-CN", 0);'>簡体中国語</a>
+			</div>
+
+			<div id="presenters"></div>
+		</div>
 		<script>
 			$(function () {
-				reloadRequest("<%= programId %>") ;
+				reloadRequest("ja", 0) ;
 			}) ;
 
-			async function reloadRequest(programId) {
+			async function reloadRequest(lang, page) {
 				
 				let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>' ;
 				
@@ -32,14 +40,14 @@
 				$("#presenters").append(spinner) ;
 				$("#pagenation").empty() ;
 				
-				let data = await fetch("/programMembers/data?programId=" + programId).then(response => response.json()) ;
+				let data = await fetch("/programPresenters/data?programId=<%= programId %>&page=" + page).then(response => response.json()) ;
 				
 				$("#presenters").empty() ;
 				$("#pagenation").empty() ;
 				
 				for (let key in data.presenters) {
-					let presenter = data.presenters[key] ;
-					$("#presenters").append(presenterBlock(presenter)) ;
+					let presenters = data.presenters[key] ;
+					$("#presenters").append(presentersBlock(lang, presenters)) ;
 				}
 
 				let ul = $('<ul class="pagination">') ;
@@ -60,36 +68,37 @@
 					.append('<ul class="pagination">').append(ul) ;
 			}
 
-			async function onClickRemoveButton(uid) {
-				let data = await fetch("/programMembers/remove?uid=" + uid + "&programId=<%= programId %>").then(response => response.json()) ;
-				
-				reloadRequest("<%= programId %>") ;
-			}
+			function presentersBlock(lang, presenter) {
 
-			async function onClickAddButton(uid) {
-				let data = await fetch("/programMembers/add?uid=" + uid + "&programId=<%= programId %>").then(response => response.json()) ;
-				
-				reloadRequest("<%= programId %>") ;
-			}
+				let photoURLString = presenter.photoURL ;
 
-			function presenterBlock(user) {
+				if (photoURLString == "" || photoURLString == undefined) {
+					photoURLString = "images/profile.png" ;
+				}
 
-				return `<div class="card my-1">
+				return `<div class="card my-3">
 							<div class="card-body">
 								<div class="row">
-									<div class="col-sm">
-										${user.name.ja}
+									<div class="col-auto">
+										<div id="profilePhoto"><img class="border rounded img-thumbnai" src="${photoURLString}" width="50"></div>
 									</div>
-									<div class="col-sm">
-										
+									<div class="col">
+										<a href="/programPresenters/edit?presenterId=${presenter.presenterId}&programId=<%= programId %>">${presenter.name[lang]}</a>
 									</div>
-									<div class="col-sm">
-										<button type="button" class="btn btn-danger" style="width: 100%;" onclick="onClickRemoveButton('${user.uid}');">削除</button>
+									<div class="col-auto">
+										<button type="button" class="btn btn-danger" style="width: 130px;" onclick="onClickDeletepresentersButton('${presenter.presenterId}')">削除</button>
 									</div>
-								</div>
+								</div>								
 							</div>
-						</div>` ;				
+						</div>` ;
 			}
+
+			async function onClickDeletepresentersButton(presenterId) {
+				await fetch("/programPresenters/delete?presenterId=" + presenterId + "&programId=<%= programId %>").then(response => response.json()) ;
+
+				reloadRequest("ja", 0) ;
+			}
+
 		</script>
 	</body>
 </html>

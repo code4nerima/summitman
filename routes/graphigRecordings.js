@@ -13,7 +13,9 @@ router.get('/', wrap(async function(req, res, next) {
         return ;
     }
 
-    res.render('graphigRecordings', {});		 
+    let programId = req.query.programId ;
+
+    res.render('graphigRecordings', {programId: programId});		 
 })) ;
 
 module.exports = router;

@@ -19,7 +19,7 @@ router.get('/', wrap(async function(req, res, next) {
 
     let programId = req.query.programId ;
 
-    res.render('presenters', {programId: programId});		 
+    res.render('programPresenters', {programId: programId});		 
 })) ;
 
 router.get('/data', wrap(async function(req, res, next) {
