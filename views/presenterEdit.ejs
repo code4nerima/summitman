@@ -20,6 +20,75 @@
 				<h1 class="mb-5">登壇者作成</h1>
 			<% } %>
 			
+			<% if (presenter.presenterId != undefined) { %>
+				<h2>プロフィール画像</h2>
+				<div class="row py-1">
+					<div class="col">
+						<% if (presenter.photoURL == '') { %>
+							<div id="profilePhoto"><img class="border rounded img-thumbnai" src="../images/profile.png" width="200"></div>
+						<% } else { %>
+							<div id="profilePhoto"><img class="border rounded img-thumbnai" src="<%= presenter.photoURL %>" width="200"></div>
+						<% } %>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col">
+						<form id="photo">
+							<input type="hidden" name="programId" value="<%= presenter.programId %>">
+							<input type="hidden" name="presenterId" value="<%= presenter.presenterId %>">
+							<input type="file" class="form-control" id="file" name="file" accept="image/*" onchange="changeFile(this);" aria-describedby="fileHelp">
+							<label class="form-label small">ファイルサイズは1MB以内の画像を選択してください。</label>
+						</form>
+					</div>
+					<div class="col-auto">
+						<button type="button" id="photoDeleteButton" class="btn btn-danger">削除</button>
+					</div>
+				</div>
+				<script>
+					$(window).on('load', async () => {
+						$('#photoDeleteButton').on('click', () => {
+							$('#photoDeleteButton').prop('disabled', true);
+		
+							fetch("/programPresenters/photoDelete?programId=<%= presenter.programId %>&presenterId=<%= presenter.presenterId %>")
+								.then(response => response.json())
+								.then(data => {
+									$('#profilePhoto').empty() ;
+									$('#profilePhoto').append('<img class="border rounded img-thumbnai" src="../images/profile.png" width="200">') ;
+									$('#photoDeleteButton').prop('disabled', false);
+								});
+						}) ;
+					}) ;
+		
+					function changeFile(obj) {
+						var fileList = $('#file').get(0).files;
+		
+						for (let key in fileList) {
+							let file = fileList[key] ;
+		
+							if (file.size > 1024 * 1024) {
+								alert("ファイルサイズは1MB以内のものを選んでください") ;
+								return ;
+							}
+						}
+		
+						const formData = new FormData($('#photo').get(0));
+		
+						const param = {
+							method: "POST",
+							body: formData
+						}
+		
+						fetch("/programPresenters/photo", param)
+							.then(response => response.json())
+							.then(data => {
+								$('#profilePhoto').empty() ;
+								$('#profilePhoto').append('<img class="border rounded img-thumbnai" src="' + data["publicUrl"] + '" width="200">') 
+								$('#photoDeleteButton').prop('disabled', false);
+							});
+					}
+				</script>
+			<% } %>
+
 			<form method="POST" action="/programPresenters/edit">
 				<h2>名前</h2>
 				<div class="row mb-3">
@@ -97,7 +166,7 @@
 				<input type="hidden" name="programId" value="<%= programId %>">
 
 				<% if (presenter.presenterId != undefined) { %>
-					<input type="hidden" name="trackId" value="<%= presenter.presenterId %>">
+					<input type="hidden" name="presenterId" value="<%= presenter.presenterId %>">
 				<% } %>
 				<div class="mb-3">
 					<% if (presenter.presenterId != undefined) { %>

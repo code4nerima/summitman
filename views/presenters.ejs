@@ -66,9 +66,18 @@
 
 			function presentersBlock(lang, presenter) {
 
+				let photoURLString = presenter.photoURL ;
+
+				if (photoURLString == "" || photoURLString == undefined) {
+					photoURLString = "images/profile.png" ;
+				}
+
 				return `<div class="card my-3">
 							<div class="card-body">
 								<div class="row">
+									<div class="col-auto">
+										<div id="profilePhoto"><img class="border rounded img-thumbnai" src="${photoURLString}" width="50"></div>
+									</div>
 									<div class="col">
 										<a href="/programPresenters/edit?presenterId=${presenter.presenterId}&programId=<%= programId %>">${presenter.name[lang]}</a>
 									</div>

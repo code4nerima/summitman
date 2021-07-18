@@ -85,7 +85,7 @@
 			function memberBlock(user) {
 				let photoURLString = user.photoURL ;
 
-				if (photoURLString == null || photoURLString == undefined) {
+				if (photoURLString == "" || photoURLString == undefined) {
 					photoURLString = "images/profile.png" ;
 				}
 
@@ -117,7 +117,7 @@
 				let roleString = getRoleString(user.role) ;
 				let photoURLString = user.photoURL ;
 
-				if (photoURLString == null || photoURLString == undefined) {
+				if (photoURLString == "" || photoURLString == undefined) {
 					photoURLString = "images/profile.png" ;
 				}
 
