@@ -123,6 +123,7 @@ router.post('/edit', wrap(async function(req, res, next) {
             "zh-TW": req.body['zh-TW_description'],
             "zh-CN": req.body['zh-CN_description'],
         },
+        email: req.body.email,
     } ;
 
     if (req.body.programId != undefined) {
@@ -194,10 +195,10 @@ router.get('/view', wrap(async function(req, res, next) {
         let genreId = program.genreIds[key] ;
         let genre = genreIdMap[genreId] ;
 
-        program.genreName["ja"] += genre.name["ja"] + " " ;
-        program.genreName["en"] += genre.name["en"] + " " ;
-        program.genreName["zh-TW"] += genre.name["zh-TW"] + " " ;
-        program.genreName["zh-CN"] += genre.name["zh-CN"] + " " ;
+        program.genreName["ja"] += genre.name["ja"] + ", " ;
+        program.genreName["en"] += genre.name["en"] + ", " ;
+        program.genreName["zh-TW"] += genre.name["zh-TW"] + ", " ;
+        program.genreName["zh-CN"] += genre.name["zh-CN"] + ", " ;
     }
 
     program.genreName["ja"] = program.genreName["ja"].trim() ;
