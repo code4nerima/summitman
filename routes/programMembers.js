@@ -1,5 +1,6 @@
 var express = require('express');
 let clientAdapter = require('../modules/clientAdapter') ;
+let functions = require('../modules/functions') ;
 let firebaseSession = require('../modules/firebase_session.js') ;
 var router = express.Router() ;
 
@@ -13,7 +14,14 @@ router.get('/', wrap(async function(req, res, next) {
         return ;
     }
 
-    res.render('programMembers', {programId: req.query.programId});		 
+    let programId = req.query.programId ;
+
+    if (!await functions.isAccessAvalableToProgram(req, programId)) {
+        res.redirect('/') ;
+        return ;
+    }
+
+    res.render('programMembers', {programId: programId});		 
 })) ;
 
 router.get('/data', wrap(async function(req, res, next) {

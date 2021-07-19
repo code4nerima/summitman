@@ -1,5 +1,6 @@
 var express = require('express');
 let clientAdapter = require('../modules/clientAdapter') ;
+let functions = require('../modules/functions') ;
 let firebaseSession = require('../modules/firebase_session.js') ;
 let admin = require('firebase-admin');
 const multer = require('multer') ;
@@ -18,6 +19,11 @@ router.get('/', wrap(async function(req, res, next) {
     }
 
     let programId = req.query.programId ;
+
+    if (!await functions.isAccessAvalableToProgram(req, programId)) {
+        res.redirect('/') ;
+        return ;
+    }
 
     res.render('programPresenters', {programId: programId});		 
 })) ;
@@ -44,6 +50,12 @@ router.get('/edit', wrap(async function(req, res, next) {
     }
 
     let programId = req.query.programId ;
+
+    if (!await functions.isAccessAvalableToProgram(req, programId)) {
+        res.redirect('/') ;
+        return ;
+    }
+
     let presenterId = req.query.presenterId ;
 
     let presenter = {

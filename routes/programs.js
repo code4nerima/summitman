@@ -1,5 +1,6 @@
 var express = require('express');
 let clientAdapter = require('../modules/clientAdapter') ;
+let functions = require('../modules/functions') ;
 let firebaseSession = require('../modules/firebase_session.js') ;
 var router = express.Router() ;
 
@@ -55,17 +56,24 @@ router.get('/edit', wrap(async function(req, res, next) {
         return ;
     }
 
+    let programId = req.query.programId ;
+
+    if (!await functions.isAccessAvalableToProgram(req, programId)) {
+        res.redirect('/') ;
+        return ;
+    }
+
     let program = {
         title: {},
         description: {},
         genreIds: [],
     } ;
 
-    if (req.query.programId != undefined) {
-        let recv = await clientAdapter.getProgram(req, req.query.programId) ;
+    if (programId != undefined) {
+        let recv = await clientAdapter.getProgram(req, programId) ;
         
         program = recv.data ;
-        program.programId = req.query.programId ;
+        program.programId = programId ;
     }
 
     let tracks = [] ;
@@ -197,14 +205,12 @@ router.get('/view', wrap(async function(req, res, next) {
     program.genreName["zh-TW"] = program.genreName["zh-TW"].trim() ;
     program.genreName["zh-CN"] = program.genreName["zh-CN"].trim() ;
 
-    let currentUser = req.session.user ;
-
-    let currentUserProfile = (await clientAdapter.getUserProfile(req, currentUser.uid)).data ;
+    let editable = await functions.isAccessAvalableToProgram(req, program.programId) ;
 
     res.render('programView', {
         program: program,
         trackIdMap: trackIdMap,
-        editable: currentUserProfile.role >= 1 ? true : false,
+        editable: editable,
     });	
 })) ;
 
