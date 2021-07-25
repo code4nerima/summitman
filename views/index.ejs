@@ -3,7 +3,7 @@
 	<head>
 		<%- include('parts/head', {title: 'トップページ'}) %>
 	</head>
-	<body>
+	<body class="p-2">
 		<%- include('parts/navbar', {}) %>
 
 		<div class="container p-2">
@@ -70,6 +70,11 @@
 				$("#memberOfPrograms").empty() ;
 				$("#pagenation").empty() ;
 				
+				for (let key in data.submittedPrograms) {
+					let program = data.submittedPrograms[key] ;
+					$("#submittedPrograms").append(programBlock(lang, program, data.trackIdMap)) ;
+				}
+
 				for (let key in data.ownerOfPrograms) {
 					let program = data.ownerOfPrograms[key] ;
 					$("#ownerOfPrograms").append(programBlock(lang, program, data.trackIdMap)) ;
