@@ -16,6 +16,7 @@ var programPresentersRouter = require('./routes/programPresenters');
 var programMembersRouter = require('./routes/programMembers');
 var graphigRecordingsRouter = require('./routes/graphigRecordings');
 var genreRouter = require('./routes/genre');
+var localeChangeRouter = require('./routes/localChange');
 
 var app = express();
 
@@ -29,6 +30,29 @@ var session_opt = {
 } ;
 
 app.use(session(session_opt)) ;
+
+var i18n = require("i18n");
+ 
+// 多言語化の利用設定
+i18n.configure({
+  // 利用するlocalesを設定。これが辞書ファイルとひも付きます
+  locales: ['ja', 'en', 'zh-TW', 'zh-CN'],
+  defaultLocale: 'en',
+  // 辞書ファイルのありかを指定
+  directory: __dirname + "/locales",
+  // オブジェクトを利用したい場合はtrue
+  objectNotation: true,
+});
+ 
+app.use(i18n.init);
+ 
+// manualでi18nセッション管理できるように設定しておきます
+app.use(function (req, res, next) {
+  if (req.session.locale) {
+    i18n.setLocale(req, req.session.locale);
+  }
+  next();
+});
 
 require('dotenv').config();
 
@@ -54,6 +78,7 @@ app.use('/programPresenters', programPresentersRouter);
 app.use('/programMembers', programMembersRouter);
 app.use('/graphigRecordings', graphigRecordingsRouter);
 app.use('/genre', genreRouter);
+app.use('/locale_change', localeChangeRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

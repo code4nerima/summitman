@@ -8,38 +8,38 @@
 
 		<div class="container p-2">
 
-			<h1 class="mb-5">サミットマネージャー</h1>
+			<h1 class="mb-5"><%- __("サミットマネージャー") %></h1>
 
 			<div class="row">
 				<div class="col mb-3">
-					<h2>ようこそ <%= userProfile.name.ja %> さん</h2>
+					<h2><%- __("ようこそ") %> <%= userProfile.name.ja %> <%- __("さん") %></h2>
 					<div id="profilePhoto"><img class="border rounded img-thumbnai" src="<% if (userProfile.photoURL != undefined) { %><%= userProfile.photoURL %><% } else { %>images/profile.png<% } %>" width="100"></div>
-					<a href="/profile">プロフィール</a>
+					<a href="/profile"><%- __("プロフィール") %></a>
 				</div>
 			</div>
 			<% if (userProfile.role == 1) { %>
 			<div class="row">
 				<div class="col mb-3">
-					<h2>管理者メニュー</h2>
-					<a href="/genre">ジャンル設定</a>
+					<h2><%- __("管理者メニュー") %></h2>
+					<a href="/genre"><%- __("ジャンル設定") %></a>
 				</div>
 			</div>
 			<% } %>
 			<div class="row">
 				<div class="col mb-3">
-					<h2>あなたが申請したプログラム</h2>
+					<h2><%- __("あなたが申請したプログラム") %></h2>
 					<div id="submittedPrograms"></div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col mb-3">
-					<h2>あなたのオーナーのプログラム</h2>
+					<h2><%- __("あなたのオーナーのプログラム") %></h2>
 					<div id="ownerOfPrograms"></div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col mb-3">
-					<h2>スタッフとして加わるプログラム</h2>
+					<h2><%- __("スタッフとして加わるプログラム") %></h2>
 					<div id="memberOfPrograms"></div>
 				</div>
 			</div>
