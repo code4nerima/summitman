@@ -99,10 +99,13 @@ router.get('/edit', wrap(async function(req, res, next) {
         genres = recv.data.genres ;
     }
 
+    let currentUserProfile = (await clientAdapter.getUserProfile(req, currentUser.uid)).data ;
+
     res.render('programEdit', {
         program: program,
         tracks: tracks,
         genres: genres,
+        role: currentUserProfile.role,
     });	
 })) ;
 
@@ -114,30 +117,39 @@ router.post('/edit', wrap(async function(req, res, next) {
         return ;
     }
 
-    let program = {
-        title: {
-            "ja": req.body.ja_title,
-            "en": req.body.en_title,
-            "zh-TW": req.body['zh-TW_title'],
-            "zh-CN": req.body['zh-CN_title'],
-        },
-        date: req.body.date,
-        startTime: req.body.startTime,
-        endTime: req.body.endTime,
-        trackId: req.body.trackId,
-        category: req.body.category,
-        genreIds: req.body.genreIds,
-        description: {
-            "ja": req.body.ja_description,
-            "en": req.body.en_description,
-            "zh-TW": req.body['zh-TW_description'],
-            "zh-CN": req.body['zh-CN_description'],
-        },
-        email: req.body.email,
-    } ;
+    let programId = req.body.programId ;
+    let program ;
 
-    if (req.body.programId != undefined) {
-        program.programId = req.body.programId ;
+    if (programId != undefined) {
+        let recv = await clientAdapter.getProgram(req, programId) ;
+        program = recv.data ;
+    } else {
+        program = {
+            name: {},
+            description: {}} ;
+    }
+
+    program.title["ja"] = req.body.ja_title ;
+    program.title["en"] = req.body.en_title ;
+    program.title["zh-TW"] = req.body['zh-TW_title'] ;
+    program.title["zh-CN"] = req.body['zh-CN_title'] ;
+    
+    program.date = req.body.date ;
+    program.startTime = req.body.startTime ;
+    program.endTime = req.body.endTime ;
+    program.trackId = req.body.trackId ;
+    program.category = req.body.category ;
+    program.genreIds = req.body.genreIds ;
+
+    program.description["ja"] = req.body.ja_description ;
+    program.description["en"] = req.body.en_description ;
+    program.description["zh-TW"] = req.body['zh-TW_description'] ;
+    program.description["zh-CN"] = req.body['zh-CN_description'] ;
+
+    program.email = req.body.email ;
+    
+    if (programId != undefined) {
+        program.programId = programId ;
 
         clientAdapter.updateProgram(req, program) ;
         res.redirect('/programs/view?programId=' + program.programId);

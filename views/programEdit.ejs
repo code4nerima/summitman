@@ -83,7 +83,7 @@
 					</div>
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("申請者メールアドレス") %></label>
-						<input maxlength="50" type="text" class="form-control" id="email" name="email" value="<%= program.email %>" disabled>						
+						<input maxlength="50" type="text" class="form-control" id="email" name="email" value="<%= program.email %>" <% if (role != 1) { %>disabled<% } %>>						
 					</div>
 				</div>
 				<div class="row">
