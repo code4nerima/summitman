@@ -42,8 +42,15 @@
 			<%- include('parts/lang', {}) %>
 			<h1 class="mb-5"><%- __("サミットマネージャー") %></h1>
 
-		<div id="firebaseui-auth-container"></div>
-	</div>
+			<div id="firebaseui-auth-container"></div>
+
+			<div class="row">
+				<div class="col">
+					<label>初めての方でメールでログインされる方は初回のメールアドレス入力でアカウントが作成されます。</label>
+					<label>Facebookでログインされる方はFacebookに登録されているメールアドレスが内部でアカウントとして使用されます。</label>		
+				</div>
+			</div>
+		</div>
 
 	</body>
 	</html>
