@@ -8,27 +8,33 @@
 
 		<div class="container p-2">
 
-			<h1 class="mb-5">スタッフ登録</h1>
+			<h1 class="mb-5"><%- __("スタッフ登録") %></h1>
 
 			<div class="my-3">
-				<a href="/programs/edit?programId=<%= programId %>">プログラムの編集に戻る</a>
+				<div class="alert alert-primary" role="alert">
+					<%= program.title.ja %>
+				</div>	
+			</div>
+
+			<div class="my-3">
+				<button type="button" class="btn btn-success" onclick="location.href='/programs/view?programId=<%= program.programId %>';"><%- __("プログラム詳細に戻る") %></button>
 			</div>
 			
-			<h2>スタッフ一覧</h2>
+			<h2><%- __("スタッフ一覧") %></h2>
 			<div id="members"></div>
 
 			<hr />
-			<h2>ユーザー一覧</h2>
+			<h2><%- __("ユーザー一覧") %></h2>
 			<div id="userProfiles"></div>
 
 			<div class="my-3">
-				<button type="button" class="btn btn-danger" style="width: 130px;" onclick="window.history.back(-1);return false;">戻る</button>
+				<button type="button" class="btn btn-danger" style="width: 130px;" onclick="window.history.back(-1);return false;"><%- __("戻る") %></button>
 			</div>
 		</div>
 
 		<script>
 			$(function () {
-				reloadRequest("<%= programId %>") ;
+				reloadRequest("<%= program.programId %>") ;
 			}) ;
 
 			async function reloadRequest(programId) {
@@ -76,15 +82,15 @@
 			}
 
 			async function onClickRemoveButton(uid) {
-				let data = await fetch("/programMembers/remove?uid=" + uid + "&programId=<%= programId %>").then(response => response.json()) ;
+				let data = await fetch("/programMembers/remove?uid=" + uid + "&programId=<%= program.programId %>").then(response => response.json()) ;
 				
-				reloadRequest("<%= programId %>") ;
+				reloadRequest("<%= program.programId %>") ;
 			}
 
 			async function onClickAddButton(uid) {
-				let data = await fetch("/programMembers/add?uid=" + uid + "&programId=<%= programId %>").then(response => response.json()) ;
+				let data = await fetch("/programMembers/add?uid=" + uid + "&programId=<%= program.programId %>").then(response => response.json()) ;
 				
-				reloadRequest("<%= programId %>") ;
+				reloadRequest("<%= program.programId %>") ;
 			}
 
 			function memberBlock(user) {
@@ -109,7 +115,7 @@
 												
 											</div>
 											<div class="col-sm">
-												<button type="button" class="btn btn-danger" style="width: 100%;" onclick="onClickRemoveButton('${user.uid}');">削除</button>
+												<button type="button" class="btn btn-danger" style="width: 100%;" onclick="onClickRemoveButton('${user.uid}');"><%- __("削除") %></button>
 											</div>
 										</div>
 									</div>
@@ -141,7 +147,7 @@
 												${roleString}
 											</div>
 											<div class="col-sm">
-												<button type="button" class="btn btn-primary" style="width: 100%;" onclick="onClickAddButton('${user.uid}');">追加</button>
+												<button type="button" class="btn btn-primary" style="width: 100%;" onclick="onClickAddButton('${user.uid}');"><%- __("追加") %></button>
 											</div>
 										</div>
 									</div>

@@ -10,7 +10,7 @@
 
 			<h1 class="mb-5">トラック詳細</h1>
 
-			<% if (editable) { %>
+			<% if (role == 1) { %>
 				<div class="my-3">
 					<a class="btn btn-primary" style="width: 130px;" href="/tracks/edit?trackId=<%= track.trackId %>">編集</a>
 					<button type="button" class="btn btn-danger" style="width: 130px;" onclick="location.href='/tracks/delete?trackId=<%= track.trackId %>'; return false;">削除</button>
@@ -61,7 +61,7 @@
 			</div>
 
 			<div class="my-3">
-				<button type="button" class="btn btn-danger" style="width: 130px;" onclick="window.history.back(-1);return false;">戻る</button>
+				<button type="button" class="btn btn-danger" style="width: 100%;" onclick="location.href='/tracks';">トラック一覧へ戻る</button>
 			</div>
 		</div>
 	</body>

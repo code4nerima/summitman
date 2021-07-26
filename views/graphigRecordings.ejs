@@ -8,10 +8,16 @@
 
 		<div class="container p-2">
 
-			<h1 class="mb-5">グラレコアップロード</h1>
+			<h1 class="mb-5"><%- __("グラレコアップロード") %></h1>
 		
 			<div class="my-3">
-				<a href="/programs/edit?programId=<%= programId %>">プログラムの編集に戻る</a>
+				<div class="alert alert-primary" role="alert">
+					<%= program.title.ja %>
+				</div>	
+			</div>
+
+			<div class="my-3">
+				<button type="button" class="btn btn-success" onclick="location.href='/programs/view?programId=<%= program.programId %>';"><%- __("プログラム詳細に戻る") %></button>
 			</div>
 
 		</div>

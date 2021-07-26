@@ -20,12 +20,20 @@ router.get('/', wrap(async function(req, res, next) {
 
     let programId = req.query.programId ;
 
-    if (!await functions.isAccessAvalableToProgram(req, programId)) {
+    let currentUser = req.session.user ;
+    let uid = currentUser.uid ;
+    
+    let user = (await clientAdapter.getUserProfile(req, uid)).data ;
+    let program = (await clientAdapter.getProgram(req, programId)).data ;
+
+    user.email = currentUser.email ;
+
+    if (!await functions.isAccessAvailableToProgram(user, program)) {
         res.redirect('/') ;
         return ;
     }
 
-    res.render('programPresenters', {programId: programId});		 
+    res.render('programPresenters', {program: program});		 
 })) ;
 
 router.get('/data', wrap(async function(req, res, next) {
@@ -51,9 +59,19 @@ router.get('/edit', wrap(async function(req, res, next) {
 
     let programId = req.query.programId ;
 
-    if (!await functions.isAccessAvalableToProgram(req, programId)) {
-        res.redirect('/') ;
-        return ;
+    let currentUser = req.session.user ;
+    let uid = currentUser.uid ;
+    
+    {
+        let user = (await clientAdapter.getUserProfile(req, uid)).data ;
+        let program = (await clientAdapter.getProgram(req, programId)).data ;
+
+        user.email = currentUser.email ;
+
+        if (!await functions.isAccessAvailableToProgram(user, program)) {
+            res.redirect('/') ;
+            return ;
+        }
     }
 
     let presenterId = req.query.presenterId ;
@@ -109,17 +127,17 @@ router.post('/edit', wrap(async function(req, res, next) {
     presenter.name["ja_kana"] = req.body.ja_name_kana ;
     presenter.name["en"] = req.body.en_name ;
     presenter.name["zh-TW"] = req.body['zh-TW_name'] ;
-    presenter.name["zh-CN"] = req.body['zzh-CN_name'] ;
+    presenter.name["zh-CN"] = req.body['zh-CN_name'] ;
 
     presenter.organization["ja"] = req.body.ja_organization ;
     presenter.organization["en"] = req.body.en_organization ;
     presenter.organization["zh-TW"] = req.body['zh-TW_organization'] ;
-    presenter.organization["zh-CN"] = req.body['zzh-CN_organization'] ;
+    presenter.organization["zh-CN"] = req.body['zh-CN_organization'] ;
 
     presenter.description["ja"] = req.body.ja_description ;
     presenter.description["en"] = req.body.en_description ;
     presenter.description["zh-TW"] = req.body['zh-TW_description'] ;
-    presenter.description["zh-CN"] = req.body['zzh-CN_description'] ;
+    presenter.description["zh-CN"] = req.body['zh-CN_description'] ;
 
     presenter.sortOrder = req.body.sortOrder ;
 

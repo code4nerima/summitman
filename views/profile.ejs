@@ -8,9 +8,9 @@
 
 		<div class="container p-2">
 
-			<h1 class="mb-5">プロフィールの編集</h1>
+			<h1 class="mb-5"><%- __("プロフィールの編集") %></h1>
 
-			<h2>プロフィール画像</h2>
+			<h2><%- __("プロフィール画像") %></h2>
 			<div class="row py-1">
 				<div class="col">
 					<% if (data.photoURL == '') { %>
@@ -25,37 +25,37 @@
 					<form id="photo">
 						<input type="hidden" name="uid" value="<%= data.uid %>">
 						<input type="file" class="form-control" id="file" name="file" accept="image/*" onchange="changeFile(this);" aria-describedby="fileHelp">
-						<label class="form-label small">ファイルサイズは1MB以内の画像を選択してください。</label>
+						<label class="form-label small"><%- __("ファイルサイズは1MB以内の画像を選択してください。") %></label>
 					</form>
 				</div>
 				<div class="col-auto">
-					<button type="button" id="photoDeleteButton" class="btn btn-danger">削除</button>
+					<button type="button" id="photoDeleteButton" class="btn btn-danger"><%- __("削除") %></button>
 				</div>
 			</div>
 
 			<form method="POST" action="/profile">
-				<h2>名前</h2>
+				<h2><%- __("名前") %></h2>
 				<div class="row mb-3">
 					<div class="col-sm">
-						<label for="name" class="form-label">名前（日本語）<span class="badge bg-danger">必須</span></label>
+						<label for="name" class="form-label"><%- __("名前（日本語）") %><span class="badge bg-danger"><%- __("必須") %></span></label>
 						<input maxlength="50" required type="text" class="form-control" id="ja_name" name="ja_name" value="<%= data.name.ja %>">
 					</div>
 					<div class="col-sm">
-						<label for="name" class="form-label">名前（ふりがな）<span class="badge bg-danger">必須</span></label>
+						<label for="name" class="form-label"><%- __("名前（ふりがな）") %><span class="badge bg-danger"><%- __("必須") %></span></label>
 						<input maxlength="50" required type="text" class="form-control" id="ja_name_kana" name="ja_name_kana" value="<%= data.name.ja_kana %>">
 					</div>
 				</div>
 				<div class="row mb-3">
 					<div class="col-sm">
-						<label for="name" class="form-label">名前（英語）<span class="badge bg-danger">必須</span></label>
+						<label for="name" class="form-label"><%- __("名前（英語）") %><span class="badge bg-danger"><%- __("必須") %></span></label>
 						<input maxlength="50" required type="text" class="form-control" id="en_name" name="en_name" value="<%= data.name.en %>">
 					</div>
 					<div class="col-sm">
-						<label for="name" class="form-label">名前（繁体中国語）</label>
+						<label for="name" class="form-label"><%- __("名前（繁体字）") %></label>
 						<input maxlength="50" type="text" class="form-control" id="zh-TW_name" name="zh-TW_name" value="<%= data.name['zh-TW'] %>">
 					</div>
 					<div class="col-sm">
-						<label for="name" class="form-label">名前（簡体中国語）</label>
+						<label for="name" class="form-label"><%- __("名前（簡体字）") %></label>
 						<input maxlength="50" type="text" class="form-control" id="zh-CN_name" name="zh-CN_name" value="<%= data.name['zh-CN'] %>">
 					</div>
 				</div>
@@ -63,10 +63,10 @@
 					<div class="row mb-3">
 						<div class="col-sm">
 							<select class="form-select" name="role" aria-label="役割">
-								<option value="0" <% if (data.role == 0) { %>selected<% } %>>スタッフ</option>
-								<option value="1" <% if (data.role == 1) { %>selected<% } %>>管理者</option>
-								<option value="2" <% if (data.role == 2) { %>selected<% } %>>配信担当</option>
-								<option value="3" <% if (data.role == 3) { %>selected<% } %>>翻訳担当</option>
+								<option value="0" <% if (data.role == 0) { %>selected<% } %>><%- __("スタッフ") %></option>
+								<option value="1" <% if (data.role == 1) { %>selected<% } %>><%- __("管理者") %></option>
+								<option value="2" <% if (data.role == 2) { %>selected<% } %>><%- __("配信担当") %></option>
+								<option value="3" <% if (data.role == 3) { %>selected<% } %>><%- __("翻訳担当") %></option>
 							</select>
 						</div>
 					</div>
@@ -76,8 +76,8 @@
 					<input type="hidden" name="adminAccess" value="1">
 				<% } %>
 				<div class="mb-3">
-					<button type="submit" class="btn btn-primary" style="width: 130px;">更新</button>
-					<button type="button" class="btn btn-danger" style="width: 130px;" onclick="window.history.back(-1);return false;">キャンセル</button>
+					<button type="submit" class="btn btn-primary" style="width: 130px;"><%- __("更新") %></button>
+					<button type="button" class="btn btn-danger" style="width: 130px;" onclick="window.history.back(-1);return false;"><%- __("キャンセル") %></button>
 				</div>
 			</form>
 		</div>

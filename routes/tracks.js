@@ -17,7 +17,7 @@ router.get('/', wrap(async function(req, res, next) {
     let currentUserProfile = (await clientAdapter.getUserProfile(req, currentUser.uid)).data ;
 
     res.render('tracks', {
-        editable: currentUserProfile.role == 1 ? true : false,
+        role: currentUserProfile.role,
     });		 
 })) ;
 
@@ -39,6 +39,14 @@ router.get('/edit', wrap(async function(req, res, next) {
 
     if (result != 0) {
         res.redirect('/signin');
+        return ;
+    }
+
+    let currentUser = req.session.user ;
+    let currentUserProfile = (await clientAdapter.getUserProfile(req, currentUser.uid)).data ;
+
+    if (currentUserProfile.role != 1) {
+        res.redirect('/');
         return ;
     }
 
@@ -88,11 +96,11 @@ router.post('/edit', wrap(async function(req, res, next) {
         track.trackId = req.body.trackId ;
 
         clientAdapter.updateTrack(req, track) ;
+        res.redirect('/tracks/view?trackId=' + req.body.trackId);
     } else {
         clientAdapter.createTrack(req, track) ;
+        res.redirect('/tracks');
     }
-
-    res.redirect('/tracks');
 })) ;
 
 router.get('/view', wrap(async function(req, res, next) {
@@ -122,7 +130,7 @@ router.get('/view', wrap(async function(req, res, next) {
 
     res.render('trackView', {
         track: track,
-        editable: currentUserProfile.role >= 1 ? true : false,
+        role: currentUserProfile.role,
     });	
 })) ;
 

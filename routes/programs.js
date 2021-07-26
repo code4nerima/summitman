@@ -58,9 +58,19 @@ router.get('/edit', wrap(async function(req, res, next) {
 
     let programId = req.query.programId ;
 
-    if (!await functions.isAccessAvalableToProgram(req, programId)) {
-        res.redirect('/') ;
-        return ;
+    let currentUser = req.session.user ;
+    let uid = currentUser.uid ;
+    
+    {
+        let user = (await clientAdapter.getUserProfile(req, uid)).data ;
+        let program = (await clientAdapter.getProgram(req, programId)).data ;
+
+        user.email = currentUser.email ;
+
+        if (!await functions.isAccessAvailableToProgram(user, program)) {
+            res.redirect('/') ;
+            return ;
+        }
     }
 
     let program = {
@@ -130,11 +140,12 @@ router.post('/edit', wrap(async function(req, res, next) {
         program.programId = req.body.programId ;
 
         clientAdapter.updateProgram(req, program) ;
+        res.redirect('/programs/view?programId=' + program.programId);
     } else {
         clientAdapter.createProgram(req, program) ;
+        res.redirect('/programs');
     }
 
-    res.redirect('/programs');
 })) ;
 
 router.get('/view', wrap(async function(req, res, next) {
@@ -206,7 +217,14 @@ router.get('/view', wrap(async function(req, res, next) {
     program.genreName["zh-TW"] = program.genreName["zh-TW"].trim() ;
     program.genreName["zh-CN"] = program.genreName["zh-CN"].trim() ;
 
-    let editable = await functions.isAccessAvalableToProgram(req, program.programId) ;
+    let currentUser = req.session.user ;
+    let uid = currentUser.uid ;
+    
+    let user = (await clientAdapter.getUserProfile(req, uid)).data ;
+
+    user.email = currentUser.email ;
+
+    let editable = await functions.isAccessAvailableToProgram(user, program) ;
 
     res.render('programView', {
         program: program,

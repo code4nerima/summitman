@@ -16,12 +16,20 @@ router.get('/', wrap(async function(req, res, next) {
 
     let programId = req.query.programId ;
 
-    if (!await functions.isAccessAvalableToProgram(req, programId)) {
+    let currentUser = req.session.user ;
+    let uid = currentUser.uid ;
+    
+    let user = (await clientAdapter.getUserProfile(req, uid)).data ;
+    let program = (await clientAdapter.getProgram(req, programId)).data ;
+
+    user.email = currentUser.email ;
+    
+    if (!await functions.isAccessAvailableToProgram(user, program)) {
         res.redirect('/') ;
         return ;
     }
 
-    res.render('programMembers', {programId: programId});		 
+    res.render('programMembers', {program: program});		 
 })) ;
 
 router.get('/data', wrap(async function(req, res, next) {

@@ -8,36 +8,54 @@
 
 		<div class="container p-2">
 
-			<h1 class="mb-5">プログラム詳細</h1>
+			<h1 class="mb-5"><%- __("プログラム詳細") %></h1>
 
 			<% if (editable) { %>
-				<div class="my-3">
-					<a class="btn btn-primary" style="width: 130px;" href="/programs/edit?programId=<%= program.programId %>">編集</a>
-					<button type="button" class="btn btn-danger" style="width: 130px;" onclick="location.href='/programs/delete?programId=<%= program.programId %>'; return false;">削除</button>
+				
+				<div class="row mb-3">
+					<div class="col-sm mb-1">
+						<button type="button" class="btn btn-primary" onclick="location.href='/programs/edit?programId=<%= program.programId %>';" style="width: 100%;"><%- __("編集する") %></button>
+					</div>
+					<div class="col-sm mb-1">
+						<button type="button" class="btn btn-success" onclick="location.href='/programOwners?programId=<%= program.programId %>';" style="width: 100%;"><%- __("プログラムオーナー登録") %></button>
+					</div>
+					<div class="col-sm mb-1">
+						<button type="button" class="btn btn-success" onclick="location.href='/programPresenters?programId=<%= program.programId %>';" style="width: 100%;"><%- __("登壇者登録") %></button>
+					</div>
+					<div class="col-sm mb-1">
+						<button type="button" class="btn btn-success" onclick="location.href='/programMembers?programId=<%= program.programId %>';" style="width: 100%;"><%- __("スタッフ登録") %></button>
+					</div>
+					<div class="col-sm mb-1">
+						<button type="button" class="btn btn-success" onclick="location.href='/graphigRecordings?programId=<%= program.programId %>';" style="width: 100%;"><%- __("グラレコアップロード") %></button>
+					</div>
 				</div>
+				<div class="row mb-3">
+					<div class="col-sm mb-1">
+				</div>
+			</div>
 			<% } %>
 
 			<div class="card my-1">
 				<div class="card-header h5 fw-bold">
-					タイトル
+					<%- __("タイトル") %>
 				</div>
 				<ul class="list-group list-group-flush">
-					<li class="list-group-item"><span class="badge bg-secondary me-2">日</span><%= program.title.ja %></li>
-					<li class="list-group-item"><span class="badge bg-secondary me-2">英</span><%= program.title.en %></li>
-					<li class="list-group-item"><span class="badge bg-secondary me-2">繁</span><%= program.title["zh-TW"] %></li>
-					<li class="list-group-item"><span class="badge bg-secondary me-2">簡</span><%= program.title["zh-CN"] %></li>
+					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("日") %></span><%= program.title.ja %></li>
+					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("英") %></span><%= program.title.en %></li>
+					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("繁") %></span><%= program.title["zh-TW"] %></li>
+					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("簡") %></span><%= program.title["zh-CN"] %></li>
 				</ul>
 				<div class="card-header h5 fw-bold">
-					詳細
+					<%- __("詳細") %>
 				</div>
 				<ul class="list-group list-group-flush">
-					<li class="list-group-item"><span class="badge bg-secondary me-2">日</span><%= program.description.ja %></li>
-					<li class="list-group-item"><span class="badge bg-secondary me-2">英</span><%= program.description.en %></li>
-					<li class="list-group-item"><span class="badge bg-secondary me-2">繁</span><%= program.description["zh-TW"] %></li>
-					<li class="list-group-item"><span class="badge bg-secondary me-2">簡</span><%= program.description["zh-CN"] %></li>
+					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("日") %></span><%= program.description.ja %></li>
+					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("英") %></span><%= program.description.en %></li>
+					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("繁") %></span><%= program.description["zh-TW"] %></li>
+					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("簡") %></span><%= program.description["zh-CN"] %></li>
 				</ul>
 				<div class="card-header h5 fw-bold">
-					その他
+					<%- __("その他") %>
 				</div>
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item">
@@ -64,24 +82,24 @@
 							<div class="col-sm">
 								<i class="me-2 bi bi-tags"></i>
 								<% if (program.category == 0) {%>
-									未定
+									<%- __("未定") %>
 								<% } else if (program.category == 1) { %>
-									セッション
+									<%- __("セッション") %>
 								<% } else if (program.category == 2) { %>
-									ワークショップ
+									<%- __("ワークショップ") %>
 								<% } %>
 							</div>
 						</div>
 					</li>
 				</ul>
 				<div class="card-header h5 fw-bold">
-					トラック
+					<%- __("トラック") %>
 				</div>
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item"><i class="me-2 bi bi-house-door"></i><%= program.trackName.ja %></li>
 				</ul>
 				<div class="card-header h5 fw-bold">
-					ジャンル
+					<%- __("ジャンル") %>
 				</div>
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item"><i class="me-2 bi bi-collection"></i><%= program.genreName.ja %></li>
@@ -89,7 +107,7 @@
 			</div>
 
 			<div class="my-3">
-				<button type="button" class="btn btn-danger" style="width: 130px;" onclick="window.history.back(-1);return false;">戻る</button>
+				<button type="button" class="btn btn-danger" style="width: 100%;" onclick="location.href='/programs';"><%- __("プログラム一覧へ戻る") %></button>
 			</div>
 		</div>
 	</body>

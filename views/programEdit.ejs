@@ -15,84 +15,79 @@
 
 		<div class="container p-2">
 			<% if (program.programId != undefined) { %>
-				<h1 class="mb-5">プログラム編集</h1>
+				<h1 class="mb-5"><%- __("プログラム編集") %></h1>
 			<% } else { %>
-				<h1 class="mb-5">プログラム作成</h1>
+				<h1 class="mb-5"><%- __("プログラム作成") %></h1>
 			<% } %>
+			
 			<form method="POST" action="/programs/edit">
-				<div class="row mb-3">
-					<div class="col-sm mb-1">
-						<button type="button" class="btn btn-primary" onclick="location.href='/programOwners?programId=<%= program.programId %>';" style="width: 100%;">プログラムオーナー登録</button>
-					</div>
-					<div class="col-sm mb-1">
-						<button type="button" class="btn btn-primary" onclick="location.href='/programPresenters?programId=<%= program.programId %>';" style="width: 100%;">登壇者登録</button>
-					</div>
-					<div class="col-sm mb-1">
-						<button type="button" class="btn btn-primary" onclick="location.href='/programMembers?programId=<%= program.programId %>';" style="width: 100%;">スタッフ登録</button>
-					</div>
-					<div class="col-sm mb-1">
-						<button type="button" class="btn btn-primary" onclick="location.href='/graphigRecordings?programId=<%= program.programId %>';" style="width: 100%;">グラレコアップロード</button>
-					</div>
+				<div class="mb-3">
+					<% if (program.programId != undefined) { %>
+						<button type="submit" class="btn btn-primary" style="width: 130px;"><%- __("編集を終了する") %></button>
+						<label><%- __("編集が終わったらブラウザの戻るを使用しないで必ずこのボタンを押してください。") %></label>
+					<% } else { %>
+						<button type="submit" class="btn btn-primary" style="width: 130px;"><%- __("作成する") %></button>
+					<% } %>
 				</div>
-				<h2>タイトル</h2>
+				<h2><%- __("タイトル") %></h2>
 				<div class="row row-cols-1 row-cols-md-2 g-2 mb-3">
 					<div class="col-sm">
-						<label for="name" class="form-label">タイトル（日本語）<span class="badge bg-danger">必須</span></label>
+						<label for="name" class="form-label"><%- __("タイトル（日本語）") %><span class="badge bg-danger"><%- __("必須") %></span></label>
 						<input maxlength="50" required type="text" class="form-control" id="ja_title" name="ja_title" value="<%= program.title['ja'] %>">
 					</div>
 					<div class="col-sm">
-						<label for="name" class="form-label">タイトル（英語）<span class="badge bg-danger">必須</span></label>
+						<label for="name" class="form-label"><%- __("タイトル（英語）") %><span class="badge bg-danger"><%- __("必須") %></span></label>
 						<input maxlength="50" required type="text" class="form-control" id="en_title" name="en_title" value="<%= program.title['en'] %>">
 					</div>
 					<div class="col-sm">
-						<label for="name" class="form-label">タイトル（繁体中国語）</label>
+						<label for="name" class="form-label"><%- __("タイトル（繁体字）") %></label>
 						<input maxlength="50" type="text" class="form-control" id="zh-TW_title" name="zh-TW_title" value="<%= program.title['zh-TW'] %>">
 					</div>
 					<div class="col-sm">
-						<label for="name" class="form-label">タイトル（簡体中国語）</label>
+						<label for="name" class="form-label"><%- __("タイトル（簡体字）") %></label>
 						<input maxlength="50" type="text" class="form-control" id="zh-CN_title" name="zh-CN_title" value="<%= program.title['zh-CN'] %>">
 					</div>
 				</div>
-				<h2>詳細</h2>
+				<h2><%- __("詳細") %></h2>
 				<div class="row mb-3">
 					<div class="col-sm">
-						<label for="date" class="form-label">日付 <span class="ms-1 badge bg-danger">必須</span></label>
+						<label for="date" class="form-label"><%- __("日付") %><span class="ms-1 badge bg-danger"><%- __("必須") %></span></label>
 						<input maxlength="50" required autocomplete="off" type="text" class="form-control datepicker" id="date" name="date" value="<%= program.date %>" aria-describedby="date">
 					</div>
 					<div class="col-sm">
-						<label for="time" class="form-label">開始時間 <span class="ms-1 badge bg-danger">必須</span></label>
+						<label for="time" class="form-label"><%- __("開始時間") %><span class="ms-1 badge bg-danger"><%- __("必須") %></span></label>
 						<input maxlength="50" required autocomplete="off" type="text" class="form-control timepicker" id="startTime" name="startTime" value="<%= program.startTime %>" aria-describedby="startTimeHelp">
 					</div>
 					<div class="col-sm">
-						<label for="time" class="form-label">終了時間 <span class="ms-1 badge bg-danger">必須</span></label>
+						<label for="time" class="form-label"><%- __("終了時間") %><span class="ms-1 badge bg-danger"><%- __("必須") %></span></label>
 						<input maxlength="50" required autocomplete="off" type="text" class="form-control timepicker" id="endTime" name="endTime" value="<%= program.endTime %>" aria-describedby="endTimeHelp">
 					</div>
 				</div>
 				<div class="row mb-3">
 					<div class="col-sm">
-						<label for="track" class="form-label">トラック</label>
-						<select class="form-select" name="trackId" aria-label="トラック">
-							<option value="" <% if (program.trackId == '') { %>selected<% } %>>未定</option>
+						<label for="track" class="form-label"><%- __("トラック") %></label>
+						<select class="form-select" name="trackId" aria-label="<%- __("トラック") %>">
+							<option value="" <% if (program.trackId == '') { %>selected<% } %>><%- __("未定") %></option>
 							<% for (let key in tracks) { %>
 								<option value="<%= tracks[key].trackId %>" <% if (program.trackId == tracks[key].trackId) { %>selected<% } %>><%= tracks[key].name.ja %></option>
 							<% }  %>
 						</select>
 					</div>
 					<div class="col-sm">
-						<label for="category" class="form-label">カテゴリ</label>
-						<select class="form-select" name="category" aria-label="カテゴリ">
-							<option value="0" <% if (program.category == 0) { %>selected<% } %>>未定</option>
-							<option value="1" <% if (program.category == 1) { %>selected<% } %>>セッション</option>
-							<option value="2" <% if (program.category == 2) { %>selected<% } %>>ワークショップ</option>
+						<label for="category" class="form-label"><%- __("カテゴリ") %></label>
+						<select class="form-select" name="category" aria-label="<%- __("カテゴリ") %>">
+							<option value="0" <% if (program.category == 0) { %>selected<% } %>><%- __("未定") %></option>
+							<option value="1" <% if (program.category == 1) { %>selected<% } %>><%- __("セッション") %></option>
+							<option value="2" <% if (program.category == 2) { %>selected<% } %>><%- __("ワークショップ") %></option>
 						</select>
 					</div>
 					<div class="col-sm">
-						<label for="name" class="form-label">申請者メールアドレス</label>
+						<label for="name" class="form-label"><%- __("申請者メールアドレス") %></label>
 						<input maxlength="50" type="text" class="form-control" id="email" name="email" value="<%= program.email %>" disabled>						
 					</div>
 				</div>
 				<div class="row">
-					<h2>ジャンル</h2>
+					<h2><%- __("ジャンル") %></h2>
 				</div>
 				<div class="row row-cols-3 row-cols-md-2 g-2 mb-3">
 					<% for (let i=0; i<genres.length; i++) { %>
@@ -103,22 +98,22 @@
 						</div>
 					<% } %>
 				</div>
-				<h2>概要</h2>
+				<h2><%- __("概要") %></h2>
 				<div class="row row-cols-1 row-cols-md-2 g-2 mb-3">
 					<div class="col-sm">
-						<label for="ja_description" class="form-label">概要（日本語）</label>
+						<label for="ja_description" class="form-label"><%- __("概要（日本語）") %></label>
 						<textarea maxlength="1000" class="form-control" style="height: 300px;" id="ja_description" name="ja_description" placeholder=""><%= program.description["ja"] %></textarea>
 					</div>
 					<div class="col-sm">
-						<label for="name" class="form-label">概要（英語）</label>
+						<label for="name" class="form-label"><%- __("概要（英語）") %></label>
 						<textarea maxlength="1000" class="form-control" style="height: 300px;" id="en_description" name="en_description" placeholder=""><%= program.description["en"] %></textarea>
 					</div>
 					<div class="col-sm">
-						<label for="name" class="form-label">概要（繁体中国語）</label>
+						<label for="name" class="form-label"><%- __("概要（繁体字）") %></label>
 						<textarea maxlength="1000" class="form-control" style="height: 300px;" id="zh-TW_description" name="zh-TW_description" placeholder=""><%= program.description["zh-TW"] %></textarea>
 					</div>
 					<div class="col-sm">
-						<label for="name" class="form-label">概要（簡体中国語）</label>
+						<label for="name" class="form-label"><%- __("概要（簡体字）") %></label>
 						<textarea maxlength="1000" class="form-control" style="height: 300px;" id="zh-CN_description" name="zh-CN_description" placeholder=""><%= program.description["zh-CN"] %></textarea>
 					</div>
 				</div>
@@ -128,11 +123,11 @@
 				<% } %>
 				<div class="mb-3">
 					<% if (program.programId != undefined) { %>
-						<button type="submit" class="btn btn-primary" style="width: 130px;">更新</button>
+						<button type="submit" class="btn btn-primary" style="width: 130px;"><%- __("編集を終了する") %></button>
+						<label><%- __("編集が終わったらブラウザの戻るを使用しないで必ずこのボタンを押してください。") %></label>
 					<% } else { %>
-						<button type="submit" class="btn btn-primary" style="width: 130px;">作成</button>
+						<button type="submit" class="btn btn-primary" style="width: 130px;"><%- __("作成する") %></button>
 					<% } %>
-					<button type="button" class="btn btn-danger" style="width: 130px;" onclick="window.history.back(-1);return false;">キャンセル</button>
 				</div>
 			</form>
 		</div>

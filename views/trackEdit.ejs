@@ -33,11 +33,11 @@
 				</div>
 				<div class="row mb-3">
 					<div class="col-sm">
-						<label for="name" class="form-label">名前（繁体中国語）</label>
+						<label for="name" class="form-label">名前（繁体字）</label>
 						<input maxlength="50" type="text" class="form-control" id="zh-TW_name" name="zh-TW_name" value="<%= track.name['zh-TW'] %>">
 					</div>
 					<div class="col-sm">
-						<label for="name" class="form-label">名前（簡体中国語）</label>
+						<label for="name" class="form-label">名前（簡体字）</label>
 						<input maxlength="50" type="text" class="form-control" id="zh-CN_name" name="zh-CN_name" value="<%= track.name['zh-CN'] %>">
 					</div>
 				</div>
@@ -92,13 +92,14 @@
 				<% if (track.trackId != undefined) { %>
 					<input type="hidden" name="trackId" value="<%= track.trackId %>">
 				<% } %>
+
 				<div class="mb-3">
 					<% if (track.trackId != undefined) { %>
-						<button type="submit" class="btn btn-primary" style="width: 130px;">更新</button>
+						<button type="submit" class="btn btn-primary" style="width: 130px;">編集を終了する</button>
+						<label>編集が終わったらブラウザの戻るを使用しないで必ずこのボタンを押してください。</label>
 					<% } else { %>
-						<button type="submit" class="btn btn-primary" style="width: 130px;">作成</button>
+						<button type="submit" class="btn btn-primary" style="width: 130px;">作成する</button>
 					<% } %>
-					<button type="button" class="btn btn-danger" style="width: 130px;" onclick="window.history.back(-1);return false;">キャンセル</button>
 				</div>
 			</form>
 		</div>

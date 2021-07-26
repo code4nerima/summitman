@@ -8,21 +8,27 @@
 
 		<div class="container p-2">
 
-			<h1 class="mb-5">登壇者登録</h1>
+			<h1 class="mb-5"><%- __("登壇者登録") %></h1>
 
 			<div class="my-3">
-				<a href="/programs/edit?programId=<%= programId %>">プログラムの編集に戻る</a>
+				<div class="alert alert-primary" role="alert">
+					<%= program.title.ja %>
+				</div>	
 			</div>
 
 			<div class="my-3">
-				<a class="btn btn-primary" style="width: 130px;" href="/programPresenters/edit?programId=<%= programId %>">新規作成</a>
+				<button type="button" class="btn btn-success" onclick="location.href='/programs/view?programId=<%= program.programId %>';"><%- __("プログラム詳細に戻る") %></button>
+			</div>
+
+			<div class="my-3">
+				<a class="btn btn-primary" style="width: 130px;" href="/programPresenters/edit?programId=<%= program.programId %>"><%- __("新規作成") %></a>
 			</div>
 
 			<div class="d-grid gap-2 d-md-block">
-				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("ja", 0);'>日本語</a>
-				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("en", 0);'>英語</a>
-				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("zh-TW", 0);'>繁体中国語</a>
-				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("zh-CN", 0);'>簡体中国語</a>
+				<a class="btn btn-info btn-sm" style="width: 130px;" onclick='reloadRequest("ja", 0);'><%- __("日本語") %></a>
+				<a class="btn btn-info btn-sm" style="width: 130px;" onclick='reloadRequest("en", 0);'><%- __("英語") %></a>
+				<a class="btn btn-info btn-sm" style="width: 130px;" onclick='reloadRequest("zh-TW", 0);'><%- __("繁体字") %></a>
+				<a class="btn btn-info btn-sm" style="width: 130px;" onclick='reloadRequest("zh-CN", 0);'><%- __("簡体字") %></a>
 			</div>
 
 			<div id="presenters"></div>
@@ -40,7 +46,7 @@
 				$("#presenters").append(spinner) ;
 				$("#pagenation").empty() ;
 				
-				let data = await fetch("/programPresenters/data?programId=<%= programId %>&page=" + page).then(response => response.json()) ;
+				let data = await fetch("/programPresenters/data?programId=<%= program.programId %>&page=" + page).then(response => response.json()) ;
 				
 				$("#presenters").empty() ;
 				$("#pagenation").empty() ;
@@ -83,10 +89,10 @@
 										<div id="profilePhoto"><img class="border rounded img-thumbnai" src="${photoURLString}" width="50"></div>
 									</div>
 									<div class="col">
-										<a href="/programPresenters/edit?presenterId=${presenter.presenterId}&programId=<%= programId %>">${presenter.name[lang]}</a>
+										<a href="/programPresenters/edit?presenterId=${presenter.presenterId}&programId=<%= program.programId %>">${presenter.name[lang]}</a>
 									</div>
 									<div class="col-auto">
-										<button type="button" class="btn btn-danger" style="width: 130px;" onclick="onClickDeletepresentersButton('${presenter.presenterId}')">削除</button>
+										<button type="button" class="btn btn-danger" style="width: 130px;" onclick="onClickDeletepresentersButton('${presenter.presenterId}')"><%- __("削除") %></button>
 									</div>
 								</div>								
 							</div>
@@ -94,7 +100,7 @@
 			}
 
 			async function onClickDeletepresentersButton(presenterId) {
-				await fetch("/programPresenters/delete?presenterId=" + presenterId + "&programId=<%= programId %>").then(response => response.json()) ;
+				await fetch("/programPresenters/delete?presenterId=" + presenterId + "&programId=<%= program.programId %>").then(response => response.json()) ;
 
 				reloadRequest("ja", 0) ;
 			}
