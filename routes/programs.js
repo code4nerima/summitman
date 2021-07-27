@@ -2,6 +2,7 @@ var express = require('express');
 let clientAdapter = require('../modules/clientAdapter') ;
 let functions = require('../modules/functions') ;
 let firebaseSession = require('../modules/firebase_session.js') ;
+let admin = require('firebase-admin');
 var router = express.Router() ;
 
 const wrap = fn => (...args) => fn(...args).catch(args[2]) ;
@@ -60,10 +61,18 @@ router.get('/edit', wrap(async function(req, res, next) {
 
     let currentUser = req.session.user ;
     let uid = currentUser.uid ;
+    let program = {
+        title: {},
+        description: {},
+        genreIds: [],
+    } ;
     
+    if (programId != undefined) {
+        program = (await clientAdapter.getProgram(req, programId)).data ;
+    }
+
     {
         let user = (await clientAdapter.getUserProfile(req, uid)).data ;
-        let program = (await clientAdapter.getProgram(req, programId)).data ;
 
         user.email = currentUser.email ;
 
@@ -73,17 +82,28 @@ router.get('/edit', wrap(async function(req, res, next) {
         }
     }
 
-    let program = {
-        title: {},
-        description: {},
-        genreIds: [],
-    } ;
-
     if (programId != undefined) {
-        let recv = await clientAdapter.getProgram(req, programId) ;
-        
-        program = recv.data ;
         program.programId = programId ;
+        
+        if (req.query.force == undefined) {
+            let data = (await admin.firestore().collection("programEditingLock").doc(programId).get()).data() ;
+
+            if (data != undefined && data.uid != uid) {
+                let lockingUser = (await clientAdapter.getUserProfile(req, data.uid)).data ;
+
+                res.render('programIsLocked', {
+                    lockingUser: lockingUser,
+                    program: program,
+                });	
+                return ;
+            }
+        }
+        
+        await admin.firestore().collection("programEditingLock").doc(programId).set(
+            {
+                programId: programId,
+                uid: uid
+            }) ;
     }
 
     let tracks = [] ;
@@ -152,6 +172,9 @@ router.post('/edit', wrap(async function(req, res, next) {
         program.programId = programId ;
 
         clientAdapter.updateProgram(req, program) ;
+
+        await admin.firestore().collection("programEditingLock").doc(programId).delete() ;
+        
         res.redirect('/programs/view?programId=' + program.programId);
     } else {
         clientAdapter.createProgram(req, program) ;

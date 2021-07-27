@@ -89,6 +89,28 @@ router.get('/edit', wrap(async function(req, res, next) {
         
         presenter = recv.data ;
         presenter.presenterId = presenterId ;
+
+        if (req.query.force == undefined) {
+            let data = (await admin.firestore().collection("presenterEditingLock").doc(presenterId).get()).data() ;
+
+            if (data != undefined && data.uid != uid) {
+                let lockingUser = (await clientAdapter.getUserProfile(req, data.uid)).data ;
+
+                presenter.programId = programId ;
+
+                res.render('presenterIsLocked', {
+                    lockingUser: lockingUser,
+                    presenter: presenter,
+                });	
+                return ;
+            }
+        }
+        
+        await admin.firestore().collection("presenterEditingLock").doc(presenterId).set(
+            {
+                presenterId: presenterId,
+                uid: uid
+            }) ;
     }
 
     presenter.programId = programId ;
@@ -143,6 +165,8 @@ router.post('/edit', wrap(async function(req, res, next) {
 
     if (presenterId != undefined) {
         await clientAdapter.updatePresenter(req, programId, presenter) ;
+
+        await admin.firestore().collection("presenterEditingLock").doc(presenter.presenterId).delete() ;
     } else {
         await clientAdapter.createPresenter(req, programId, presenter) ;
     }

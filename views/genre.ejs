@@ -11,14 +11,14 @@
 			<h1 class="mb-5"><%- __("ジャンル設定") %></h1>
 
 			<div class="my-3">
-				<a class="btn btn-primary" style="width: 130px;" href="/genre/edit"><%- __("新規作成") %></a>
+				<a class="btn btn-primary" href="/genre/edit"><%- __("新規作成") %></a>
 			</div>
 
 			<div class="d-grid gap-2 d-md-block">
-				<a class="btn btn-info btn-sm" style="width: 130px;" onclick='reloadRequest("ja", 0);'><%- __("日本語") %></a>
-				<a class="btn btn-info btn-sm" style="width: 130px;" onclick='reloadRequest("en", 0);'><%- __("英語") %></a>
-				<a class="btn btn-info btn-sm" style="width: 130px;" onclick='reloadRequest("zh-TW", 0);'><%- __("繁体字") %></a>
-				<a class="btn btn-info btn-sm" style="width: 130px;" onclick='reloadRequest("zh-CN", 0);'><%- __("簡体字") %></a>
+				<a class="btn btn-success btn-sm" onclick='reloadRequest("ja", 0);'><%- __("日本語") %></a>
+				<a class="btn btn-success btn-sm" onclick='reloadRequest("en", 0);'><%- __("英語") %></a>
+				<a class="btn btn-success btn-sm" onclick='reloadRequest("zh-TW", 0);'><%- __("繁体字") %></a>
+				<a class="btn btn-success btn-sm" onclick='reloadRequest("zh-CN", 0);'><%- __("簡体字") %></a>
 			</div>
 
 			<div id="genres"></div>
@@ -73,7 +73,7 @@
 										<a href="/genre/edit?genreId=${genre.genreId}">${genre.name[lang]}</a>
 									</div>
 									<div class="col-auto">
-										<button type="button" class="btn btn-danger" style="width: 130px;" onclick="onClickDeleteGenreButton('${genre.genreId}')"><%- __("削除") %></button>
+										<button type="button" class="btn btn-danger" onclick="onClickDeleteGenreButton('${genre.genreId}')"><%- __("削除") %></button>
 									</div>
 								</div>								
 							</div>

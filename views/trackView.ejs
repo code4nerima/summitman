@@ -12,8 +12,8 @@
 
 			<% if (role == 1) { %>
 				<div class="my-3">
-					<a class="btn btn-primary" style="width: 130px;" href="/tracks/edit?trackId=<%= track.trackId %>">編集</a>
-					<button type="button" class="btn btn-danger" style="width: 130px;" onclick="location.href='/tracks/delete?trackId=<%= track.trackId %>'; return false;">削除</button>
+					<a class="btn btn-primary" href="/tracks/edit?trackId=<%= track.trackId %>">編集</a>
+					<button type="button" class="btn btn-danger" onclick="location.href='/tracks/delete?trackId=<%= track.trackId %>'; return false;">削除</button>
 				</div>
 			<% } %>
 

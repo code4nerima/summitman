@@ -23,10 +23,10 @@
 			<form method="POST" action="/programs/edit">
 				<div class="mb-3">
 					<% if (program.programId != undefined) { %>
-						<button type="submit" class="btn btn-primary" style="width: 130px;"><%- __("編集を終了する") %></button>
+						<button type="submit" class="btn btn-primary"><%- __("編集を終了する") %></button>
 						<label><%- __("編集が終わったらブラウザの戻るを使用しないで必ずこのボタンを押してください。") %></label>
 					<% } else { %>
-						<button type="submit" class="btn btn-primary" style="width: 130px;"><%- __("作成する") %></button>
+						<button type="submit" class="btn btn-primary"><%- __("作成する") %></button>
 					<% } %>
 				</div>
 				<h2><%- __("タイトル") %></h2>
@@ -123,10 +123,10 @@
 				<% } %>
 				<div class="mb-3">
 					<% if (program.programId != undefined) { %>
-						<button type="submit" class="btn btn-primary" style="width: 130px;"><%- __("編集を終了する") %></button>
+						<button type="submit" class="btn btn-primary"><%- __("編集を終了する") %></button>
 						<label><%- __("編集が終わったらブラウザの戻るを使用しないで必ずこのボタンを押してください。") %></label>
 					<% } else { %>
-						<button type="submit" class="btn btn-primary" style="width: 130px;"><%- __("作成する") %></button>
+						<button type="submit" class="btn btn-primary"><%- __("作成する") %></button>
 					<% } %>
 				</div>
 			</form>
