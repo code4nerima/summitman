@@ -34,6 +34,12 @@ router.get('/', wrap(async function(req, res, next) {
 
 router.get('/data', wrap(async function(req, res, next) {
 
+    if (!req.headers.referer.startsWith(process.env.ROOT_URL)) {
+		res.setHeader('Content-Type', 'application/json');
+		res.end(JSON.stringify({}));
+		return ;
+	}
+    
     let members ;
     let userProfiles ;
 

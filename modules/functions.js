@@ -4,11 +4,12 @@ class functions {
 
     async isAccessAvailableToProgram(user, program) {
         
-
-        if (user.role == 1) {
+        // Can access user in charge of admin and localization.
+        if (user.role == 1 || user.role == 3) {
             return true ;
         }
     
+        // Can access users in charge of program owner.
         for (let key in program.owners) {
             let owner = program.owners[key] ;
 

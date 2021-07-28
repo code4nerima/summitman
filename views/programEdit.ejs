@@ -27,6 +27,7 @@
 						<label><%- __("編集が終わったらブラウザの戻るを使用しないで必ずこのボタンを押してください。") %></label>
 					<% } else { %>
 						<button type="submit" class="btn btn-primary"><%- __("作成する") %></button>
+						<button type="button" class="btn btn-danger" onclick="window.history.back(-1);return false;"><%- __("戻る") %></button>
 					<% } %>
 				</div>
 				<h2><%- __("タイトル") %></h2>
@@ -127,6 +128,7 @@
 						<label><%- __("編集が終わったらブラウザの戻るを使用しないで必ずこのボタンを押してください。") %></label>
 					<% } else { %>
 						<button type="submit" class="btn btn-primary"><%- __("作成する") %></button>
+						<button type="button" class="btn btn-danger" onclick="window.history.back(-1);return false;"><%- __("戻る") %></button>
 					<% } %>
 				</div>
 			</form>
