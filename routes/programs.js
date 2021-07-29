@@ -3,7 +3,6 @@ let clientAdapter = require('../modules/clientAdapter') ;
 let functions = require('../modules/functions') ;
 let firebaseSession = require('../modules/firebase_session.js') ;
 let admin = require('firebase-admin');
-require('date-utils');
 var router = express.Router() ;
 
 const wrap = fn => (...args) => fn(...args).catch(args[2]) ;
@@ -107,12 +106,11 @@ router.get('/edit', wrap(async function(req, res, next) {
             }
         }
         
-        var dt = new Date();
-        var formatted = dt.toFormat("YYYY/MM/DD/ HH24:MI:SS");
-
+        var date = new Date();
+        
         await admin.firestore().collection("programEditingLock").doc(programId).set(
             {
-                datetime: formatted,
+                datetime: date.toUTCString(),
                 programId: programId,
                 uid: uid
             }) ;

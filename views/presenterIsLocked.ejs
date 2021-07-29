@@ -12,7 +12,7 @@
 		
 			<div class="my-3">
 				<div class="alert alert-primary" role="alert">
-					<div><%= datetime %></div>
+					<div id="timestamp"></div>
 					<div><%= presenter.name.ja %> <%- __("は") %> <%= lockingUser.name.ja %> <%- __("が編集しています。") %></div>
 				</div>	
 			</div>
@@ -26,5 +26,22 @@
 			</div>
 
 		</div>
+		
+		<script>
+			$(function () {
+				let timestamp = getDateString("<%= datetime %>") ;
+
+				$("#timestamp").append(timestamp) ;
+			}) ;
+
+			function getDateString(timestamp) {
+				let date = new Date(timestamp) ;
+				let dayOfWeek = date.getDay() ;
+
+				let dayOfWeekName = ["日", "月", "火", "水", "木", "金", "土"] ;
+
+				return date.toLocaleDateString('ja-JP') + " (" + dayOfWeekName[dayOfWeek] + ")" + " " + date.toLocaleTimeString('ja-JP')
+			}
+		</script>
 	</body>
 </html>

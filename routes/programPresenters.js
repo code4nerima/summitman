@@ -114,12 +114,11 @@ router.get('/edit', wrap(async function(req, res, next) {
             }
         }
         
-        var dt = new Date();
-        var formatted = dt.toFormat("YYYY/MM/DD/ HH24:MI:SS");
+        var date = new Date();
 
         await admin.firestore().collection("presenterEditingLock").doc(presenterId).set(
             {
-                datetime: formatted,
+                datetime: date.toUTCString(),
                 presenterId: presenterId,
                 uid: uid
             }) ;
