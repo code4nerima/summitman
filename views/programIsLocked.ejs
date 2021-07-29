@@ -12,7 +12,7 @@
 		
 			<div class="my-3">
 				<div class="alert alert-primary" role="alert">
-					<div><%= datetime %></div>
+					<div id="timestamp"></div>
 					<div><%- __("このプログラムは") %> <%= lockingUser.name.ja %> <%- __("が編集しています。2") %></div>					
 				</div>	
 			</div>
@@ -24,7 +24,23 @@
 			<div class="my-3">
 				<button type="button" class="btn btn-success" onclick="location.href='/programs/view?programId=<%= program.programId %>';"><%- __("プログラム詳細に戻る") %></button>
 			</div>
-
 		</div>
+
+		<script>
+			$(function () {
+				let timestamp = getDateString("<%= datetime %>") ;
+
+				$("#timestamp").append(timestamp) ;
+			}) ;
+
+			function getDateString(timestamp) {
+				let date = new Date(timestamp) ;
+				let dayOfWeek = date.getDay() ;
+
+				let dayOfWeekName = ["日", "月", "火", "水", "木", "金", "土"] ;
+
+				return date.toLocaleDateString('ja-JP') + " (" + dayOfWeekName[dayOfWeek] + ")" + " " + date.toLocaleTimeString('ja-JP')
+			}
+		</script>
 	</body>
 </html>
