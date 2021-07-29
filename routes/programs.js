@@ -3,6 +3,7 @@ let clientAdapter = require('../modules/clientAdapter') ;
 let functions = require('../modules/functions') ;
 let firebaseSession = require('../modules/firebase_session.js') ;
 let admin = require('firebase-admin');
+require('date-utils');
 var router = express.Router() ;
 
 const wrap = fn => (...args) => fn(...args).catch(args[2]) ;
@@ -100,13 +101,18 @@ router.get('/edit', wrap(async function(req, res, next) {
                 res.render('programIsLocked', {
                     lockingUser: lockingUser,
                     program: program,
+                    datetime: data.datetime,
                 });	
                 return ;
             }
         }
         
+        var dt = new Date();
+        var formatted = dt.toFormat("YYYY/MM/DD/ HH24:MI:SS");
+
         await admin.firestore().collection("programEditingLock").doc(programId).set(
             {
+                datetime: formatted,
                 programId: programId,
                 uid: uid
             }) ;
@@ -173,7 +179,8 @@ router.post('/edit', wrap(async function(req, res, next) {
     program.description["zh-CN"] = req.body['zh-CN_description'] ;
 
     program.email = req.body.email ;
-    
+    program.inputCompleted = req.body.inputCompleted == undefined ? 0 : 1 ;
+
     if (programId != undefined) {
         program.programId = programId ;
 

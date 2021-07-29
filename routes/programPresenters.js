@@ -108,13 +108,18 @@ router.get('/edit', wrap(async function(req, res, next) {
                 res.render('presenterIsLocked', {
                     lockingUser: lockingUser,
                     presenter: presenter,
+                    datetime: data.datetime,
                 });	
                 return ;
             }
         }
         
+        var dt = new Date();
+        var formatted = dt.toFormat("YYYY/MM/DD/ HH24:MI:SS");
+
         await admin.firestore().collection("presenterEditingLock").doc(presenterId).set(
             {
+                datetime: formatted,
                 presenterId: presenterId,
                 uid: uid
             }) ;
