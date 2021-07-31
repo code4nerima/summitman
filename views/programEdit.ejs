@@ -75,6 +75,15 @@
 				</div>
 				<div class="row mb-3">
 					<div class="col-sm">
+						<button type="button" class="btn btn-secondary my-3" onclick="onClickDay(0)" <% if (role != 1) { %>disabled<% } %>><%- __("1日目") %></button>
+						<button type="button" class="btn btn-secondary my-3" onclick="onClickDay(1)" <% if (role != 1) { %>disabled<% } %>><%- __("2日目") %></button>
+						<button type="button" class="btn btn-secondary my-3" onclick="onClickTime(0)" <% if (role != 1) { %>disabled<% } %>>14:25-15:15</button>
+						<button type="button" class="btn btn-secondary my-3" onclick="onClickTime(1)" <% if (role != 1) { %>disabled<% } %>>15:25-16:15</button>
+						<button type="button" class="btn btn-secondary my-3" onclick="onClickTime(2)" <% if (role != 1) { %>disabled<% } %>>16:25-17:15</button>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-sm">
 						<label for="track" class="form-label"><%- __("トラック") %></label>
 						<select class="form-select" name="trackId" aria-label="<%- __("トラック") %>" <% if (role != 1) { %>disabled<% } %>>
 							<option value="" <% if (program.trackId == '') { %>selected<% } %>><%- __("未定") %></option>
@@ -90,6 +99,7 @@
 							<option value="1" <% if (program.category == 1) { %>selected<% } %>><%- __("セッション") %></option>
 							<option value="2" <% if (program.category == 2) { %>selected<% } %>><%- __("ワークショップ") %></option>
 							<option value="3" <% if (program.category == 3) { %>selected<% } %>><%- __("録画セッション") %></option>
+							<option value="4" <% if (program.category == 4) { %>selected<% } %>><%- __("休憩") %></option>
 						</select>
 					</div>
 					<div class="col-sm">
@@ -159,6 +169,27 @@
 				dropdown: true,
 				scrollbar: true
 			});
+
+			function onClickDay(day) {
+				if (day == 0) {
+					$("#date").val("2021-9-18") ;
+				} else if (day == 1) {
+					$("#date").val("2021-9-19") ;
+				}
+			}
+
+			function onClickTime(time) {
+				if (time == 0) {
+					$("#startTime").val("14:25") ;
+					$("#endTime").val("15:15") ;
+				} else if (time == 1) {
+					$("#startTime").val("15:25") ;
+					$("#endTime").val("16:15") ;
+				} else if (time == 2) {
+					$("#startTime").val("16:25") ;
+					$("#endTime").val("17:15") ;
+				}
+			}
 		</script>
 
 	</body>
