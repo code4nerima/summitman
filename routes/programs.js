@@ -177,7 +177,7 @@ router.post('/edit', wrap(async function(req, res, next) {
     program.description["zh-CN"] = req.body['zh-CN_description'] ;
 
     program.email = req.body.email ;
-    program.inputCompleted = req.body.inputCompleted == undefined ? 0 : 1 ;
+    program.inputCompleted = req.body.inputCompleted ;
 
     if (programId != undefined) {
         program.programId = programId ;
