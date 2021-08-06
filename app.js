@@ -17,6 +17,7 @@ var programMembersRouter = require('./routes/programMembers');
 var graphigRecordingsRouter = require('./routes/graphigRecordings');
 var genreRouter = require('./routes/genre');
 var localeChangeRouter = require('./routes/localChange');
+var emailRouter = require('./routes/email');
 
 var app = express();
 
@@ -79,6 +80,7 @@ app.use('/programMembers', programMembersRouter);
 app.use('/graphigRecordings', graphigRecordingsRouter);
 app.use('/genre', genreRouter);
 app.use('/locale_change', localeChangeRouter);
+app.use('/email', emailRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

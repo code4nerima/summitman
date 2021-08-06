@@ -1,4 +1,5 @@
 let clientAdapter = require('../modules/clientAdapter') ;
+const sgMail = require('@sendgrid/mail');
 
 class functions {
 
@@ -23,6 +24,21 @@ class functions {
         }
 
         return false; 
+    }
+
+    sendEmail(fromEmail, toEmail, subject, message) {
+        
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+        const msg = {
+            to: toEmail,
+            from: fromEmail,
+            subject: subject,
+            text: message,
+            html: message.replace(/\n/g, '<br />'),
+        };
+    
+        sgMail.send(msg);
     }
 }
 

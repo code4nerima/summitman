@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ja">
+	<head>
+		<%- include('parts/head', {title: 'メール送信'}) %>
+	</head>
+	<body class="p-2">
+		<div class="container p-2">
+			<%- include('parts/navbar', {}) %>
+
+			<div class="container p-2">
+	
+				<h1 class="mb-5"><%- __("メール送信") %></h1>
+			
+				<div class="row">
+					<div class="col">
+						<label for="comment" class="form-label">タイトル</label>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col">
+						<input required type="text" class="form-control" id="subject" name="subject" value="<%= subject %>">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col">
+						<label for="comment" class="form-label">本文</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<textarea class="form-control" id="message" name="message" placeholder=""><%= message %></textarea>
+					</div>
+				</div>
+				<div class="row my-3">
+					<div class="col">
+						<button type="button" class="form-control btn btn-primary" id="sendButton">送信</button>
+					</div>
+				</div>
+				
+				<script>
+					$(window).on('load', async () => {
+						$('#sendButton').on('click', () => {
+							$('#sendButton').prop('disabled', true);
+	
+							fetch('/email/send', {
+								method: 'POST', 
+								headers: {"Content-Type": "application/json; charset=utf-8"},
+								body: JSON.stringify({subject: $('#subject').val(), message: $('#message').val()}),
+								})
+								.then(response => response.json())
+								.then(data => {
+									alert(data["resultMessage"]) ;
+									$('#subject').val('');
+									$('#message').val('');
+									$('#sendButton').prop('disabled', false);
+								});
+						}) ;
+					}) ;
+				</script>
+			</div>
+		</div>
+	</body>
+</html>
