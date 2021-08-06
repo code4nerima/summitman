@@ -14,6 +14,14 @@ router.get('/', wrap(async function(req, res, next) {
         return ;
     }
 
+    let currentUser = req.session.user ;
+    let currentUserProfile = (await clientAdapter.getUserProfile(req, currentUser.uid)).data ;
+
+    if (currentUserProfile.role != 1) {
+        res.redirect('/');
+        return ;
+    }
+    
     res.render('email', {subject: "", message: ""});		 
 })) ;
 
