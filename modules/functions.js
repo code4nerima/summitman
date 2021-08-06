@@ -26,7 +26,7 @@ class functions {
         return false; 
     }
 
-    sendEmail(fromEmail, toEmail, subject, message) {
+    async sendEmail(fromEmail, toEmail, subject, message) {
         
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -38,7 +38,7 @@ class functions {
             html: message.replace(/\n/g, '<br />'),
         };
     
-        sgMail.send(msg);
+        await sgMail.send(msg);
     }
 }
 

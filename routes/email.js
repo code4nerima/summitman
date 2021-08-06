@@ -19,18 +19,33 @@ router.get('/', wrap(async function(req, res, next) {
 
 router.post('/send', wrap(async function(req, res, next) {
 
-    let programs = (await clientAdapter.listProgram(req, 0, -1)).data.programs ;
-    
-    for (let key in programs) {
-        let program = programs[key] ;
+    let resultMessagte = "" ;
+    let result = 0 ;
 
-        if (program.email != undefined && program.email != "") {
-            await functions.sendEmail("code4nerima@gmail.com", program.email, req.body.subject, req.body.message) ;
+    if (req.body.subject != "" && req.body.message != "") {
+        let programs = (await clientAdapter.listProgram(req, 0, -1)).data.programs ;
+        let emails = [] ;
+
+        for (let key in programs) {
+            let program = programs[key] ;
+
+            if (program.email != undefined && program.email != "") {
+                emails.push(program.email) ;
+            }
         }
+        
+        for (let key in emails) {
+            await functions.sendEmail("info@code4nerima.org", emails[key], req.body.subject, req.body.message) ;
+        }
+
+        resultMessagte = "メールを送信しました。" ;
+        result = 1 ;
+    } else {
+        resultMessagte = "タイトルと本文を入力してください。" ;
     }
 
     res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify({ resultMessage: 'メールを送信しました。' }));
+    res.end(JSON.stringify({ result: result, resultMessage: resultMessagte }));
 })) ;
 
 module.exports = router;

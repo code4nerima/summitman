@@ -13,7 +13,13 @@
 			
 				<div class="row">
 					<div class="col">
-						<label for="comment" class="form-label">タイトル</label>
+						プログラムの申請者に一斉メールを送信します。即時送信されるので操作は注意していください。
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col">
+						<label for="subject" class="form-label">タイトル</label>
 					</div>
 				</div>
 
@@ -25,7 +31,7 @@
 
 				<div class="row">
 					<div class="col">
-						<label for="comment" class="form-label">本文</label>
+						<label for="message" class="form-label">本文</label>
 					</div>
 				</div>
 				<div class="row">
@@ -52,8 +58,11 @@
 								.then(response => response.json())
 								.then(data => {
 									alert(data["resultMessage"]) ;
-									$('#subject').val('');
-									$('#message').val('');
+
+									if (data.result == 1) {
+										$('#subject').val('');
+										$('#message').val('');
+									}
 									$('#sendButton').prop('disabled', false);
 								});
 						}) ;
