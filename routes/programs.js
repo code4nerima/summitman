@@ -164,20 +164,22 @@ router.post('/edit', wrap(async function(req, res, next) {
     program.title["zh-TW"] = req.body['zh-TW_title'] ;
     program.title["zh-CN"] = req.body['zh-CN_title'] ;
     
-    program.date = req.body.date ;
-    program.startTime = req.body.startTime ;
-    program.endTime = req.body.endTime ;
-    program.trackId = req.body.trackId ;
-    program.category = req.body.category ;
-    program.genreIds = req.body.genreIds ;
+    if (req.body.date != undefined) {
+        program.date = req.body.date ;
+        program.startTime = req.body.startTime ;
+        program.endTime = req.body.endTime ;
+        program.trackId = req.body.trackId ;
+        program.category = req.body.category ;
+        program.genreIds = req.body.genreIds == undefined ? [] : req.body.genreIds ;
+        program.email = req.body.email ;
+    }
 
     program.description["ja"] = req.body.ja_description ;
     program.description["en"] = req.body.en_description ;
     program.description["zh-TW"] = req.body['zh-TW_description'] ;
     program.description["zh-CN"] = req.body['zh-CN_description'] ;
 
-    program.email = req.body.email ;
-    program.inputCompleted = req.body.inputCompleted ;
+    program.inputCompleted = req.body.inputCompleted != undefined ? "1" : "0" ;
 
     if (programId != undefined) {
         program.programId = programId ;
