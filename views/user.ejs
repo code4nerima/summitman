@@ -11,10 +11,11 @@
 			<h1 class="mb-5">プロフィール</h1>
 				<div class="card">
 					<ul class="list-group list-group-flush">
-						<li class="list-group-item"><i class="me-2 bi bi-person"></i><%= user.name.ja %></li>
-						<li class="list-group-item"><i class="me-2 bi bi-person"></i><%= user.name.en %></li>
-						<li class="list-group-item"><i class="me-2 bi bi-person"></i><%= user.name['zh-TW'] %></li>
-						<li class="list-group-item"><i class="me-2 bi bi-person"></i><%= user.name['zh-CN'] %></li>
+						<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("日") %></span><%= user.name.ja %></li>
+						<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("かな") %></span></i><%= user.name.ja_kana %></li>
+						<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("英") %></span></i><%= user.name.en %></li>
+						<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("繁") %></span><%= user.name['zh-TW'] %></li>
+						<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("簡") %></span><%= user.name['zh-CN'] %></li>
 					</ul>
 				</div>
 			<% if (editable) { %>

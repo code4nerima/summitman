@@ -94,25 +94,25 @@
 				<div class="row mb-3">
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("名前（日本語）") %><span class="badge bg-danger"><%- __("必須") %></span></label>
-						<input maxlength="50" required type="text" class="form-control" id="ja_name" name="ja_name" value="<%= presenter.name['ja'] %>">
+						<input maxlength="100" required type="text" class="form-control" id="ja_name" name="ja_name" value="<%= presenter.name['ja'] %>">
 					</div>
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("名前（ふりがな）") %><span class="badge bg-danger"><%- __("必須") %></span></label>
-						<input maxlength="50" required type="text" class="form-control" id="ja_name_kana" name="ja_name_kana" value="<%= presenter.name['ja_kana'] %>">
+						<input maxlength="100" required type="text" class="form-control" id="ja_name_kana" name="ja_name_kana" value="<%= presenter.name['ja_kana'] %>">
 					</div>
 				</div>
 				<div class="row mb-3">
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("名前（英語）") %><span class="badge bg-danger"><%- __("必須") %></span></label>
-						<input maxlength="50" required type="text" class="form-control" id="en_name" name="en_name" value="<%= presenter.name['en'] %>">
+						<input maxlength="100" required type="text" class="form-control" id="en_name" name="en_name" value="<%= presenter.name['en'] %>">
 					</div>
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("名前（繁体字）") %></label>
-						<input maxlength="50" type="text" class="form-control" id="zh-TW_name" name="zh-TW_name" value="<%= presenter.name['zh-TW'] %>">
+						<input maxlength="100" type="text" class="form-control" id="zh-TW_name" name="zh-TW_name" value="<%= presenter.name['zh-TW'] %>">
 					</div>
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("名前（簡体字）") %></label>
-						<input maxlength="50" type="text" class="form-control" id="zh-CN_name" name="zh-CN_name" value="<%= presenter.name['zh-CN'] %>">
+						<input maxlength="100" type="text" class="form-control" id="zh-CN_name" name="zh-CN_name" value="<%= presenter.name['zh-CN'] %>">
 					</div>
 				</div>
 
@@ -120,19 +120,19 @@
 				<div class="row row-cols-1 row-cols-md-2 g-2 mb-3">
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("所属（日本語）") %></label>
-						<input maxlength="50" type="text" class="form-control" id="ja_organization" name="ja_organization" value="<%= presenter.organization['ja'] %>">
+						<input maxlength="100" type="text" class="form-control" id="ja_organization" name="ja_organization" value="<%= presenter.organization['ja'] %>">
 					</div>
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("所属（英語）") %></label>
-						<input maxlength="50" type="text" class="form-control" id="en_organization" name="en_organization" value="<%= presenter.organization['en'] %>">
+						<input maxlength="100" type="text" class="form-control" id="en_organization" name="en_organization" value="<%= presenter.organization['en'] %>">
 					</div>
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("所属（繁体字）") %></label>
-						<input maxlength="50" type="text" class="form-control" id="zh-TW_organization" name="zh-TW_organization" value="<%= presenter.organization['zh-TW'] %>">
+						<input maxlength="100" type="text" class="form-control" id="zh-TW_organization" name="zh-TW_organization" value="<%= presenter.organization['zh-TW'] %>">
 					</div>
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("所属（簡体字）") %></label>
-						<input maxlength="50" type="text" class="form-control" id="zh-CN_organization" name="zh-CN_organization" value="<%= presenter.organization['zh-CN'] %>">
+						<input maxlength="100" type="text" class="form-control" id="zh-CN_organization" name="zh-CN_organization" value="<%= presenter.organization['zh-CN'] %>">
 					</div>
 				</div>
 
@@ -160,7 +160,7 @@
 				<div class="row row-cols-1 row-cols-md-2 g-2 mb-3">
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("並び順") %></label>
-						<input maxlength="50" type="number" class="form-control" id="sortOrder" name="sortOrder" value="<%= presenter.sortOrder %>">
+						<input maxlength="100" type="number" class="form-control" id="sortOrder" name="sortOrder" value="<%= presenter.sortOrder %>">
 						<label class="form-label small"><%- __("0から始まる並び順です。同じ番号のときはふりがな順に並びます。") %></label>
 					</div>
 				</div>
