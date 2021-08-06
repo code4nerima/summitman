@@ -104,6 +104,15 @@
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item"><i class="me-2 bi bi-collection"></i><%= program.genreName.ja %></li>
 				</ul>
+				<div class="card-header h5 fw-bold">
+					<%- __("登壇者") %>
+				</div>
+				<ul class="list-group list-group-flush">
+					<% for (let key in program.presenters) { %>
+						<% let presenter = program.presenters[key] ; %> 
+						<li class="list-group-item"><img class="border rounded img-thumbnai" src="<%= presenter.photoURL %>" width="50"><span class="m-3"><%= presenter.name.ja %></span></li>
+					<% } %>
+				</ul>
 			</div>
 
 			<div class="my-3">

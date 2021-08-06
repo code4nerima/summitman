@@ -155,7 +155,7 @@ router.post('/edit', wrap(async function(req, res, next) {
         program = recv.data ;
     } else {
         program = {
-            name: {},
+            title: {},
             description: {}} ;
     }
 

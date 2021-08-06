@@ -106,7 +106,11 @@
 	"登壇者登録に戻る": "Back to Register Presenter",
 	"録画セッション": "Recoreded session",
 	"プログラムオーナーによる入力が完了したらチェックしてください": "Please check it if you finished to input details.",
-	"1日目": "1日目",
-	"2日目": "2日目",
-	"休憩": "休憩"
+	"1日目": "Day 1",
+	"2日目": "Day 2",
+	"休憩": "Break",
+	"メール送信": "Send Email",
+	"かな": "Kana",
+	"登壇者": "Presenters",
+	"プログラムのタイトルを100文字以内で入力してください。": "Input program title within 100 letters."
 }
