@@ -2,7 +2,7 @@ function getRoleString(role) {
     let roleString ;
 
     if (role == 0) {
-        roleString = 'スタッフ' ;
+        roleString = '参加者' ;
     } else if (role == 1) {
         roleString = '管理者' ;
     } else if (role == 2) {
