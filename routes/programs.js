@@ -170,9 +170,10 @@ router.post('/edit', wrap(async function(req, res, next) {
         program.endTime = req.body.endTime ;
         program.trackId = req.body.trackId ;
         program.category = req.body.category ;
-        program.genreIds = req.body.genreIds == undefined ? [] : req.body.genreIds ;
         program.email = req.body.email ;
     }
+
+    program.genreIds = req.body.genreIds == undefined ? [] : req.body.genreIds ;
 
     program.description["ja"] = req.body.ja_description ;
     program.description["en"] = req.body.en_description ;
