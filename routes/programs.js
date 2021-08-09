@@ -87,6 +87,7 @@ router.get('/edit', wrap(async function(req, res, next) {
         title: {},
         description: {},
         genreIds: [],
+        urls: [],
     } ;
     
     if (programId != undefined) {
