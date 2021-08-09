@@ -127,5 +127,7 @@
 	"参加者": "Attendee",
 	"関連リンク": "Related Link",
 	"URL": "URL",
-	"入力完了": "Input Completed"
+	"入力完了": "Input Completed",
+	"認証メールが届いているので承認してください。": "Please check your email and click the authorization URL.",
+	"承認済み": "I Authorized"
 }
