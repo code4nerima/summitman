@@ -275,10 +275,13 @@ router.get('/view', wrap(async function(req, res, next) {
 
     let editable = await functions.isAccessAvailableToProgram(user, program) ;
 
+    let currentUserProfile = (await clientAdapter.getUserProfile(req, currentUser.uid)).data ;
+
     res.render('programView', {
         program: program,
         trackIdMap: trackIdMap,
         editable: editable,
+        role: currentUserProfile.role,
     });	
 })) ;
 
