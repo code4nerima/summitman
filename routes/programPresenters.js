@@ -208,12 +208,23 @@ router.post('/photo', upload.single('file'), wrap(async function(req, res, next)
         let programId = req.body.programId ;
         let presenterId = req.body.presenterId ;
 
+        let presenter ;
+        
+        {
+            let recv = await clientAdapter.getPresenter(req, programId, presenterId) ;
+            presenter = recv.data ;
+        }
+    
         var bucket = admin.storage().bucket();
 
-        try {
-            await bucket.file("photo_" + presenterId).delete() ;
-        } catch (e) {
+        if (presenter.photoURL != '') {
+            let fileName = presenter.photoURL.substring(presenter.photoURL.lastIndexOf('/') + 1)
 
+            try {
+                await bucket.file(fileName).delete() ;
+            } catch (e) {
+                console.log(e) ;
+            }
         }
 
         let publicUrl = '' ;
@@ -229,19 +240,17 @@ router.post('/photo', upload.single('file'), wrap(async function(req, res, next)
 
             await image.toFile(req.file.path + "_") ;
 
+            let date = new Date() ;
+            
             await bucket.upload(req.file.path + "_", {
-                destination: "photo_" + presenterId,
+                destination: "photo_" + presenterId + '_' + date.getTime(),
             });
 
-            const file = bucket.file("photo_" + presenterId) ;
+            const file = bucket.file("photo_" + presenterId + '_' + date.getTime()) ;
             publicUrl = file.publicUrl();
         }
 
-        {
-            let recv = await clientAdapter.getPresenter(req, programId, presenterId) ;
-        
-            let presenter = recv.data ;
-    
+        {    
             presenter.photoURL = publicUrl ;
 
             await clientAdapter.updatePresenter(req, programId, presenter) ;
@@ -267,19 +276,26 @@ router.get('/photoDelete', wrap(async function(req, res, next) {
     let programId = req.query.programId ;
     let presenterId = req.query.presenterId ;
 
+    let presenter ;
+        
+    {
+        let recv = await clientAdapter.getPresenter(req, programId, presenterId) ;
+        presenter = recv.data ;
+    }
+
     var bucket = admin.storage().bucket();
 
-    try {
-        await bucket.file("photo_" + presenterId).delete() ;
-    } catch (e) {
+    if (presenter.photoURL != '') {
+        let fileName = presenter.photoURL.substring(presenter.photoURL.lastIndexOf('/') + 1)
 
+        try {
+            await bucket.file(fileName).delete() ;
+        } catch (e) {
+            console.log(e) ;
+        }
     }
 
     {
-        let recv = await clientAdapter.getPresenter(req, programId, presenterId) ;
-    
-        let presenter = recv.data ;
-
         presenter.photoURL = "" ;
 
         await clientAdapter.updatePresenter(req, programId, presenter) ;

@@ -108,15 +108,33 @@ router.post('/photo', upload.single('file'), wrap(async function(req, res, next)
         return ;
     }
 
+    let currentUser = req.session.user ;
+
+    let userProfile ;
+
+    {
+        let recv = await clientAdapter.getUserProfile(req, currentUser.uid) ;
+
+        if (recv.result == 1) {
+            userProfile = recv.data ;
+        } else {
+            userProfile = {} ;
+        }
+    }
+
     try {
         let currentUser = req.session.user ;
 
         var bucket = admin.storage().bucket();
 
-        try {
-            await bucket.file("photo_" + currentUser.uid).delete() ;
-        } catch (e) {
+        if (userProfile.photoURL != '') {
+            let fileName = userProfile.photoURL.substring(userProfile.photoURL.lastIndexOf('/') + 1)
 
+            try {
+                await bucket.file(fileName).delete() ;
+            } catch (e) {
+                console.log(e) ;
+            }
         }
 
         let publicUrl = '' ;
@@ -132,28 +150,20 @@ router.post('/photo', upload.single('file'), wrap(async function(req, res, next)
 
             await image.toFile(req.file.path + "_") ;
 
+            const date = new Date();
+
             await bucket.upload(req.file.path + "_", {
-                destination: "photo_" + currentUser.uid,
+                destination: "photo_" + currentUser.uid + '_' + date.getTime()
             });
 
-            const file = bucket.file("photo_" + currentUser.uid) ;
+            const file = bucket.file("photo_" + currentUser.uid + '_' + date.getTime()) ;
             publicUrl = file.publicUrl();
         }
 
         {
-            let data ;
-            
-            let recv = await clientAdapter.getUserProfile(req, currentUser.uid) ;
-    
-            if (recv.result == 1) {
-                data = recv.data ;
-            } else {
-                data = {} ;
-            }
+            userProfile.photoURL = publicUrl ;
 
-            data.photoURL = publicUrl ;
-
-            await clientAdapter.updateUserProfile(req, data) ;
+            await clientAdapter.updateUserProfile(req, userProfile) ;
         }
 
         res.setHeader('Content-Type', 'application/json');
@@ -175,28 +185,34 @@ router.get('/photoDelete', wrap(async function(req, res, next) {
 
     let currentUser = req.session.user ;
 
-    var bucket = admin.storage().bucket();
-
-    try {
-        await bucket.file("photo_" + currentUser.uid).delete() ;
-    } catch (e) {
-
-    }
+    let userProfile ;
 
     {
-        let data ;
-
         let recv = await clientAdapter.getUserProfile(req, currentUser.uid) ;
 
         if (recv.result == 1) {
-            data = recv.data ;
+            userProfile = recv.data ;
         } else {
-            data = {} ;
+            userProfile = {} ;
         }
+    }
 
-        data.photoURL = "" ;
+    var bucket = admin.storage().bucket();
 
-        await clientAdapter.updateUserProfile(req, data) ;
+    if (userProfile.photoURL != '') {
+        let fileName = userProfile.photoURL.substring(userProfile.photoURL.lastIndexOf('/') + 1)
+
+        try {
+            await bucket.file(fileName).delete() ;
+        } catch (e) {
+            console.log(e) ;
+        }
+    }
+
+    {
+        userProfile.photoURL = "" ;
+
+        await clientAdapter.updateUserProfile(req, userProfile) ;
     }
 
     res.setHeader('Content-Type', 'application/json');
