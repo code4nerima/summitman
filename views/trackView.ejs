@@ -8,18 +8,18 @@
 
 		<div class="container p-2">
 
-			<h1 class="mb-5">トラック詳細</h1>
+			<h1 class="mb-5"><%- __("トラック詳細") %></h1>
 
 			<% if (role == 1) { %>
 				<div class="my-3">
-					<a class="btn btn-primary" href="/tracks/edit?trackId=<%= track.trackId %>">編集</a>
+					<a class="btn btn-primary" href="/tracks/edit?trackId=<%= track.trackId %>"><%- __("編集") %></a>
 					<button type="button" class="btn btn-danger" onclick="location.href='/tracks/delete?trackId=<%= track.trackId %>'; return false;">削除</button>
 				</div>
 			<% } %>
 
 			<div class="card my-1">
 				<div class="card-header h5 fw-bold">
-					名前
+					<%- __("名前") %>
 				</div>
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item"><%= track.name.ja %></li>
@@ -31,7 +31,7 @@
 
 			<div class="card my-1">
 				<div class="card-header h5 fw-bold">
-					Zoomミーティング情報
+					<%- __("Zoomミーティング情報") %>
 				</div>
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item"><%= track.meetingURL %></li>
@@ -42,7 +42,7 @@
 
 			<div class="card my-1">
 				<div class="card-header h5 fw-bold">
-					カスタムストリーミングサービスを設定
+					<%- __("カスタムストリーミングサービスを設定") %>
 				</div>
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item"><%= track.streamURL %></li>
@@ -53,7 +53,7 @@
 
 			<div class="card my-1">
 				<div class="card-header h5 fw-bold">
-					その他
+					<%- __("その他") %>
 				</div>
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item"><%= track.station %></li>

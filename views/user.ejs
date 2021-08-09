@@ -8,7 +8,7 @@
 
 		<div class="container p-2">
 
-			<h1 class="mb-5">プロフィール</h1>
+			<h1 class="mb-5"><%- __("プロフィール") %></h1>
 				<div class="card">
 					<ul class="list-group list-group-flush">
 						<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("日") %></span><%= user.name.ja %></li>
@@ -20,11 +20,11 @@
 				</div>
 			<% if (editable) { %>
 			<div class="my-3">
-				<a class="btn btn-primary" href="/profile?uid=<%= user.uid %>">編集する</a>
+				<a class="btn btn-primary" href="/profile?uid=<%= user.uid %>"><%- __("編集する") %></a>
 			</div>
 			<% } %>
 			<div class="my-3">
-				<button type="button" class="btn btn-danger" onclick="window.history.back(-1);return false;">戻る</button>
+				<button type="button" class="btn btn-danger" onclick="window.history.back(-1);return false;"><%- __("戻る") %></button>
 			</div>
 		</div>
 	</body>
