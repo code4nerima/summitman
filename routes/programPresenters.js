@@ -95,6 +95,7 @@ router.get('/edit', wrap(async function(req, res, next) {
         description: {},
         photoURL: "",
         sortOrder: 0,
+        urls: [],
     } ;
 
     if (presenterId != undefined) {
