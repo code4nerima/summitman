@@ -10,8 +10,7 @@
 
 			<h1 class="mb-5"><%- __("プログラム詳細") %></h1>
 
-			<% if (editable) { %>
-				
+			<% if (isProgramOwner || role == 1) { %>
 				<div class="row mb-3">
 					<div class="col-sm mb-1">
 						<button type="button" class="btn btn-primary" onclick="location.href='/programs/edit?programId=<%= program.programId %>';" style="width: 100%;"><%- __("編集する") %></button>
@@ -29,10 +28,24 @@
 						<button type="button" class="btn btn-success" onclick="location.href='/graphigRecordings?programId=<%= program.programId %>';" style="width: 100%;"><%- __("グラレコアップロード") %></button>
 					</div>
 				</div>
+			<% } else if (role == 3) { %>
 				<div class="row mb-3">
 					<div class="col-sm mb-1">
+						<button type="button" class="btn btn-primary" onclick="location.href='/programs/edit?programId=<%= program.programId %>';" style="width: 100%;"><%- __("編集する") %></button>
+					</div>
+					<div class="col-sm mb-1">
+						<button type="button" class="btn btn-success" onclick="location.href='/programOwners?programId=<%= program.programId %>';" style="width: 100%;" disabled><%- __("プログラムオーナー登録") %></button>
+					</div>
+					<div class="col-sm mb-1">
+						<button type="button" class="btn btn-success" onclick="location.href='/programPresenters?programId=<%= program.programId %>';" style="width: 100%;"><%- __("登壇者登録") %></button>
+					</div>
+					<div class="col-sm mb-1">
+						<button type="button" class="btn btn-success" onclick="location.href='/programMembers?programId=<%= program.programId %>';" style="width: 100%;" disabled><%- __("スタッフ登録") %></button>
+					</div>
+					<div class="col-sm mb-1">
+						<button type="button" class="btn btn-success" onclick="location.href='/graphigRecordings?programId=<%= program.programId %>';" style="width: 100%;" disabled><%- __("グラレコアップロード") %></button>
+					</div>
 				</div>
-			</div>
 			<% } %>
 
 			<div class="card my-1">
@@ -116,7 +129,7 @@
 			</div>
 
 			<div class="my-3">
-				<button type="button" class="btn btn-danger" style="width: 100%;" onclick="location.href='/programs';"><%- __("プログラム一覧へ戻る") %></button>
+				<button type="button" class="btn btn-danger" style="width: 100%;" onclick="location.href='/programs?showingProgramId=<%= program.programId %>';"><%- __("プログラム一覧へ戻る") %></button>
 			</div>
 		</div>
 	</body>

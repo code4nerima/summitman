@@ -25,7 +25,7 @@ router.get('/', wrap(async function(req, res, next) {
 
     user.email = currentUser.email ;
     
-    if (!await functions.isAccessAvailableToProgram(user, program)) {
+    if (!await functions.isProgramOwner(user, program) && user.role != 1) {
         res.redirect('/') ;
         return ;
     }

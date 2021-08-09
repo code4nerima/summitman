@@ -28,12 +28,18 @@ router.get('/', wrap(async function(req, res, next) {
 
     user.email = currentUser.email ;
 
-    if (!await functions.isAccessAvailableToProgram(user, program)) {
+    let isProgramOwner = await functions.isProgramOwner(user, program) ;
+
+    if (!isProgramOwner && user.role != 1 && user.role != 3) {
         res.redirect('/') ;
         return ;
     }
 
-    res.render('programPresenters', {program: program});		 
+    res.render('programPresenters', {
+        program: program,
+        isProgramOwner: isProgramOwner,
+        role: user.role,
+    });		 
 })) ;
 
 router.get('/data', wrap(async function(req, res, next) {
@@ -75,7 +81,7 @@ router.get('/edit', wrap(async function(req, res, next) {
 
         user.email = currentUser.email ;
 
-        if (!await functions.isAccessAvailableToProgram(user, program)) {
+        if (!await functions.isProgramOwner(user, program) && user.role != 1 && user.role != 3) {
             res.redirect('/') ;
             return ;
         }
@@ -122,6 +128,10 @@ router.get('/edit', wrap(async function(req, res, next) {
                 presenterId: presenterId,
                 uid: uid
             }) ;
+    }
+
+    if (presenter.urls.length == 0) {
+        presenter.urls = [{title: {}, sortOrder: 0, url: ''}] ;
     }
 
     presenter.programId = programId ;
@@ -173,6 +183,17 @@ router.post('/edit', wrap(async function(req, res, next) {
     presenter.description["zh-CN"] = req.body['zh-CN_description'] ;
 
     presenter.sortOrder = req.body.sortOrder ;
+
+    presenter.urls = [{
+        title: {
+            'ja': req.body.ja_linkTitle,
+            'en': req.body.en_linkTitle,
+            'zh-TW': req.body['zh-TW_linkTitle'],
+            'zh-CN': req.body['zh-CN_linkTitle'],
+        }, 
+        sortOrder: 0, 
+        url: req.body.linkURL,
+    }] ;
 
     if (presenterId != undefined) {
         await clientAdapter.updatePresenter(req, programId, presenter) ;

@@ -45,9 +45,25 @@ router.get('/data', wrap(async function(req, res, next) {
 
     let recv = await clientAdapter.listProgram(req, 0, -1) ;
 
+    let currentUser = req.session.user ;
+    let currentUserProfile = (await clientAdapter.getUserProfile(req, currentUser.uid)).data ;
+    let programs = [] ;
+
+    if (currentUserProfile.role != 1) {
+        for (let key in recv.data.programs) {
+            if (recv.data.programs[key].category == 4) {
+                continue ;
+            }
+
+            programs.push(recv.data.programs[key]) ;
+        }
+    } else {
+        programs = recv.data.programs ;
+    }
+
     let data = {
         lang: req.query.lang == undefined ? 'ja' : req.query.lang,
-        programs: recv.data.programs,
+        programs: programs,
         trackIdMap: trackIdMap,
     } ;
 
@@ -77,12 +93,16 @@ router.get('/edit', wrap(async function(req, res, next) {
         program = (await clientAdapter.getProgram(req, programId)).data ;
     }
 
+    if (program.urls.length == 0) {
+        program.urls = [{title: {}, sortOrder: 0, url: ''}] ;
+    }
+
     {
         let user = (await clientAdapter.getUserProfile(req, uid)).data ;
 
         user.email = currentUser.email ;
 
-        if (!await functions.isAccessAvailableToProgram(user, program)) {
+        if (!await functions.isProgramOwner(user, program) && user.role != 1 && user.role != 3) {
             res.redirect('/') ;
             return ;
         }
@@ -180,6 +200,17 @@ router.post('/edit', wrap(async function(req, res, next) {
     program.description["zh-TW"] = req.body['zh-TW_description'] ;
     program.description["zh-CN"] = req.body['zh-CN_description'] ;
 
+    program.urls = [{
+        title: {
+            'ja': req.body.ja_linkTitle,
+            'en': req.body.en_linkTitle,
+            'zh-TW': req.body['zh-TW_linkTitle'],
+            'zh-CN': req.body['zh-CN_linkTitle'],
+        }, 
+        sortOrder: 0, 
+        url: req.body.linkURL,
+    }] ;
+
     program.inputCompleted = req.body.inputCompleted != undefined ? "1" : "0" ;
 
     if (programId != undefined) {
@@ -273,14 +304,14 @@ router.get('/view', wrap(async function(req, res, next) {
 
     user.email = currentUser.email ;
 
-    let editable = await functions.isAccessAvailableToProgram(user, program) ;
+    let isProgramOwner = await functions.isProgramOwner(user, program) ;
 
     let currentUserProfile = (await clientAdapter.getUserProfile(req, currentUser.uid)).data ;
 
     res.render('programView', {
         program: program,
         trackIdMap: trackIdMap,
-        editable: editable,
+        isProgramOwner: isProgramOwner,
         role: currentUserProfile.role,
     });	
 })) ;

@@ -165,11 +165,38 @@
 					</div>
 				</div>
 
+				<h2><%- __("関連リンク") %></h2>
+				<div class="row row-cols-1 row-cols-md-2 g-2 mb-3">
+					<div class="col-sm">
+						<label for="name" class="form-label"><%- __("タイトル（日本語）") %></label>
+						<input maxlength="100" type="text" class="form-control" id="ja_linkTitle" name="ja_linkTitle" value="<%= presenter.urls[0].title['ja'] %>">
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label"><%- __("タイトル（英語）") %></label>
+						<input maxlength="100" type="text" class="form-control" id="en_linkTitle" name="en_linkTitle" value="<%= presenter.urls[0].title['en'] %>">
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label"><%- __("タイトル（繁体字）") %></label>
+						<input maxlength="100" type="text" class="form-control" id="zh-TW_linkTitle" name="zh-TW_linkTitle" value="<%= presenter.urls[0].title['zh-TW'] %>">
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label"><%- __("タイトル（簡体字）") %></label>
+						<input maxlength="100" type="text" class="form-control" id="zh-CN_linkTitle" name="zh-CN_linkTitle" value="<%= presenter.urls[0].title['zh-CN'] %>">
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-sm">
+						<label for="name" class="form-label"><%- __("URL") %></label>
+						<input type="text" class="form-control" id="linkURL" name="linkURL" value="<%= presenter.urls[0].url %>">
+					</div>
+				</div>
+
 				<input type="hidden" name="programId" value="<%= programId %>">
 
 				<% if (presenter.presenterId != undefined) { %>
 					<input type="hidden" name="presenterId" value="<%= presenter.presenterId %>">
 				<% } %>
+				
 				<div class="mb-3">
 					<% if (presenter.presenterId != undefined) { %>
 						<button type="submit" class="btn btn-primary"><%- __("編集を終了する") %></button>
