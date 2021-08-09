@@ -48,17 +48,18 @@ router.get('/data', wrap(async function(req, res, next) {
     let currentUser = req.session.user ;
     let currentUserProfile = (await clientAdapter.getUserProfile(req, currentUser.uid)).data ;
     let programs = [] ;
+    let breakPrograms = [] ;
 
-    if (currentUserProfile.role != 1) {
-        for (let key in recv.data.programs) {
-            if (recv.data.programs[key].category == 4) {
-                continue ;
-            }
-
+    for (let key in recv.data.programs) {
+        if (recv.data.programs[key].category == 4) {
+            breakPrograms.push(recv.data.programs[key]) ;
+        } else {
             programs.push(recv.data.programs[key]) ;
         }
-    } else {
-        programs = recv.data.programs ;
+    }
+
+    if (currentUserProfile.role == 1) {
+        programs = programs.concat(breakPrograms) ;
     }
 
     let data = {
