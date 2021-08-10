@@ -194,7 +194,15 @@ router.post('/edit', wrap(async function(req, res, next) {
         program.email = req.body.email ;
     }
 
-    program.genreIds = req.body.genreIds == undefined ? [] : req.body.genreIds ;
+    if (req.body.genreIds != undefined) {
+        if (typeof(req.body.genreIds) == "Array") {
+            program.genreIds = req.body.genreIds ;
+        } else {
+            program.genreIds = [req.body.genreIds] ;
+        }
+    } else {
+        program.genreIds = [] ;
+    }
 
     program.description["ja"] = req.body.ja_description ;
     program.description["en"] = req.body.en_description ;
