@@ -195,8 +195,10 @@ router.post('/edit', wrap(async function(req, res, next) {
         program.email = req.body.email ;
     }
 
+    console.log(typeof(req.body.genreIds)) ;
+
     if (req.body.genreIds != undefined) {
-        if (typeof(req.body.genreIds) == "Array") {
+        if (Array.isArray(req.body.genreIds)) {
             program.genreIds = req.body.genreIds ;
         } else {
             program.genreIds = [req.body.genreIds] ;
