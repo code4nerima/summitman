@@ -50,7 +50,7 @@
 
 			<div class="card my-1">
 				<div class="card-header h5 fw-bold">
-					<%- __("タイトル") %>
+					<span class="badge bg-success me-2"><% if (program.inputCompleted == 1) { %><%- __("入力完了") %><% } %></span><%- __("タイトル") %>
 				</div>
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("日") %></span><%= program.title.ja %></li>

@@ -24,8 +24,8 @@
 				<div class="row mb-3">
 					<div class="col-sm">
 						<div class="form-check">
-							<input name="inputCompleted" class="form-check-input" type="checkbox" value="1" id="inputCompleted" <% if (program.inputCompleted == 1) { %>checked<% } %>>
-							<label class="form-check-label" for="inputCompleted"><span class="fw-bold"><%- __("プログラムオーナーによる入力が完了したらチェックしてください") %></span></label>
+							<input name="inputCompleted" class="form-check-input" style="transform: scale(1.4);" type="checkbox" value="1" id="inputCompleted" <% if (program.inputCompleted == 1) { %>checked<% } %>>
+							<label class="form-check-label h4" for="inputCompleted"><span class="fw-bold"><%- __("プログラムオーナーによる入力が完了したらこちらをチェックしてください") %></span></label>
 						</div>
 					</div>	
 				</div>
@@ -82,9 +82,9 @@
 					<div class="col-sm">
 						<button type="button" class="btn btn-secondary my-3" onclick="onClickDay(0)" <% if (role != 1) { %>disabled<% } %>><%- __("1日目") %></button>
 						<button type="button" class="btn btn-secondary my-3" onclick="onClickDay(1)" <% if (role != 1) { %>disabled<% } %>><%- __("2日目") %></button>
-						<button type="button" class="btn btn-secondary my-3" onclick="onClickTime(0)" <% if (role != 1) { %>disabled<% } %>>14:25-15:15</button>
-						<button type="button" class="btn btn-secondary my-3" onclick="onClickTime(1)" <% if (role != 1) { %>disabled<% } %>>15:25-16:15</button>
-						<button type="button" class="btn btn-secondary my-3" onclick="onClickTime(2)" <% if (role != 1) { %>disabled<% } %>>16:25-17:15</button>
+						<button type="button" class="btn btn-secondary my-3" onclick="onClickTime(0)" <% if (role != 1) { %>disabled<% } %>>14:30-15:20</button>
+						<button type="button" class="btn btn-secondary my-3" onclick="onClickTime(1)" <% if (role != 1) { %>disabled<% } %>>15:30-16:20</button>
+						<button type="button" class="btn btn-secondary my-3" onclick="onClickTime(2)" <% if (role != 1) { %>disabled<% } %>>16:30-17:20</button>
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -173,6 +173,16 @@
 				<% if (program.programId != undefined) { %>
 					<input type="hidden" name="programId" value="<%= program.programId %>">
 				<% } %>
+
+				<div class="mb-3">
+					<% if (program.programId != undefined) { %>
+						<button type="submit" class="btn btn-primary"><%- __("編集を終了する") %></button>
+						<label><%- __("編集が終わったらブラウザの戻るを使用しないで必ずこのボタンを押してください。") %></label>
+					<% } else { %>
+						<button type="submit" class="btn btn-primary"><%- __("作成する") %></button>
+						<button type="button" class="btn btn-danger" onclick="window.history.back(-1);return false;"><%- __("戻る") %></button>
+					<% } %>
+				</div>
 			</form>
 		</div>
 
@@ -211,14 +221,14 @@
 
 			function onClickTime(time) {
 				if (time == 0) {
-					$("#startTime").val("14:25") ;
-					$("#endTime").val("15:15") ;
+					$("#startTime").val("14:30") ;
+					$("#endTime").val("15:20") ;
 				} else if (time == 1) {
-					$("#startTime").val("15:25") ;
-					$("#endTime").val("16:15") ;
+					$("#startTime").val("15:30") ;
+					$("#endTime").val("16:20") ;
 				} else if (time == 2) {
-					$("#startTime").val("16:25") ;
-					$("#endTime").val("17:15") ;
+					$("#startTime").val("16:30") ;
+					$("#endTime").val("17:20") ;
 				}
 			}
 		</script>
