@@ -13,3 +13,17 @@ function getRoleString(role) {
 
     return roleString ;
 }
+
+function getLangLabel(lang) {
+    if (lang == "ja") {
+        return "日本語" ;
+    } else if (lang == "en") {
+        return "英語" ;
+    } else if (lang == "zh-TW") {
+        return "繁体字" ;
+    } else if (lang == "zh-CN") {
+        return "簡体字" ;
+    } else {
+        return lang ;
+    }
+}

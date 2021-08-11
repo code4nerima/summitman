@@ -17,6 +17,7 @@
 			<% } %>
 
 			<div class="d-grid gap-2 d-md-block">
+				<div id="currentLang"></div>
 				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("ja", 0, false);'><%- __("日本語") %></a>
 				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("en", 0, false);'><%- __("英語") %></a>
 				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("zh-TW", 0, false);'><%- __("繁体字") %></a>
@@ -27,10 +28,20 @@
 		</div>
 		<script>
 			$(function () {
-				reloadRequest("ja", 0, true) ;
+				let lang = localStorage["programs_lang"] ;
+
+				if (lang == undefined) {
+					lang = "ja" ;
+				}
+				
+				reloadRequest(lang, 0, true) ;
 			}) ;
 
 			async function reloadRequest(lang, page, isScrolling) {
+				
+				localStorage.setItem('programs_lang', lang) ;
+
+				$("#currentLang").text(getLangLabel(lang)) ;
 				
 				let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>' ;
 				
@@ -99,13 +110,19 @@
 					categoryString = "ワークショップ" ;
 				}
 
+				let titleString = program.title[lang] ;
+
+				if (titleString == undefined || titleString == "") {
+					titleString = '<%- __("タイトルなし") %>' ;
+				}
+
 				let inputCompletedString = program.inputCompleted == 1 ? '<%- __("入力完了") %>' : '' ;
 
 				return `<div class="card my-3" id="${program.programId}">
 							<div class="card-header h5 fw-bold">
 								<div class="row">
 									<div class="col">
-										<span class="badge bg-success me-2">${inputCompletedString}</span> <a href="/programs/view?programId=${program.programId}">${program.title[lang]}</a>
+										<span class="badge bg-success me-2">${inputCompletedString}</span> <a href="/programs/view?programId=${program.programId}">${titleString}</a>
 									</div>
 								</div>
 							</div>
