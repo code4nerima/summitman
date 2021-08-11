@@ -27,6 +27,7 @@
 			<% } %>
 			
 			<div class="d-grid gap-2 d-md-block">
+				<div id="currentLang"></div>
 				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("ja", 0);'><%- __("日本語") %></a>
 				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("en", 0);'><%- __("英語") %></a>
 				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("zh-TW", 0);'><%- __("繁体字") %></a>
@@ -37,11 +38,21 @@
 		</div>
 		<script>
 			$(function () {
-				reloadRequest("ja", 0) ;
+				let lang = localStorage["programPresenters_lang"] ;
+
+				if (lang == undefined) {
+					lang = "ja" ;
+				}
+
+				reloadRequest(lang, 0) ;
 			}) ;
 
 			async function reloadRequest(lang, page) {
 				
+				localStorage.setItem('programPresenters_lang', lang) ;
+
+				$("#currentLang").text(getLangLabel(lang)) ;
+
 				let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>' ;
 				
 				$("#presenters").empty() ;
