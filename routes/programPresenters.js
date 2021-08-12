@@ -239,10 +239,9 @@ router.post('/photo', upload.single('file'), wrap(async function(req, res, next)
     
         var bucket = admin.storage().bucket();
 
-        if (presenter.photoURL != '') {
-            let fileName = presenter.photoURL.substring(presenter.photoURL.lastIndexOf('/') + 1)
-
+        if (presenter.photoURL != null && presenter.photoURL != '') {
             try {
+                let fileName = presenter.photoURL.substring(presenter.photoURL.lastIndexOf('/') + 1)
                 await bucket.file(fileName).delete() ;
             } catch (e) {
                 console.log(e) ;
