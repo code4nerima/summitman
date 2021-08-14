@@ -28,6 +28,12 @@
 						<button type="button" class="btn btn-success" onclick="location.href='/graphigRecordings?programId=<%= program.programId %>';" style="width: 100%;"><%- __("グラレコアップロード") %></button>
 					</div>
 				</div>
+				<div class="row mb-3">
+					<div class="col-sm mb-1">
+						<div class="my-3"><%- __("プログラムの申請者及びプログラムオーナーの方は「編集する」ボタンを押して詳細の入力と「登壇者登録」を押して登壇者情報の作成をお願いします。申請者やオーナーの方自身が登壇者の場合も登壇者としてご自身を作成してください。") %></div>
+						<div class="my-3"><%- __("入力が完了したら編集画面内の「プログラムオーナーによる入力が完了したらこちらをチェックしてください」をチェックして編集を終了してください。") %></div>
+					</div>
+				</div>
 			<% } else if (role == 3) { %>
 				<div class="row mb-3">
 					<div class="col-sm mb-1">
@@ -123,7 +129,26 @@
 				<ul class="list-group list-group-flush">
 					<% for (let key in program.presenters) { %>
 						<% let presenter = program.presenters[key] ; %> 
-						<li class="list-group-item"><img class="border rounded img-thumbnai" src="<%= presenter.photoURL %>" width="50"><span class="m-3"><%= presenter.name.ja %></span></li>
+						<li class="list-group-item">
+							<div class="row">
+								<div class="col">
+									<img class="border rounded img-thumbnai" src="<%= presenter.photoURL %>" width="50">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<span class="badge bg-secondary me-2"><%- __("日") %></span><%= presenter.name.ja %>
+									<div><%= presenter.description.ja %></div>
+									<span class="badge bg-secondary me-2"><%- __("英") %></span><%= presenter.name.en %>
+									<div><%= presenter.description.en %></div>
+									<span class="badge bg-secondary me-2"><%- __("繁") %></span><%= presenter.name["zh-TW"] %>
+									<div><%= presenter.description["zh-TW"] %></div>
+									<span class="badge bg-secondary me-2"><%- __("簡") %></span><%= presenter.name["zh-CN"] %>
+									<div><%= presenter.description["zh-CN"] %></div>
+								</div>
+							</div>
+							
+						</li>
 					<% } %>
 				</ul>
 			</div>
