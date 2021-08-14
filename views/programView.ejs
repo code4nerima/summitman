@@ -129,15 +129,17 @@
 				<ul class="list-group list-group-flush">
 					<% for (let key in program.presenters) { %>
 						<% let presenter = program.presenters[key] ; %> 
+						<% let photoURL = presenter.photoURL ; %>
+						<% if (photoURL == null || photoURL == "") { photoURL = "../images/profile.png" ; } %>
 						<li class="list-group-item">
 							<div class="row">
 								<div class="col">
-									<img class="border rounded img-thumbnai" src="<%= presenter.photoURL %>" width="50">
+									<img class="border rounded img-thumbnai" src="<%= photoURL %>" width="50">
 								</div>
 							</div>
 							<div class="row">
 								<div class="col">
-									<span class="badge bg-secondary me-2"><%- __("日") %></span><%= presenter.name.ja %>
+									<span class="badge bg-secondary me-2"><%- __("日") %></span><%= presenter.name.ja %>（<%= presenter.name.ja_kana %>）
 									<div><%= presenter.description.ja %></div>
 									<span class="badge bg-secondary me-2"><%- __("英") %></span><%= presenter.name.en %>
 									<div><%= presenter.description.en %></div>
