@@ -101,6 +101,8 @@ router.post('/edit', wrap(async function(req, res, next) {
         streamURL: req.body.streamURL,
         streamKey: req.body.streamKey,
         broadcastingURL: req.body.broadcastingURL,
+        udtalkWebURL: req.body.udtalkWebURL,
+        udtalkWebURL: req.body.udtalkWebURL,
         station: req.body.station,
     } ;
 

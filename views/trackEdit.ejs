@@ -79,6 +79,20 @@
 					</div>
 				</div>
 
+				<h2>UDトークを設定</h2>
+				<div class="row">
+					<div class="col-sm">
+						<div class="mb-3">
+							<label for="udtalkWebURL" class="form-label"><%- __("ウェブで公開URL") %></label>
+							<input type="text" class="form-control" id="udtalkWebURL" name="udtalkWebURL" value="<%= track.udtalkWebURL %>">
+						</div>
+						<div class="mb-3">
+							<label for="udtalkAppURL" class="form-label"><%- __("トークの公開URL") %></label>
+							<input type="text" class="form-control" id="udtalkAppURL" name="udtalkAppURL" value="<%= track.udtalkAppURL %>">
+						</div>						
+					</div>
+				</div>
+
 				<h2><%- __("その他") %></h2>
 				<div class="row">
 					<div class="col-sm">
