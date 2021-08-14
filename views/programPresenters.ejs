@@ -100,9 +100,17 @@
 					photoURLString = "images/profile.png" ;
 				}
 
+				let nameTranslationsString = makeTranslationsString(presenter.name) ;
+				let descriptionTranslationsString = makeTranslationsString(presenter.description) ;
+
 				return `<div class="card my-3">
 							<div class="card-body">
-								<div class="row">
+								<div class="row mb-1">
+									<div class="col">
+										${nameTranslationsString}
+									</div>
+								</div>
+								<div class="row mb-3">
 									<div class="col-auto">
 										<div id="profilePhoto"><img class="border rounded img-thumbnai" src="${photoURLString}" width="50"></div>
 									</div>
@@ -113,6 +121,11 @@
 										<button type="button" class="btn btn-danger" onclick="onClickDeletepresentersButton('${presenter.presenterId}')"><%- __("削除") %></button>
 									</div>
 								</div>	
+								<div class="row mb-1">
+									<div class="col">
+										${descriptionTranslationsString}
+									</div>
+								</div>
 								<div class="row">
 									<div class="col">
 										${presenter.description[lang]}
@@ -120,6 +133,28 @@
 								</div>							
 							</div>
 						</div>` ;
+			}
+
+			function makeTranslationsString(value) {
+				let string = "" ;
+
+				if (value.ja != undefined && value.ja != "") {
+					string += '<span class="badge bg-secondary me-2"><%- __("日") %></span>' ;
+				}
+
+				if (value.en != undefined && value.en != "") {
+					string += '<span class="badge bg-secondary me-2"><%- __("英") %></span>' ;
+				}
+
+				if (value["zh-TW"] != undefined && value["zh-TW"] != "") {
+					string += '<span class="badge bg-secondary me-2"><%- __("繁") %></span>' ;
+				}
+
+				if (value["zh-CN"] != undefined && value["zh-CN"] != "") {
+					string += '<span class="badge bg-secondary me-2"><%- __("簡") %></span>' ;
+				}
+
+				return string ;
 			}
 
 			async function onClickDeletepresentersButton(presenterId) {
