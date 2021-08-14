@@ -38,25 +38,25 @@
 				<div class="row mb-3">
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("名前（日本語）") %><span class="badge bg-danger"><%- __("必須") %></span></label>
-						<input maxlength="100" required type="text" class="form-control" id="ja_name" name="ja_name" value="<%= data.name.ja %>">
+						<input maxlength="200" required type="text" class="form-control" id="ja_name" name="ja_name" value="<%= data.name.ja %>">
 					</div>
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("名前（ふりがな）") %><span class="badge bg-danger"><%- __("必須") %></span></label>
-						<input maxlength="100" required type="text" class="form-control" id="ja_name_kana" name="ja_name_kana" value="<%= data.name.ja_kana %>">
+						<input maxlength="200" required type="text" class="form-control" id="ja_name_kana" name="ja_name_kana" value="<%= data.name.ja_kana %>">
 					</div>
 				</div>
 				<div class="row mb-3">
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("名前（英語）") %><span class="badge bg-danger"><%- __("必須") %></span></label>
-						<input maxlength="100" required type="text" class="form-control" id="en_name" name="en_name" value="<%= data.name.en %>">
+						<input maxlength="200" required type="text" class="form-control" id="en_name" name="en_name" value="<%= data.name.en %>">
 					</div>
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("名前（繁体字）") %></label>
-						<input maxlength="100" type="text" class="form-control" id="zh-TW_name" name="zh-TW_name" value="<%= data.name['zh-TW'] %>">
+						<input maxlength="200" type="text" class="form-control" id="zh-TW_name" name="zh-TW_name" value="<%= data.name['zh-TW'] %>">
 					</div>
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("名前（簡体字）") %></label>
-						<input maxlength="100" type="text" class="form-control" id="zh-CN_name" name="zh-CN_name" value="<%= data.name['zh-CN'] %>">
+						<input maxlength="200" type="text" class="form-control" id="zh-CN_name" name="zh-CN_name" value="<%= data.name['zh-CN'] %>">
 					</div>
 				</div>
 				<% if (adminAccess) { %>

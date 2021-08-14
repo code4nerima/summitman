@@ -48,34 +48,34 @@
 				<div class="row row-cols-1 row-cols-md-2 g-2 mb-3">
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("タイトル（日本語）") %><span class="badge bg-danger"><%- __("必須") %></span></label>
-						<input maxlength="100" required type="text" class="form-control" id="ja_title" name="ja_title" value="<%= program.title['ja'] %>">
+						<input maxlength="200" required type="text" class="form-control" id="ja_title" name="ja_title" value="<%= program.title['ja'] %>">
 					</div>
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("タイトル（英語）") %></label>
-						<input maxlength="100" type="text" class="form-control" id="en_title" name="en_title" value="<%= program.title['en'] %>">
+						<input maxlength="200" type="text" class="form-control" id="en_title" name="en_title" value="<%= program.title['en'] %>">
 					</div>
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("タイトル（繁体字）") %></label>
-						<input maxlength="100" type="text" class="form-control" id="zh-TW_title" name="zh-TW_title" value="<%= program.title['zh-TW'] %>">
+						<input maxlength="200" type="text" class="form-control" id="zh-TW_title" name="zh-TW_title" value="<%= program.title['zh-TW'] %>">
 					</div>
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("タイトル（簡体字）") %></label>
-						<input maxlength="100" type="text" class="form-control" id="zh-CN_title" name="zh-CN_title" value="<%= program.title['zh-CN'] %>">
+						<input maxlength="200" type="text" class="form-control" id="zh-CN_title" name="zh-CN_title" value="<%= program.title['zh-CN'] %>">
 					</div>
 				</div>
 				<h2><%- __("詳細") %></h2>
 				<div class="row mb-3">
 					<div class="col-sm">
 						<label for="date" class="form-label"><%- __("日付") %></label>
-						<input maxlength="100" required autocomplete="off" type="text" class="form-control datepicker" id="date" name="date" value="<%= program.date %>" aria-describedby="date" <% if (role != 1) { %>disabled<% } %>>
+						<input maxlength="200" required autocomplete="off" type="text" class="form-control datepicker" id="date" name="date" value="<%= program.date %>" aria-describedby="date" <% if (role != 1) { %>disabled<% } %>>
 					</div>
 					<div class="col-sm">
 						<label for="time" class="form-label"><%- __("開始時間") %></label>
-						<input maxlength="100" required autocomplete="off" type="text" class="form-control timepicker" id="startTime" name="startTime" value="<%= program.startTime %>" aria-describedby="startTimeHelp" <% if (role != 1) { %>disabled<% } %>>
+						<input maxlength="200" required autocomplete="off" type="text" class="form-control timepicker" id="startTime" name="startTime" value="<%= program.startTime %>" aria-describedby="startTimeHelp" <% if (role != 1) { %>disabled<% } %>>
 					</div>
 					<div class="col-sm">
 						<label for="time" class="form-label"><%- __("終了時間") %></label>
-						<input maxlength="100" required autocomplete="off" type="text" class="form-control timepicker" id="endTime" name="endTime" value="<%= program.endTime %>" aria-describedby="endTimeHelp" <% if (role != 1) { %>disabled<% } %>>
+						<input maxlength="200" required autocomplete="off" type="text" class="form-control timepicker" id="endTime" name="endTime" value="<%= program.endTime %>" aria-describedby="endTimeHelp" <% if (role != 1) { %>disabled<% } %>>
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -109,7 +109,7 @@
 					</div>
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("申請者メールアドレス") %></label>
-						<input maxlength="100" type="text" class="form-control" id="email" name="email" value="<%= program.email %>" <% if (role != 1) { %>disabled<% } %>>						
+						<input maxlength="200" type="text" class="form-control" id="email" name="email" value="<%= program.email %>" <% if (role != 1) { %>disabled<% } %>>						
 					</div>
 				</div>
 				<div class="row">
@@ -148,19 +148,19 @@
 				<div class="row row-cols-1 row-cols-md-2 g-2 mb-3">
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("タイトル（日本語）") %></label>
-						<input maxlength="100" type="text" class="form-control" id="ja_linkTitle" name="ja_linkTitle" value="<%= program.urls[0].title['ja'] %>">
+						<input maxlength="200" type="text" class="form-control" id="ja_linkTitle" name="ja_linkTitle" value="<%= program.urls[0].title['ja'] %>">
 					</div>
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("タイトル（英語）") %></label>
-						<input maxlength="100" type="text" class="form-control" id="en_linkTitle" name="en_linkTitle" value="<%= program.urls[0].title['en'] %>">
+						<input maxlength="200" type="text" class="form-control" id="en_linkTitle" name="en_linkTitle" value="<%= program.urls[0].title['en'] %>">
 					</div>
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("タイトル（繁体字）") %></label>
-						<input maxlength="100" type="text" class="form-control" id="zh-TW_linkTitle" name="zh-TW_linkTitle" value="<%= program.urls[0].title['zh-TW'] %>">
+						<input maxlength="200" type="text" class="form-control" id="zh-TW_linkTitle" name="zh-TW_linkTitle" value="<%= program.urls[0].title['zh-TW'] %>">
 					</div>
 					<div class="col-sm">
 						<label for="name" class="form-label"><%- __("タイトル（簡体字）") %></label>
-						<input maxlength="100" type="text" class="form-control" id="zh-CN_linkTitle" name="zh-CN_linkTitle" value="<%= program.urls[0].title['zh-CN'] %>">
+						<input maxlength="200" type="text" class="form-control" id="zh-CN_linkTitle" name="zh-CN_linkTitle" value="<%= program.urls[0].title['zh-CN'] %>">
 					</div>
 				</div>
 				<div class="row mb-3">
