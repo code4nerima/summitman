@@ -10,10 +10,13 @@
 
 			<h1 class="mb-5"><%- __("プログラムオーナー登録") %></h1>
 
+			<h2><%- __("タイトル") %></h2>
+			
 			<div class="my-3">
-				<div class="alert alert-primary" role="alert">
-					<%= program.title.ja %>
-				</div>	
+				<div><span class="badge bg-secondary me-2"><%- __("日") %></span><%= program.title.ja %></div>
+				<div><span class="badge bg-secondary me-2"><%- __("英") %></span><%= program.title.en %></div>
+				<div><span class="badge bg-secondary me-2"><%- __("繁") %></span><%= program.title["zh-TW"] %></div>
+				<div><span class="badge bg-secondary me-2"><%- __("簡") %></span><%= program.title["zh-CN"] %></div>
 			</div>
 
 			<div class="my-3">

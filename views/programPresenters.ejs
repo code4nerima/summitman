@@ -10,22 +10,21 @@
 
 			<h1 class="mb-5"><%- __("出演者／登壇者登録") %></h1>
 
+			<h2><%- __("タイトル") %></h2>
+
 			<div class="my-3">
-				<div class="alert alert-primary" role="alert">
-					<%= program.title.ja %>
-				</div>	
+				<div><span class="badge bg-secondary me-2"><%- __("日") %></span><%= program.title.ja %></div>
+				<div><span class="badge bg-secondary me-2"><%- __("英") %></span><%= program.title.en %></div>
+				<div><span class="badge bg-secondary me-2"><%- __("繁") %></span><%= program.title["zh-TW"] %></div>
+				<div><span class="badge bg-secondary me-2"><%- __("簡") %></span><%= program.title["zh-CN"] %></div>
 			</div>
 
 			<div class="my-3">
 				<button type="button" class="btn btn-success" onclick="location.href='/programs/view?programId=<%= program.programId %>';"><%- __("プログラム詳細に戻る") %></button>
 			</div>
 
-			<% if (isProgramOwner || role == 1) { %>
-			<div class="my-3">
-				<a class="btn btn-primary" href="/programPresenters/edit?programId=<%= program.programId %>"><%- __("新規作成") %></a>
-			</div>
-			<% } %>
-			
+			<h2><%- __("出演者／登壇者一覧") %></h2>
+		
 			<div class="d-grid gap-2 d-md-block">
 				<div id="currentLang"></div>
 				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("ja", 0);'><%- __("日本語") %></a>
@@ -33,6 +32,12 @@
 				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("zh-TW", 0);'><%- __("繁体字") %></a>
 				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("zh-CN", 0);'><%- __("簡体字") %></a>
 			</div>
+
+			<% if (isProgramOwner || role == 1) { %>
+				<div class="my-3">
+					<a class="btn btn-primary" href="/programPresenters/edit?programId=<%= program.programId %>"><%- __("新規作成") %></a>
+				</div>
+			<% } %>
 
 			<div id="presenters"></div>
 		</div>
