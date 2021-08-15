@@ -102,6 +102,7 @@
 
 				let nameTranslationsString = makeTranslationsString(presenter.name) ;
 				let descriptionTranslationsString = makeTranslationsString(presenter.description) ;
+				let relatedURLTranslationsString = makeTranslationsString(presenter.urls[0].title) ;
 
 				return `<div class="card my-3">
 							<div class="card-body">
@@ -126,12 +127,23 @@
 										${descriptionTranslationsString}
 									</div>
 								</div>
-								<div class="row">
+								<div class="row mb-3">
 									<div class="col">
 										${presenter.description[lang]}
 									</div>
-								</div>							
-							</div>
+								</div>		
+								<div class="row mb-1">
+									<div class="col">
+										${relatedURLTranslationsString}
+									</div>
+								</div>
+								<div class="row mb-1">
+									<div class="col">
+										<div>${presenter.urls[0].title[lang]}</div>
+										<a href="${presenter.urls[0].url}" target="_blank">${presenter.urls[0].url}</a>
+									</div>
+								</div>
+							</div>							
 						</div>` ;
 			}
 

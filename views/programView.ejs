@@ -157,6 +157,33 @@
 						<% } %>
 					<% } %>
 				</ul>
+				<div class="card-header h5 fw-bold">
+					<%- __("関連URL") %>
+				</div>
+				<ul class="list-group list-group-flush">
+					<% if (program.presenters.length == 0) { %>
+						<li class="list-group-item"><%- __("※まだ関連URLが登録されていません") %></li>
+					<% } else { %>
+						<% for (let key in program.urls) { %>
+							<% let url = program.urls[key] ; %> 
+							<li class="list-group-item">
+								<div class="row">
+									<div class="col">
+										<div><span class="badge bg-secondary me-2"><%- __("日") %></span><%= url.title.ja %></div>
+										<div><span class="badge bg-secondary me-2"><%- __("英") %></span><%= url.title.en %></div>
+										<div><span class="badge bg-secondary me-2"><%- __("繁") %></span><%= url.title["zh-TW"] %></div>
+										<div><span class="badge bg-secondary me-2"><%- __("簡") %></span><%= url.title["zh-CN"] %></div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col">
+										<a href="<%= url.url %>" target="_blank"><%= url.url %></a>
+									</div>
+								</div>
+							</li>
+						<% } %>
+					<% } %>
+				</ul>
 			</div>
 
 			<div class="my-3">
