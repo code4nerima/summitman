@@ -57,6 +57,23 @@ router.get('/data', wrap(async function(req, res, next) {
     let data = {
         presenters: recv.data.presenters
     } ;
+
+    for (let key in data.presenters) {
+        let presenter = data.presenters[key] ;
+
+        if (presenter.urls == undefined || presenter.urls.length == 0) {
+            presenter.urls = [{
+                title: {
+                    'ja': "",
+                    'en': "",
+                    'zh-TW': "",
+                    'zh-CN': "",
+                }, 
+                sortOrder: 0, 
+                url: "",
+            }]
+        }
+    }
     
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(data));
