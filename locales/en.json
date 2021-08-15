@@ -137,5 +137,7 @@
 	"※まだ出演者／登壇者が登録されていません": "*There are no presenters and participates yet.",
 	"ウェブで公開URL": "URL published for Web",
 	"トークの公開URL": "URL published for App",
-	"UDトークを設定": "UD Talk settings"
+	"UDトークを設定": "UD Talk settings",
+	"出演者／登壇者": "Presenters",
+	"入力が完了しているプログラムのみ表示する": "Show only input completed programs"
 }

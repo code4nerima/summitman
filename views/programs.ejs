@@ -16,6 +16,15 @@
 				</div>
 			<% } %>
 
+			<div class="row mb-3">
+				<div class="col-sm">
+					<div class="form-check">
+						<input name="onlyInputCompleted" class="form-check-input" type="checkbox" value="1" id="onlyInputCompleted" onclick="onClickOnlyInputCompleted()">
+						<label class="form-check-label" for="onlyInputCompleted"><%- __("入力が完了しているプログラムのみ表示する") %></label>
+					</div>
+				</div>	
+			</div>
+
 			<div class="d-grid gap-2 d-md-block">
 				<div id="currentLang"></div>
 				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("ja", 0, false);'><%- __("日本語") %></a>
@@ -27,7 +36,15 @@
 			<div id="programs"></div>
 		</div>
 		<script>
-			$(function () {
+			function onClickOnlyInputCompleted() {
+				console.log($("#onlyInputCompleted").prop('checked')) ;
+
+				if ($("#onlyInputCompleted").prop('checked')) {
+					localStorage.setItem('onlyInputCompleted', "1") ;
+				} else {
+					localStorage.setItem('onlyInputCompleted', "0") ;
+				}
+
 				let lang = localStorage["programs_lang"] ;
 
 				if (lang == undefined) {
@@ -35,11 +52,29 @@
 				}
 				
 				reloadRequest(lang, 0, true) ;
+			}
+
+			$(function () {
+				let lang = localStorage["programs_lang"] ;
+
+				if (lang == undefined) {
+					lang = "ja" ;
+				}
+				
+				let isOnlyInputCompleted = localStorage["onlyInputCompleted"] ;
+
+				if (isOnlyInputCompleted == "1") {
+					$("#onlyInputCompleted").prop('checked', true) ;
+				}
+
+				reloadRequest(lang, 0, true) ;
 			}) ;
 
 			async function reloadRequest(lang, page, isScrolling) {
 				
 				localStorage.setItem('programs_lang', lang) ;
+
+				let isOnlyInputCompleted = localStorage["onlyInputCompleted"] ;
 
 				$("#currentLang").text(getLangLabel(lang)) ;
 				
@@ -53,9 +88,14 @@
 				
 				$("#programs").empty() ;
 				$("#pagenation").empty() ;
-				
+
 				for (let key in data.programs) {
 					let program = data.programs[key] ;
+
+					if (isOnlyInputCompleted == "1" && program.inputCompleted != "1") {
+						continue ;
+					}
+
 					$("#programs").append(programBlock(lang, program, data.trackIdMap)) ;
 				}
 

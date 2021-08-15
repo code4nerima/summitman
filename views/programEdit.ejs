@@ -89,7 +89,7 @@
 				</div>
 				<div class="row mb-3">
 					<div class="col-sm">
-						<label for="track" class="form-label"><%- __("トラック") %></label>
+						<label for="trackId" class="form-label"><%- __("トラック") %></label>
 						<select class="form-select" name="trackId" aria-label="<%- __("トラック") %>" <% if (role != 1) { %>disabled<% } %>>
 							<option value="" <% if (program.trackId == '') { %>selected<% } %>><%- __("未定") %></option>
 							<% for (let key in tracks) { %>
@@ -108,8 +108,14 @@
 						</select>
 					</div>
 					<div class="col-sm">
-						<label for="name" class="form-label"><%- __("申請者メールアドレス") %></label>
+						<label for="email" class="form-label"><%- __("申請者メールアドレス") %></label>
 						<input maxlength="200" type="text" class="form-control" id="email" name="email" value="<%= program.email %>" <% if (role != 1) { %>disabled<% } %>>						
+					</div>					
+				</div>
+				<div class="row mb-3">
+					<div class="col-sm">
+						<label for="broadcastingURL" class="form-label"><%- __("ライブストリーム配信ページのURL") %></label>
+						<input type="text" class="form-control" id="broadcastingURL" name="broadcastingURL" value="<%= program.broadcastingURL %>" <% if (role != 1) { %>disabled<% } %>>						
 					</div>
 				</div>
 				<div class="row">
