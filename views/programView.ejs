@@ -158,11 +158,11 @@
 					<% } %>
 				</ul>
 				<div class="card-header h5 fw-bold">
-					<%- __("関連URL") %>
+					<%- __("関連リンク") %>
 				</div>
 				<ul class="list-group list-group-flush">
 					<% if (program.presenters.length == 0) { %>
-						<li class="list-group-item"><%- __("※まだ関連URLが登録されていません") %></li>
+						<li class="list-group-item"><%- __("※まだ関連リンクが登録されていません") %></li>
 					<% } else { %>
 						<% for (let key in program.urls) { %>
 							<% let url = program.urls[key] ; %> 
