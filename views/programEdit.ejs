@@ -14,11 +14,25 @@
 		<%- include('parts/navbar', {}) %>
 
 		<div class="container p-2">
-			<% if (program.programId != undefined) { %>
-				<h1 class="mb-5"><%- __("プログラム編集") %></h1>
-			<% } else { %>
-				<h1 class="mb-5"><%- __("プログラム作成") %></h1>
-			<% } %>
+			<div class="row mb-3">
+				<div class="col">
+					<% if (program.programId != undefined) { %>
+						<h1 class="mb-5"><%- __("プログラム編集") %></h1>
+					<% } else { %>
+						<h1 class="mb-5"><%- __("プログラム作成") %></h1>
+					<% } %>
+				</div>
+			</div>
+			
+			<div class="row mb-3">
+				<div class="col">
+					<% if (program.programId != undefined) { %>
+						<% if (role == 1) { %>
+							<button type="button" class="btn btn-danger" onclick="onClickDeleteButton('<%= program.programId %>')"><%- __("削除する") %></button>
+						<% } %>
+					<% } %>
+				</div>
+			</div>
 			
 			<form method="POST" action="/programs/edit">
 				<div class="row mb-3">
@@ -216,6 +230,10 @@
 				dropdown: true,
 				scrollbar: true
 			});
+
+			async function onClickDeleteButton(programId) {
+				location.href = "/programs/delete?programId=" + programId ;
+			}
 
 			function onClickDay(day) {
 				if (day == 0) {
