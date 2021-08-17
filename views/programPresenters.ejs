@@ -1,14 +1,14 @@
 <!doctype html>
 <html lang="ja">
 	<head>
-		<%- include('parts/head', {title: '出演者／登壇者登録'}) %>
+		<%- include('parts/head', {title: ''}) %>
 	</head>
 	<body class="p-2">
 		<%- include('parts/navbar', {}) %>
 
 		<div class="container p-2">
 
-			<h1 class="mb-5"><%- __("出演者／登壇者登録") %></h1>
+			<h1 class="mb-5"><%- __("") %></h1>
 
 			<h2><%- __("タイトル") %></h2>
 
@@ -153,30 +153,30 @@
 				if (value.ja != undefined && value.ja != "") {
 					string += '<span class="badge bg-secondary me-2"><%- __("日") %></span>' ;
 				} else {
-					string += '<span class="badge bg-light me-2"><%- __("日") %></span>' ;
+					string += '<span class="badge bg-light text-black-50 me-2"><%- __("日") %></span>' ;
 				}
 
 				if (value.en != undefined && value.en != "") {
 					string += '<span class="badge bg-secondary me-2"><%- __("英") %></span>' ;
 				} else {
-					string += '<span class="badge bg-light me-2"><%- __("英") %></span>' ;
+					string += '<span class="badge bg-light text-black-50 me-2"><%- __("英") %></span>' ;
 				}
 
 				if (value["zh-TW"] != undefined && value["zh-TW"] != "") {
 					string += '<span class="badge bg-secondary me-2"><%- __("繁") %></span>' ;
 				} else {
-					string += '<span class="badge bg-light me-2"><%- __("繁") %></span>' ;
+					string += '<span class="badge bg-light text-black-50 me-2"><%- __("繁") %></span>' ;
 				}
 
 				if (value["zh-CN"] != undefined && value["zh-CN"] != "") {
 					string += '<span class="badge bg-secondary me-2"><%- __("簡") %></span>' ;
 				} else {
-					string += '<span class="badge bg-light me-2"><%- __("簡") %></span>' ;
+					string += '<span class="badge bg-light text-black-50 me-2"><%- __("簡") %></span>' ;
 				}
 
 				return string ;
 			}
-			
+
 			async function onClickDeletepresentersButton(presenterId) {
 				await fetch("/programPresenters/delete?presenterId=" + presenterId + "&programId=<%= program.programId %>").then(response => response.json()) ;
 

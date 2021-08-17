@@ -2,7 +2,7 @@
 <html lang="ja">
 	<head>
 		<% if (presenter.presenterId != undefined) { %>
-			<%- include('parts/head', {title: '登壇者編集'}) %>
+			<%- include('parts/head', {title: '出演者／登壇者編集'}) %>
 		<% } else { %>
 			<%- include('parts/head', {title: '登壇者作成'}) %>
 		<% } %>
@@ -15,7 +15,7 @@
 
 		<div class="container p-2">
 			<% if (presenter.presenterId != undefined) { %>
-				<h1 class="mb-5"><%- __("登壇者編集") %></h1>
+				<h1 class="mb-5"><%- __("出演者／登壇者編集") %></h1>
 			<% } else { %>
 				<h1 class="mb-5"><%- __("登壇者作成") %></h1>
 			<% } %>

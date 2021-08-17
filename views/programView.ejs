@@ -16,7 +16,7 @@
 						<button type="button" class="btn btn-primary" onclick="location.href='/programs/edit?programId=<%= program.programId %>';" style="width: 100%;"><%- __("編集する") %></button>
 					</div>
 					<div class="col-sm mb-1">
-						<button type="button" class="btn btn-primary" onclick="location.href='/programPresenters?programId=<%= program.programId %>';" style="width: 100%;"><%- __("出演者／登壇者登録") %></button>
+						<button type="button" class="btn btn-primary" onclick="location.href='/programPresenters?programId=<%= program.programId %>';" style="width: 100%;"><%- __("出演者／登壇者編集") %></button>
 					</div>
 					<div class="col-sm mb-1">
 						<button type="button" class="btn btn-success" onclick="location.href='/programOwners?programId=<%= program.programId %>';" style="width: 100%;"><%- __("プログラムオーナー登録") %></button>
@@ -30,7 +30,7 @@
 				</div>
 				<div class="row mb-3">
 					<div class="col-sm mb-1">
-						<div class="my-3"><%- __("プログラムの申請者及びプログラムオーナーの方は「編集する」ボタンを押して詳細の入力と「出演者／登壇者登録」を押して登壇者情報の作成をお願いします。申請者やオーナーの方自身が登壇者の場合も登壇者としてご自身を作成してください。") %></div>
+						<div class="my-3"><%- __("プログラムの申請者及びプログラムオーナーの方は「編集する」ボタンを押して詳細の入力と「出演者／登壇者編集」を押して登壇者情報の作成をお願いします。申請者やオーナーの方自身が登壇者の場合も登壇者としてご自身を作成してください。") %></div>
 						<div class="my-3"><%- __("入力が完了したら編集画面内の「プログラムオーナーによる入力が完了したらこちらをチェックしてください」をチェックして編集を終了してください。") %></div>
 					</div>
 				</div>
@@ -43,7 +43,7 @@
 						<button type="button" class="btn btn-success" onclick="location.href='/programOwners?programId=<%= program.programId %>';" style="width: 100%;" disabled><%- __("プログラムオーナー登録") %></button>
 					</div>
 					<div class="col-sm mb-1">
-						<button type="button" class="btn btn-success" onclick="location.href='/programPresenters?programId=<%= program.programId %>';" style="width: 100%;"><%- __("出演者／登壇者登録") %></button>
+						<button type="button" class="btn btn-success" onclick="location.href='/programPresenters?programId=<%= program.programId %>';" style="width: 100%;"><%- __("出演者／登壇者編集") %></button>
 					</div>
 					<div class="col-sm mb-1">
 						<button type="button" class="btn btn-success" onclick="location.href='/programMembers?programId=<%= program.programId %>';" style="width: 100%;" disabled><%- __("スタッフ登録") %></button>
@@ -54,9 +54,16 @@
 				</div>
 			<% } %>
 
-			<div class="card my-1">
+			<div class="row my-3">
+				<div class="col h3">
+					<span class="badge rounded-pill bg-success me-2"><% if (program.inputCompleted == 1) { %><%- __("入力完了") %><% } %></span>
+				</div>
+			</div>
+			
+
+			<div class="card my-3">
 				<div class="card-header h5 fw-bold">
-					<span class="badge bg-success me-2"><% if (program.inputCompleted == 1) { %><%- __("入力完了") %><% } %></span><%- __("タイトル") %>
+					<%- __("タイトル") %>
 				</div>
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("日") %></span><%= program.title.ja %></li>
@@ -64,6 +71,8 @@
 					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("繁") %></span><%= program.title["zh-TW"] %></li>
 					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("簡") %></span><%= program.title["zh-CN"] %></li>
 				</ul>
+			</div>
+			<div class="card my-3">
 				<div class="card-header h5 fw-bold">
 					<%- __("詳細") %>
 				</div>
@@ -73,6 +82,44 @@
 					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("繁") %></span><%= program.description["zh-TW"] %></li>
 					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("簡") %></span><%= program.description["zh-CN"] %></li>
 				</ul>
+			</div>
+			<div class="card my-3">
+				<div class="card-header h5 fw-bold">
+					<%- __("出演者／登壇者") %>
+				</div>
+				<ul class="list-group list-group-flush">
+					<% if (program.presenters.length == 0) { %>
+						<li class="list-group-item"><%- __("※まだ出演者／登壇者が登録されていません") %></li>
+					<% } else { %>
+						<% for (let key in program.presenters) { %>
+							<% let presenter = program.presenters[key] ; %> 
+							<% let photoURL = presenter.photoURL ; %>
+							<% if (photoURL == null || photoURL == "") { photoURL = "../images/profile.png" ; } %>
+							<li class="list-group-item">
+								<div class="row">
+									<div class="col">
+										<img class="border rounded img-thumbnai" src="<%= photoURL %>" width="50">
+									</div>
+								</div>
+								<div class="row">
+									<div class="col">
+										<span class="badge bg-secondary me-2"><%- __("日") %></span><%= presenter.name.ja %>（<%= presenter.name.ja_kana %>）
+										<div><%= presenter.description.ja %></div>
+										<span class="badge bg-secondary me-2"><%- __("英") %></span><%= presenter.name.en %>
+										<div><%= presenter.description.en %></div>
+										<span class="badge bg-secondary me-2"><%- __("繁") %></span><%= presenter.name["zh-TW"] %>
+										<div><%= presenter.description["zh-TW"] %></div>
+										<span class="badge bg-secondary me-2"><%- __("簡") %></span><%= presenter.name["zh-CN"] %>
+										<div><%= presenter.description["zh-CN"] %></div>
+									</div>
+								</div>
+								
+							</li>
+						<% } %>
+					<% } %>
+				</ul>
+			</div>
+			<div class="card my-3">
 				<div class="card-header h5 fw-bold">
 					<%- __("その他") %>
 				</div>
@@ -122,40 +169,6 @@
 				</div>
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item"><i class="me-2 bi bi-collection"></i><%= program.genreName.ja %></li>
-				</ul>
-				<div class="card-header h5 fw-bold">
-					<%- __("出演者／登壇者") %>
-				</div>
-				<ul class="list-group list-group-flush">
-					<% if (program.presenters.length == 0) { %>
-						<li class="list-group-item"><%- __("※まだ出演者／登壇者が登録されていません") %></li>
-					<% } else { %>
-						<% for (let key in program.presenters) { %>
-							<% let presenter = program.presenters[key] ; %> 
-							<% let photoURL = presenter.photoURL ; %>
-							<% if (photoURL == null || photoURL == "") { photoURL = "../images/profile.png" ; } %>
-							<li class="list-group-item">
-								<div class="row">
-									<div class="col">
-										<img class="border rounded img-thumbnai" src="<%= photoURL %>" width="50">
-									</div>
-								</div>
-								<div class="row">
-									<div class="col">
-										<span class="badge bg-secondary me-2"><%- __("日") %></span><%= presenter.name.ja %>（<%= presenter.name.ja_kana %>）
-										<div><%= presenter.description.ja %></div>
-										<span class="badge bg-secondary me-2"><%- __("英") %></span><%= presenter.name.en %>
-										<div><%= presenter.description.en %></div>
-										<span class="badge bg-secondary me-2"><%- __("繁") %></span><%= presenter.name["zh-TW"] %>
-										<div><%= presenter.description["zh-TW"] %></div>
-										<span class="badge bg-secondary me-2"><%- __("簡") %></span><%= presenter.name["zh-CN"] %>
-										<div><%= presenter.description["zh-CN"] %></div>
-									</div>
-								</div>
-								
-							</li>
-						<% } %>
-					<% } %>
 				</ul>
 				<div class="card-header h5 fw-bold">
 					<%- __("関連リンク") %>

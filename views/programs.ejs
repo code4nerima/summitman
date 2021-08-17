@@ -255,7 +255,7 @@
 								</div>
 								<div class="row h5 fw-bold"">
 									<div class="col">
-										<span class="badge bg-success me-2">${inputCompletedString}</span> <a href="/programs/view?programId=${program.programId}">${titleString}</a>
+										<span class="badge rounded-pill bg-success me-2">${inputCompletedString}</span> <a href="/programs/view?programId=${program.programId}">${titleString}</a>
 									</div>
 								</div>
 							</div>
@@ -303,25 +303,25 @@
 				if (value.ja != undefined && value.ja != "") {
 					string += '<span class="badge bg-secondary me-2"><%- __("日") %></span>' ;
 				} else {
-					string += '<span class="badge bg-light me-2"><%- __("日") %></span>' ;
+					string += '<span class="badge bg-light text-black-50 me-2"><%- __("日") %></span>' ;
 				}
 
 				if (value.en != undefined && value.en != "") {
 					string += '<span class="badge bg-secondary me-2"><%- __("英") %></span>' ;
 				} else {
-					string += '<span class="badge bg-light me-2"><%- __("英") %></span>' ;
+					string += '<span class="badge bg-light text-black-50 me-2"><%- __("英") %></span>' ;
 				}
 
 				if (value["zh-TW"] != undefined && value["zh-TW"] != "") {
 					string += '<span class="badge bg-secondary me-2"><%- __("繁") %></span>' ;
 				} else {
-					string += '<span class="badge bg-light me-2"><%- __("繁") %></span>' ;
+					string += '<span class="badge bg-light text-black-50 me-2"><%- __("繁") %></span>' ;
 				}
 
 				if (value["zh-CN"] != undefined && value["zh-CN"] != "") {
 					string += '<span class="badge bg-secondary me-2"><%- __("簡") %></span>' ;
 				} else {
-					string += '<span class="badge bg-light me-2"><%- __("簡") %></span>' ;
+					string += '<span class="badge bg-light text-black-50 me-2"><%- __("簡") %></span>' ;
 				}
 
 				return string ;
