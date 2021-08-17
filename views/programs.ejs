@@ -25,6 +25,27 @@
 				</div>	
 			</div>
 
+			<div class="row mb-3">
+				<div class="col-sm">
+					<select class="form-select" name="dates" id="dates" aria-label="<%- __("日付") %>">
+						<option value="">すべて</option>
+						<option value="2021-09-18">2021-09-18</option>
+						<option value="2021-09-19">2021-09-19</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col-sm">
+					<select class="form-select" name="tracks" id="tracks" aria-label="<%- __("トラック") %>">
+						<option value="">すべて</option>
+						<% for (let key in tracks) { %>
+							<option value="<%= tracks[key].trackId %>"><%= tracks[key].name.ja %></option>
+						<% }  %>
+					</select>
+				</div>
+			</div>
+
 			<div class="d-grid gap-2 d-md-block">
 				<div id="currentLang"></div>
 				<a class="btn btn-success btn-sm" style="width: 130px;" onclick='reloadRequest("ja", 0, false);'><%- __("日本語") %></a>
@@ -50,7 +71,7 @@
 				if (lang == undefined) {
 					lang = "ja" ;
 				}
-				
+
 				reloadRequest(lang, 0, true) ;
 			}
 
@@ -67,6 +88,42 @@
 					$("#onlyInputCompleted").prop('checked', true) ;
 				}
 
+				$('#tracks').change(function() {
+					localStorage.setItem("selectedTrackId", $('#tracks').val()) ;
+
+					let lang = localStorage["programs_lang"] ;
+
+					if (lang == undefined) {
+						lang = "ja" ;
+					}
+
+					reloadRequest(lang, 0, true) ;
+				}) ;
+
+				$('#dates').change(function() {
+					localStorage.setItem("selectedDate", $('#dates').val()) ;
+
+					let lang = localStorage["programs_lang"] ;
+
+					if (lang == undefined) {
+						lang = "ja" ;
+					}
+
+					reloadRequest(lang, 0, true) ;
+				})
+
+				let selectedTrackId = localStorage["selectedTrackId"] ;
+
+				if (selectedTrackId != undefined) {
+					$("#tracks").val(selectedTrackId);
+				}
+
+				let selectedDate = localStorage["selectedDate"] ;
+
+				if (selectedDate != undefined) {
+					$("#dates").val(selectedDate);
+				}
+
 				reloadRequest(lang, 0, true) ;
 			}) ;
 
@@ -75,10 +132,20 @@
 				localStorage.setItem('programs_lang', lang) ;
 
 				let isOnlyInputCompleted = localStorage["onlyInputCompleted"] ;
+				let selectedTrackId = localStorage["selectedTrackId"] ;	
+				let selectedDate = localStorage["selectedDate"] ;	
+
+				if (selectedTrackId == undefined) {
+					selectedTrackId = "" ;
+				}
+
+				if (selectedDate == undefined) {
+					selectedDate = "" ;
+				}
 
 				$("#currentLang").text(getLangLabel(lang)) ;
 				
-				let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>' ;
+				let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border my-3" role="status"><span class="visually-hidden">Loading...</span></div></div>' ;
 				
 				$("#programs").empty() ;
 				$("#programs").append(spinner) ;
@@ -94,6 +161,18 @@
 
 					if (isOnlyInputCompleted == "1" && program.inputCompleted != "1") {
 						continue ;
+					}
+
+					if (selectedTrackId != "") {
+						if (program.trackId != selectedTrackId) {
+							continue ;
+						}
+					}
+
+					if (selectedDate != "") {
+						if (program.date != selectedDate) {
+							continue ;
+						}
 					}
 
 					$("#programs").append(programBlock(lang, program, data.trackIdMap)) ;
@@ -138,7 +217,11 @@
 					timeString = "〜" + program.endTime ;
 				}
 
-				let trackName = trackIdMap[program.trackId].name[lang] ;
+				let trackName = "" ;
+				
+				if (program.trackId != undefined && program.trackId != "") {
+					trackName = trackIdMap[program.trackId].name[lang] ;
+				}
 
 				let categoryString = "" ;
 

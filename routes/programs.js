@@ -18,7 +18,10 @@ router.get('/', wrap(async function(req, res, next) {
     let currentUser = req.session.user ;
     let currentUserProfile = (await clientAdapter.getUserProfile(req, currentUser.uid)).data ;
 
+    let tracks = (await clientAdapter.listTrack(req, 0, -1)).data.tracks ;
+    
     res.render('programs', {
+        tracks: tracks,
         editable: currentUserProfile.role == 1 ? true : false,
     });		 
 })) ;
@@ -51,12 +54,42 @@ router.get('/data', wrap(async function(req, res, next) {
     let breakPrograms = [] ;
 
     for (let key in recv.data.programs) {
-        if (recv.data.programs[key].category == 4) {
-            breakPrograms.push(recv.data.programs[key]) ;
+        let program = recv.data.programs[key] ;
+
+        if (program.category == 4) {
+            breakPrograms.push(program) ;
         } else {
-            programs.push(recv.data.programs[key]) ;
+            programs.push(program) ;
+        }
+
+        if (program.trackId != "") {
+            program.trackName = trackIdMap[program.trackId].name ;
+        } else {
+            program.trackName = {} ;
         }
     }
+
+    programs.sort((l, r) => {
+        if (l.date > r.date) {
+            return 1 ;
+        } else if (l.date < r.date) {
+            return -1 ;
+        } else {
+            if (l.trackName.ja > r.trackName.ja) {
+                return 1 ;
+            } else if (l.trackName.ja < r.trackName.ja) {
+                return -1 ;
+            } else {
+                if (l.startTime > r.startTime) {
+                    return 1 ;
+                } else if (l.startTime < r.startTime) {
+                    return -1 ;
+                } else {
+                    return 0 ;
+                }
+            }
+        }
+    }) ;
 
     if (currentUserProfile.role == 1) {
         programs = programs.concat(breakPrograms) ;
@@ -274,7 +307,9 @@ router.get('/view', wrap(async function(req, res, next) {
         }
     }
 
-    program.trackName = trackIdMap[program.trackId].name ;
+    if (program.trackId != "") {
+        program.trackName = trackIdMap[program.trackId].name ;
+    }
 
     let genreIdMap = {} ;
 
