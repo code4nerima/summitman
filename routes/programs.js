@@ -125,7 +125,14 @@ router.get('/edit', wrap(async function(req, res, next) {
     } ;
     
     if (programId != undefined) {
-        program = (await clientAdapter.getProgram(req, programId)).data ;
+        let recv = await clientAdapter.getProgram(req, programId) ;
+
+        if (recv.data.programId == null) {
+            res.redirect('/') ;
+            return ;
+        }
+
+        program = recv.data ;
     }
 
     if (program.urls.length == 0) {
