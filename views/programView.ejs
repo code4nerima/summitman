@@ -13,7 +13,11 @@
 			<% if (isProgramOwner || role == 1) { %>
 				<div class="row mb-3">
 					<div class="col-sm mb-1">
-						<button type="button" class="btn btn-primary" onclick="location.href='/programs/edit?programId=<%= program.programId %>';" style="width: 100%;"><%- __("編集する") %></button>
+						<% if ((program.inputCompleted != "1" && isProgramOwner) || role == 1) { %>
+							<button type="button" class="btn btn-primary" onclick="location.href='/programs/edit?programId=<%= program.programId %>';" style="width: 100%;"><%- __("編集する") %></button>
+						<% } else { %>
+							<button type="button" class="btn btn-primary" onclick="location.href='/programs/edit?programId=<%= program.programId %>';" style="width: 100%;" disabled><%- __("編集する") %></button>
+						<% } %>
 					</div>
 					<div class="col-sm mb-1">
 						<button type="button" class="btn btn-primary" onclick="location.href='/programPresenters?programId=<%= program.programId %>';" style="width: 100%;"><%- __("出演者／登壇者編集") %></button>
