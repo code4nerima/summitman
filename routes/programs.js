@@ -360,14 +360,25 @@ router.get('/view', wrap(async function(req, res, next) {
     user.email = currentUser.email ;
 
     let isProgramOwner = await functions.isProgramOwner(user, program) ;
+    let isProgramMember = await functions.isProgramMember(user, program) ; ;
 
     let currentUserProfile = (await clientAdapter.getUserProfile(req, currentUser.uid)).data ;
+
+    let track = {} ;
+
+    if (req, program.trackId != null) {
+        let recv = await clientAdapter.getTrack(req, program.trackId) ;
+        
+        track = recv.data ;
+    }
 
     res.render('programView', {
         program: program,
         trackIdMap: trackIdMap,
         isProgramOwner: isProgramOwner,
+        isProgramMember: isProgramMember,
         role: currentUserProfile.role,
+        track: track,
     });	
 })) ;
 

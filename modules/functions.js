@@ -21,6 +21,20 @@ class functions {
         return false; 
     }
 
+    async isProgramMember(user, program) {
+        
+        // Can access users in charge of program owner.
+        for (let key in program.members) {
+            let member = program.members[key] ;
+
+            if (member.uid == user.uid) {
+                return true ;
+            }
+        }
+
+        return false; 
+    }
+
     async sendEmail(fromEmail, toEmail, subject, message) {
         
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);

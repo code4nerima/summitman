@@ -142,5 +142,8 @@
 	"入力が完了しているプログラムのみ表示する": "Show only input completed programs",
 	"※まだ関連リンクが登録されていません": "*There is no Related Link yet.",
 	"削除する": "Delete",
-	"すべて": "All"
+	"すべて": "All",
+	"配信関連": "Broadcasting",
+	"この情報はプログラムオーナーとスタッフにのみ表示されています。Zoomミーティングの情報は取り扱いに注意し登壇者へ連絡をしてください。": "This information is only program owners and staff members. You have to care about Zoom meeting URL. Please share for presenters.",
+	"UDトークの編集URL": "UD Talk URL for editor"
 }

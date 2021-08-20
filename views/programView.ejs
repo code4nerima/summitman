@@ -62,13 +62,45 @@
 					</div>
 				</div>
 			<% } %>
+			
+			<% if (isProgramOwner || isProgramMember || role == 1 || role == 4) { %>
+				<div class="card my-3">
+					<div class="card-header h5 fw-bold">
+						<%- __("配信関連") %>
+					</div>
+					
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">
+							<%- __("この情報はプログラムオーナーとスタッフにのみ表示されています。Zoomミーティングの情報は取り扱いに注意し登壇者へ連絡をしてください。") %>	
+						</li>
+					</ul>
+			
+					<div class="card-header h5 fw-bold">
+						<%- __("Zoomミーティング情報") %>
+					</div>
+
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item"><a href="<%= track.meetingURL %>" target="_blank"><%= track.meetingURL %></a></li>
+						<li class="list-group-item"><%= track.meetingId %></li>
+						<li class="list-group-item"><%= track.meetingPasscode %></li>
+					</ul>
+
+					<div class="card-header h5 fw-bold">
+						<%- __("UDトークの編集URL") %>
+					</div>
+
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item"><a href="<%= track.udtalkAppURL %>" target="_blank"><%= track.udtalkAppURL %></a></li>
+					</ul>
+
+				</div>
+			<% } %>
 
 			<div class="row my-3">
 				<div class="col h3">
 					<span class="badge rounded-pill bg-success me-2"><% if (program.inputCompleted == 1) { %><%- __("入力完了") %><% } %></span>
 				</div>
 			</div>
-			
 
 			<div class="card my-3">
 				<div class="card-header h5 fw-bold">
@@ -112,17 +144,30 @@
 								</div>
 								<div class="row">
 									<div class="col">
-										<span class="badge bg-secondary me-2"><%- __("日") %></span><%= presenter.name.ja %>（<%= presenter.name.ja_kana %>）
-										<div><%= presenter.description.ja %></div>
-										<span class="badge bg-secondary me-2"><%- __("英") %></span><%= presenter.name.en %>
-										<div><%= presenter.description.en %></div>
-										<span class="badge bg-secondary me-2"><%- __("繁") %></span><%= presenter.name["zh-TW"] %>
-										<div><%= presenter.description["zh-TW"] %></div>
-										<span class="badge bg-secondary me-2"><%- __("簡") %></span><%= presenter.name["zh-CN"] %>
-										<div><%= presenter.description["zh-CN"] %></div>
+										<span class="badge bg-secondary me-2 mb-2"><%- __("日") %></span><%= presenter.name.ja %>（<%= presenter.name.ja_kana %>）
+										<div class="mb-2"><%= presenter.description.ja %></div>
+										<span class="badge bg-secondary me-2 mb-2"><%- __("英") %></span><%= presenter.name.en %>
+										<div class="mb-2"><%= presenter.description.en %></div>
+										<span class="badge bg-secondary me-2 mb-2"><%- __("繁") %></span><%= presenter.name["zh-TW"] %>
+										<div class="mb-2"><%= presenter.description["zh-TW"] %></div>
+										<span class="badge bg-secondary me-2 mb-2"><%- __("簡") %></span><%= presenter.name["zh-CN"] %>
+										<div class="mb-2"><%= presenter.description["zh-CN"] %></div>
 									</div>
 								</div>
-								
+								<div class="row">
+									<div class="col ps-5">
+										<div class="fw-bold mb-3"><%- __("関連リンク") %></div>
+										<% for (let key in presenter.urls) { %>
+											<% let url = presenter.urls[key] ; %> 
+											<div><span class="badge bg-secondary me-2"><%- __("日") %></span><%= url.title.ja %></div>
+											<div><span class="badge bg-secondary me-2"><%- __("英") %></span><%= url.title.en %></div>
+											<div><span class="badge bg-secondary me-2"><%- __("繁") %></span><%= url.title["zh-TW"] %></div>
+											<div><span class="badge bg-secondary me-2"><%- __("簡") %></span><%= url.title["zh-CN"] %></div>
+
+											<div><a href="<%= url.url %>" target="_blank"><%= url.url %></a></div>
+										<% } %>
+									</div>
+								</div>
 							</li>
 						<% } %>
 					<% } %>
