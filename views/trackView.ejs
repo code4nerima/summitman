@@ -47,7 +47,8 @@
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item"><%= track.streamURL %></li>
 					<li class="list-group-item"><%= track.streamKey %></li>
-					<li class="list-group-item"><%= track.broadcastingURL %></li>
+					<li class="list-group-item"><%- __("1日目：") %><a href="<%= track.broadcastingURL01 %>"><%= track.broadcastingURL01 %></a></li>
+					<li class="list-group-item"><%- __("2日目：") %><a href="<%= track.broadcastingURL02 %>"><%= track.broadcastingURL02 %></a></li>
 				</ul>
 			</div>
 
