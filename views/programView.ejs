@@ -145,12 +145,16 @@
 								<div class="row">
 									<div class="col">
 										<span class="badge bg-secondary me-2 mb-2"><%- __("日") %></span><%= presenter.name.ja %>（<%= presenter.name.ja_kana %>）
+										<div class="mb-2"><%= presenter.organization.ja %></div>
 										<div class="mb-2"><%= presenter.description.ja %></div>
 										<span class="badge bg-secondary me-2 mb-2"><%- __("英") %></span><%= presenter.name.en %>
+										<div class="mb-2"><%= presenter.organization.en %></div>
 										<div class="mb-2"><%= presenter.description.en %></div>
 										<span class="badge bg-secondary me-2 mb-2"><%- __("繁") %></span><%= presenter.name["zh-TW"] %>
+										<div class="mb-2"><%= presenter.organization["zh-TW"] %></div>
 										<div class="mb-2"><%= presenter.description["zh-TW"] %></div>
 										<span class="badge bg-secondary me-2 mb-2"><%- __("簡") %></span><%= presenter.name["zh-CN"] %>
+										<div class="mb-2"><%= presenter.organization["zh-CN"] %></div>
 										<div class="mb-2"><%= presenter.description["zh-CN"] %></div>
 									</div>
 								</div>

@@ -117,6 +117,7 @@
 									</div>
 									<div class="col">
 										<a href="/programPresenters/edit?presenterId=${presenter.presenterId}&programId=<%= program.programId %>">${presenter.name[lang]}</a>
+										<div>${presenter.organization[lang]}</div>
 									</div>
 									<div class="col-auto">
 										<button type="button" class="btn btn-danger" onclick="onClickDeletepresentersButton('${presenter.presenterId}')"><%- __("削除") %></button>
