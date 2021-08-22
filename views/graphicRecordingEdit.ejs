@@ -21,8 +21,8 @@
 				<h2><%- __("画像") %></h2>
 				<div class="row py-1">
 					<div class="col">
-						<% if (grareco.photoURL == '') { %>
-							<div id="profilePhoto"><img class="border rounded img-thumbnai" src="../images/profile.png" width="200"></div>
+						<% if (grareco.photoURL == null || grareco.photoURL == '') { %>
+							<div id="profilePhoto"><img class="border rounded img-thumbnai" src="../images/picture.jpg" width="200"></div>
 						<% } else { %>
 							<div id="profilePhoto"><img class="border rounded img-thumbnai" src="<%= grareco.photoURL %>" width="200"></div>
 						<% } %>

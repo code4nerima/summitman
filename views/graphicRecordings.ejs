@@ -97,11 +97,16 @@
 				let photoURLString = grareco.photoURL ;
 
 				if (photoURLString == "" || photoURLString == undefined) {
-					photoURLString = "images/profile.png" ;
+					photoURLString = "images/picture.jpg" ;
 				}
 
 				let nameTranslationsString = makeTranslationsString(grareco.name) ;
 				let descriptionTranslationsString = makeTranslationsString(grareco.description) ;
+				let grarecoNameString = grareco.name[lang] ;
+
+				if (grarecoNameString == undefined || grarecoNameString == "") {
+					grarecoNameString = "Graphicer" ;
+				}
 
 				return `<div class="card my-3">
 							<div class="card-body">
@@ -115,7 +120,7 @@
 										<div id="profilePhoto"><img class="border rounded img-thumbnai" src="${photoURLString}" width="300"></div>
 									</div>
 									<div class="col">
-										<a href="/graphicRecordings/edit?grarecoId=${grareco.grarecoId}&programId=<%= program.programId %>">${grareco.name[lang]}</a>
+										<a href="/graphicRecordings/edit?grarecoId=${grareco.grarecoId}&programId=<%= program.programId %>">${grarecoNameString}</a>
 										<div>${grareco.organization[lang]}</div>
 									</div>
 									<div class="col-auto">

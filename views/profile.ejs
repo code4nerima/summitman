@@ -13,7 +13,7 @@
 			<h2><%- __("プロフィール画像") %></h2>
 			<div class="row py-1">
 				<div class="col">
-					<% if (data.photoURL == '') { %>
+					<% if (data.photoURL == null || data.photoURL == '') { %>
 						<div id="profilePhoto"><img class="border rounded img-thumbnai" src="../images/profile.png" width="200"></div>
 					<% } else { %>
 						<div id="profilePhoto"><img class="border rounded img-thumbnai" src="<%= data.photoURL %>" width="200"></div>
