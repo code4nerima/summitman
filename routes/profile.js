@@ -33,14 +33,22 @@ router.get('/', wrap(async function(req, res, next) {
                 if (recv.result == 1) {
                     data = recv.data ;
                     adminAccess = true ;
+                } else {
+                    data = null ;
                 }
+            } else {
+                data = null ;
             }
+        } else {
+            data = null ;
         }
     } else {
         let recv = await clientAdapter.getUserProfile(req, currentUser.uid) ;
 
         if (recv.result == 1) {
             data = recv.data ;
+        } else {
+            data = null ;
         }
     }
 

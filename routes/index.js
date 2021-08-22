@@ -24,7 +24,7 @@ router.get('/', wrap(async function(req, res, next) {
     let recv = await clientAdapter.getUserProfile(req, currentUser.uid) ;
 	let data ;
 
-	if (recv.data == null) {
+	if (recv.result == 0 || recv.data == null || recv.data == undefined) {
 		let user = null ;
 
 		try {
