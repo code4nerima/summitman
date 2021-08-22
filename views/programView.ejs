@@ -50,7 +50,7 @@
 						<button type="button" class="btn btn-success" onclick="location.href='/programMembers?programId=<%= program.programId %>';" style="width: 100%;"><%- __("スタッフ登録") %></button>
 					</div>
 					<div class="col-sm mb-1">
-						<button type="button" class="btn btn-success" onclick="location.href='/graphigRecordings?programId=<%= program.programId %>';" style="width: 100%;"><%- __("グラレコアップロード") %></button>
+						<button type="button" class="btn btn-success" onclick="location.href='/graphicRecordings?programId=<%= program.programId %>';" style="width: 100%;"><%- __("グラレコアップロード") %></button>
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -74,7 +74,25 @@
 						<button type="button" class="btn btn-success" onclick="location.href='/programMembers?programId=<%= program.programId %>';" style="width: 100%;" disabled><%- __("スタッフ登録") %></button>
 					</div>
 					<div class="col-sm mb-1">
-						<button type="button" class="btn btn-success" onclick="location.href='/graphigRecordings?programId=<%= program.programId %>';" style="width: 100%;" disabled><%- __("グラレコアップロード") %></button>
+						<button type="button" class="btn btn-success" onclick="location.href='/graphicRecordings?programId=<%= program.programId %>';" style="width: 100%;" disabled><%- __("グラレコアップロード") %></button>
+					</div>
+				</div>
+			<% } else if (role == 4) { %>
+				<div class="row mb-3">
+					<div class="col-sm mb-1">
+						<button type="button" class="btn btn-primary" onclick="location.href='/programs/edit?programId=<%= program.programId %>';" style="width: 100%;" disabled><%- __("編集する") %></button>
+					</div>
+					<div class="col-sm mb-1">
+						<button type="button" class="btn btn-success" onclick="location.href='/programOwners?programId=<%= program.programId %>';" style="width: 100%;" disabled><%- __("プログラムオーナー登録") %></button>
+					</div>
+					<div class="col-sm mb-1">
+						<button type="button" class="btn btn-success" onclick="location.href='/programPresenters?programId=<%= program.programId %>';" style="width: 100%;" disabled><%- __("出演者／登壇者編集") %></button>
+					</div>
+					<div class="col-sm mb-1">
+						<button type="button" class="btn btn-success" onclick="location.href='/programMembers?programId=<%= program.programId %>';" style="width: 100%;" disabled><%- __("スタッフ登録") %></button>
+					</div>
+					<div class="col-sm mb-1">
+						<button type="button" class="btn btn-success" onclick="location.href='/graphicRecordings?programId=<%= program.programId %>';" style="width: 100%;"><%- __("グラレコアップロード") %></button>
 					</div>
 				</div>
 			<% } %>

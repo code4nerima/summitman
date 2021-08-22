@@ -320,6 +320,62 @@ class clientAdapter {
         return await this.internalFetch(URL, currentUser.uid, data) ;
     }
 
+    // operating grareco
+    async createGrareco(req, programId, data) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "CreateGrareco" ;
+
+        data.programId = programId ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
+    async getGrareco(req, programId, grarecoId) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "GetGrareco" ;
+
+        let data = {
+            programId: programId,
+            grarecoId: grarecoId,
+        } ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
+    async listGrareco(req, programId, start, limit) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "ListGrareco" ;
+
+        let data = {
+            programId: programId,
+            start: start,
+            limit: limit,
+        } ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
+    async updateGrareco(req, programId, data) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "UpdateGrareco" ;
+
+        data.programId = programId ;
+        
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
+    async deleteGrareco(req, programId, grarecoId) {
+        let currentUser = req.session.user ;
+        let URL = this._URL + "DeleteGrareco" ;
+
+        let data = {
+            programId: programId,
+            grarecoId: grarecoId,
+        } ;
+
+        return await this.internalFetch(URL, currentUser.uid, data) ;
+    }
+
     async internalFetch(URL, uid, data) {
         let param = {
             method: "POST",

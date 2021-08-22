@@ -9,6 +9,8 @@ function getRoleString(role) {
         roleString = '配信担当' ;
     } else if (role == 3) {
         roleString = '翻訳担当' ;
+    } else if (role == 4) {
+        roleString = 'グラレコ担当' ;
     }
 
     return roleString ;

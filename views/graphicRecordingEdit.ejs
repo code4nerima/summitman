@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ja">
+	<head>
+		<% if (grareco.grarecoId != undefined) { %>
+			<%- include('parts/head', {title: 'グラレコ編集'}) %>
+		<% } else { %>
+			<%- include('parts/head', {title: 'グラレコ作成'}) %>
+		<% } %>
+	</head>
+	<body class="p-2">
+		<%- include('parts/navbar', {}) %>
+
+		<div class="container p-2">
+			<% if (grareco.grarecoId != undefined) { %>
+				<h1 class="mb-5"><%- __("グラレコ編集") %></h1>
+			<% } else { %>
+				<h1 class="mb-5"><%- __("グラレコ作成") %></h1>
+			<% } %>
+
+			<% if (grareco.grarecoId != undefined) { %>
+				<h2><%- __("画像") %></h2>
+				<div class="row py-1">
+					<div class="col">
+						<% if (grareco.photoURL == '') { %>
+							<div id="profilePhoto"><img class="border rounded img-thumbnai" src="../images/profile.png" width="200"></div>
+						<% } else { %>
+							<div id="profilePhoto"><img class="border rounded img-thumbnai" src="<%= grareco.photoURL %>" width="200"></div>
+						<% } %>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col">
+						<form id="photo">
+							<input type="hidden" name="programId" value="<%= grareco.programId %>">
+							<input type="hidden" name="grarecoId" value="<%= grareco.grarecoId %>">
+							<input type="file" class="form-control" id="file" name="file" accept="image/*" onchange="changeFile(this);" aria-describedby="fileHelp">
+							<label class="form-label small"><%- __("ファイルサイズは1MB以内の画像を選択してください。") %></label>
+						</form>
+					</div>
+					<div class="col-auto">
+						<button type="button" id="photoDeleteButton" class="btn btn-danger"><%- __("削除") %></button>
+					</div>
+				</div>
+				<script>
+					$(window).on('load', async () => {
+						$('#photoDeleteButton').on('click', () => {
+							$('#photoDeleteButton').prop('disabled', true);
+		
+							fetch("/graphicRecordings/photoDelete?programId=<%= grareco.programId %>&grarecoId=<%= grareco.grarecoId %>")
+								.then(response => response.json())
+								.then(data => {
+									$('#profilePhoto').empty() ;
+									$('#profilePhoto').append('<img class="border rounded img-thumbnai" src="../images/profile.png" width="200">') ;
+									$('#photoDeleteButton').prop('disabled', false);
+								});
+						}) ;
+					}) ;
+		
+					function changeFile(obj) {
+						var fileList = $('#file').get(0).files;
+		
+						for (let key in fileList) {
+							let file = fileList[key] ;
+		
+							if (file.size > 1024 * 1024) {
+								alert("ファイルサイズは1MB以内のものを選んでください") ;
+								return ;
+							}
+						}
+		
+						const formData = new FormData($('#photo').get(0));
+		
+						const param = {
+							method: "POST",
+							body: formData
+						}
+		
+						fetch("/graphicRecordings/photo", param)
+							.then(response => response.json())
+							.then(data => {
+								$('#profilePhoto').empty() ;
+								$('#profilePhoto').append('<img class="border rounded img-thumbnai" src="' + data["publicUrl"] + '" width="200">') 
+								$('#photoDeleteButton').prop('disabled', false);
+							});
+					}
+				</script>
+			<% } %>
+
+			<form method="POST" action="/graphicRecordings/edit">
+				<h2><%- __("名前") %></h2>
+				<div class="row mb-3">
+					<div class="col-sm">
+						<label for="name" class="form-label"><%- __("グラフィッカー名前（日本語）") %></label>
+						<input maxlength="200" type="text" class="form-control" id="ja_name" name="ja_name" value="<%= grareco.name['ja'] %>">
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label"><%- __("グラフィッカー名前（ふりがな）") %></label>
+						<input maxlength="200" type="text" class="form-control" id="ja_name_kana" name="ja_name_kana" value="<%= grareco.name['ja_kana'] %>">
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-sm">
+						<label for="name" class="form-label"><%- __("グラフィッカー名前（英語）") %></label>
+						<input maxlength="200" type="text" class="form-control" id="en_name" name="en_name" value="<%= grareco.name['en'] %>">
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label"><%- __("グラフィッカー名前（繁体字）") %></label>
+						<input maxlength="200" type="text" class="form-control" id="zh-TW_name" name="zh-TW_name" value="<%= grareco.name['zh-TW'] %>">
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label"><%- __("グラフィッカー名前（簡体字）") %></label>
+						<input maxlength="200" type="text" class="form-control" id="zh-CN_name" name="zh-CN_name" value="<%= grareco.name['zh-CN'] %>">
+					</div>
+				</div>
+
+				<h2><%- __("所属") %></h2>
+				<div class="row row-cols-1 row-cols-md-2 g-2 mb-3">
+					<div class="col-sm">
+						<label for="name" class="form-label"><%- __("所属（日本語）") %></label>
+						<input maxlength="200" type="text" class="form-control" id="ja_organization" name="ja_organization" value="<%= grareco.organization['ja'] %>">
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label"><%- __("所属（英語）") %></label>
+						<input maxlength="200" type="text" class="form-control" id="en_organization" name="en_organization" value="<%= grareco.organization['en'] %>">
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label"><%- __("所属（繁体字）") %></label>
+						<input maxlength="200" type="text" class="form-control" id="zh-TW_organization" name="zh-TW_organization" value="<%= grareco.organization['zh-TW'] %>">
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label"><%- __("所属（簡体字）") %></label>
+						<input maxlength="200" type="text" class="form-control" id="zh-CN_organization" name="zh-CN_organization" value="<%= grareco.organization['zh-CN'] %>">
+					</div>
+				</div>
+
+				<h2><%- __("プロフィール") %></h2>
+				<div class="row row-cols-1 row-cols-md-2 g-2 mb-3">
+					<div class="col-sm">
+						<label for="ja_description" class="form-label"><%- __("詳細（日本語）") %></label>
+						<textarea maxlength="1000" class="form-control" style="height: 300px;" id="ja_description" name="ja_description" placeholder=""><%= grareco.description["ja"] %></textarea>
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label"><%- __("詳細（英語）") %></label>
+						<textarea maxlength="1000" class="form-control" style="height: 300px;" id="en_description" name="en_description" placeholder=""><%= grareco.description["en"] %></textarea>
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label"><%- __("詳細（繁体字）") %></label>
+						<textarea maxlength="1000" class="form-control" style="height: 300px;" id="zh-TW_description" name="zh-TW_description" placeholder=""><%= grareco.description["zh-TW"] %></textarea>
+					</div>
+					<div class="col-sm">
+						<label for="name" class="form-label"><%- __("詳細（簡体字）") %></label>
+						<textarea maxlength="1000" class="form-control" style="height: 300px;" id="zh-CN_description" name="zh-CN_description" placeholder=""><%= grareco.description["zh-CN"] %></textarea>
+					</div>
+				</div>
+
+				<h2><%- __("その他") %></h2>
+				<div class="row row-cols-1 row-cols-md-2 g-2 mb-3">
+					<div class="col-sm">
+						<label for="name" class="form-label"><%- __("並び順") %></label>
+						<input maxlength="200" type="number" class="form-control" id="sortOrder" name="sortOrder" value="<%= grareco.sortOrder %>">
+						<label class="form-label small"><%- __("0から始まる並び順です。同じ番号のときはふりがな順に並びます。") %></label>
+					</div>
+				</div>
+
+				<input type="hidden" name="programId" value="<%= programId %>">
+
+				<% if (grareco.grarecoId != undefined) { %>
+					<input type="hidden" name="grarecoId" value="<%= grareco.grarecoId %>">
+				<% } %>
+				
+				<div class="mb-3">
+					<% if (grareco.grarecoId != undefined) { %>
+						<button type="submit" class="btn btn-primary"><%- __("編集を終了する") %></button>
+						<label><%- __("編集が終わったらブラウザの戻るを使用しないで必ずこのボタンを押してください。") %></label>
+					<% } else { %>
+						<button type="submit" class="btn btn-primary"><%- __("作成する") %></button>
+						<button type="button" class="btn btn-danger" onclick="window.history.back(-1);return false;"><%- __("戻る") %></button>
+					<% } %>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>
