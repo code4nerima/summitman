@@ -264,7 +264,7 @@ router.post('/edit', wrap(async function(req, res, next) {
         url: req.body.linkURL,
     }] ;
 
-    program.inputCompleted = req.body.inputCompleted != undefined ? "1" : "0" ;
+    //program.inputCompleted = req.body.inputCompleted != undefined ? "1" : "0" ;
 
     if (programId != undefined) {
         program.programId = programId ;
@@ -393,6 +393,17 @@ router.get('/delete', wrap(async function(req, res, next) {
     await clientAdapter.deleteProgram(req, req.query.programId) ;
 
     res.redirect("/programs") ;
+})) ;
+
+router.get('/inputCompleted', wrap(async function(req, res, next) {
+    let recv = await clientAdapter.getProgram(req, req.query.programId) ;
+
+    recv.data.inputCompleted = req.query.inputCompleted ;
+
+    clientAdapter.updateProgram(req, recv.data) ;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(recv.data));
 })) ;
 
 module.exports = router;
