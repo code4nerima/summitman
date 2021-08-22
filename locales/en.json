@@ -149,5 +149,20 @@
 	"UDトークの編集URL": "UD Talk URL for editor",
 	"1日目：": "Day1",
 	"2日目：": "Day2",
-	"Zoom：": "Zoom："
+	"Zoom：": "Zoom：",
+	"ライブストリーム配信ページのURL": "Live Page URL",
+	"グラレコ一覧": "Graphic Recording List",
+	"グラレコ作成": "Create Graphic Recording",
+	"グラフィッカー名前（日本語）": "Graphicer Name (Japanese)",
+	"グラフィッカー名前（ふりがな）": "Graphicer Name(Japanese Kana)",
+	"グラフィッカー名前（英語）": "Graphicer Name(English)",
+	"グラフィッカー名前（繁体字）": "Graphicer Name(Hant)",
+	"グラフィッカー名前（簡体字）": "Graphicer Name(Hans)",
+	"詳細（日本語）": "Description (Japanese)",
+	"詳細（英語）": "Description (English)",
+	"詳細（繁体字）": "Description (Hant)",
+	"詳細（簡体字）": "Description (Hans)",
+	"グラレコ編集": "Edit Graphic Recording",
+	"画像": "Picture",
+	"グラレコ担当": "Graphic Recording Staff"
 }

@@ -32,7 +32,7 @@ class clientAdapter {
         let data = {
             start: start,
             limit: limit,
-            roles: [0, 1, 2, 3],
+            roles: [0, 1, 2, 3, 4],
         } ;
 
         return await this.internalFetch(URL, currentUser.uid, data) ;

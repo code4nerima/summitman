@@ -30,6 +30,10 @@ router.get('/data', wrap(async function(req, res, next) {
         users: recv.data.userProfiles
     } ;
 
+    for (let key in recv.data.userProfiles) {
+        console.log(recv.data.userProfiles[key].name.ja) ;
+    }
+
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(data));
 })) ;
