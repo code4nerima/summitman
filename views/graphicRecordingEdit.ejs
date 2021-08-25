@@ -41,17 +41,27 @@
 						<button type="button" id="photoDeleteButton" class="btn btn-danger"><%- __("削除") %></button>
 					</div>
 				</div>
+				<div class="row mb-3">
+					<div id="spinner"></div>
+				</div>
 				<script>
 					$(window).on('load', async () => {
 						$('#photoDeleteButton').on('click', () => {
 							$('#photoDeleteButton').prop('disabled', true);
 		
+							let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border my-3" role="status"><span class="visually-hidden">Loading...</span></div></div>' ;
+				
+							$("#spinner").empty() ;
+							$("#spinner").append(spinner) ;
+
 							fetch("/graphicRecordings/photoDelete?programId=<%= grareco.programId %>&grarecoId=<%= grareco.grarecoId %>")
 								.then(response => response.json())
 								.then(data => {
 									$('#profilePhoto').empty() ;
-									$('#profilePhoto').append('<img class="border rounded img-thumbnai" src="../images/profile.png" width="200">') ;
+									$('#profilePhoto').append('<img class="border rounded img-thumbnai" src="../images/picture.jpg" width="200">') ;
 									$('#photoDeleteButton').prop('disabled', false);
+									$("#spinner").empty() ;
+									$("#file").val("") ;
 								});
 						}) ;
 					}) ;
@@ -75,12 +85,18 @@
 							body: formData
 						}
 		
+						let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border my-3" role="status"><span class="visually-hidden">Loading...</span></div></div>' ;
+				
+						$("#spinner").empty() ;
+						$("#spinner").append(spinner) ;
+
 						fetch("/graphicRecordings/photo", param)
 							.then(response => response.json())
 							.then(data => {
 								$('#profilePhoto').empty() ;
 								$('#profilePhoto').append('<img class="border rounded img-thumbnai" src="' + data["publicUrl"] + '" width="200">') 
 								$('#photoDeleteButton').prop('disabled', false);
+								$("#spinner").empty() ;
 							});
 					}
 				</script>
@@ -133,7 +149,7 @@
 					</div>
 				</div>
 
-				<h2><%- __("プロフィール") %></h2>
+				<h2><%- __("詳細") %></h2>
 				<div class="row row-cols-1 row-cols-md-2 g-2 mb-3">
 					<div class="col-sm">
 						<label for="ja_description" class="form-label"><%- __("詳細（日本語）") %></label>

@@ -16,6 +16,13 @@
 				</div>
 			<% } %>
 
+			<form id="search">
+				<div class="input-group mb-3">
+					<input id="searchWord" type="text" class="form-control" placeholder="<%- __("プログラム名を入力") %>" aria-label="<%- __("ユーザー名を入力") %>" aria-describedby="searchButton">
+					<button class="btn btn-outline-secondary" type="submit" id="searchButton"><%- __("検索") %></button>
+				</div>
+			</form>
+
 			<div class="row mb-3">
 				<div class="col-sm">
 					<div class="form-check">
@@ -125,6 +132,18 @@
 				}
 
 				reloadRequest(lang, 0, true) ;
+
+				$("#search").on("submit", (e) => {
+					let lang = localStorage["programs_lang"] ;
+
+					if (lang == undefined) {
+						lang = "ja" ;
+					}
+
+					reloadRequest(lang, 0, true) ;
+					
+					return false ;
+				}) ;
 			}) ;
 
 			async function reloadRequest(lang, page, isScrolling) {
@@ -156,6 +175,8 @@
 				$("#programs").empty() ;
 				$("#pagenation").empty() ;
 
+				let searchWord = $("#searchWord").val() ;
+
 				for (let key in data.programs) {
 					let program = data.programs[key] ;
 
@@ -173,6 +194,14 @@
 						if (program.date != selectedDate) {
 							continue ;
 						}
+					}
+
+					if (searchWord != '' && (
+						program.title.ja.indexOf(searchWord) == -1 &&
+						program.title.en.indexOf(searchWord) == -1 &&
+						program.title["zh-TW"].indexOf(searchWord) == -1 &&
+						program.title["zh-CN"].indexOf(searchWord) == -1)) {
+						continue ;
 					}
 
 					$("#programs").append(programBlock(lang, program, data.trackIdMap)) ;

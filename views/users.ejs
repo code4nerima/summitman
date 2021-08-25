@@ -8,11 +8,25 @@
 
 		<div class="container p-2">
 			<h1 class="mb-5"><%- __("ユーザー一覧") %></h1>
+
+			<form id="search">
+				<div class="input-group mb-3">
+					<input id="searchWord" type="text" class="form-control" placeholder="<%- __("ユーザー名を入力") %>" aria-label="<%- __("ユーザー名を入力") %>" aria-describedby="searchButton">
+					<button class="btn btn-outline-secondary" type="submit" id="searchButton"><%- __("検索") %></button>
+				</div>
+			</form>
+
 			<div id="users"></div>
 		</div>
+		
 		<script>
 			$(function () {
 				reloadRequest(0) ;
+
+				$("#search").on("submit", (e) => {
+					reloadRequest(0) ;
+					return false ;
+				}) ;
 			}) ;
 
 			async function reloadRequest(page) {
@@ -28,8 +42,21 @@
 				$("#users").empty() ;
 				$("#pagenation").empty() ;
 				
+				let searchWord = $("#searchWord").val() ;
+
+				console.log(searchWord) ;
+
 				for (let key in data.users) {
 					let user = data.users[key] ;
+
+					if (searchWord != '' && (
+						user.name.ja.indexOf(searchWord) == -1 &&
+						user.name.en.indexOf(searchWord) == -1 &&
+						user.name["zh-TW"].indexOf(searchWord) == -1 &&
+						user.name["zh-CN"].indexOf(searchWord) == -1)) {
+						continue ;
+					}
+
 					$("#users").append(userBlock(user)) ;
 				}
 
