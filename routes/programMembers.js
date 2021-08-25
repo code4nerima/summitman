@@ -103,12 +103,12 @@ router.get('/remove', wrap(async function(req, res, next) {
     for (let key in members) {
         let member = members[key] ;
 
-        if (req.query.uid != owner.uid) {
+        if (req.query.uid != member.uid) {
             uids.push(member.uid) ;
         }
     }
 
-    await clientAdapter.updateProgramOwners(req, req.query.programId, uids) ;
+    await clientAdapter.updateProgramMembers(req, req.query.programId, uids) ;
  
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify({}));
