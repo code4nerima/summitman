@@ -20,7 +20,7 @@
 			</div>
 
 			<div class="my-3">
-				<button type="button" class="btn btn-success" onclick="location.href='/programs/view?programId=<%= program.programId %>';"><%- __("プログラム詳細に戻る") %></button>
+				<button type="button" class="btn btn-danger" onclick="location.href='/programs/view?programId=<%= program.programId %>';"><%- __("プログラム詳細に戻る") %></button>
 			</div>
 
 			<h2><%- __("オーナー一覧") %></h2>
@@ -28,12 +28,23 @@
 
 			<hr />
 			<h2><%- __("ユーザー一覧") %></h2>
+			<form id="search">
+				<div class="input-group mb-3">
+					<input id="searchWord" type="text" class="form-control" placeholder="<%- __("ユーザー名を入力") %>" aria-label="<%- __("ユーザー名を入力") %>" aria-describedby="searchButton">
+					<button class="btn btn-outline-secondary" type="submit" id="searchButton"><%- __("検索") %></button>
+				</div>
+			</form>
 			<div id="userProfiles"></div>
 		</div>
 
 		<script>
 			$(function () {
 				reloadRequest("<%= program.programId %>") ;
+
+				$("#search").on("submit", (e) => {
+					reloadRequest("<%= program.programId %>") ;
+					return false ;
+				}) ;
 			}) ;
 
 			async function reloadRequest(programId) {
@@ -57,9 +68,20 @@
 					$("#owners").append(ownerBlock(owner)) ;
 				}
 
+				let searchWord = $("#searchWord").val() ;
+
 				for (let key in data.userProfiles) {
-					let userProfile = data.userProfiles[key] ;
-					$("#userProfiles").append(userBlock(userProfile)) ;
+					let user = data.userProfiles[key] ;
+
+					if (searchWord != '' && (
+						user.name.ja.indexOf(searchWord) == -1 &&
+						user.name.en.indexOf(searchWord) == -1 &&
+						user.name["zh-TW"].indexOf(searchWord) == -1 &&
+						user.name["zh-CN"].indexOf(searchWord) == -1)) {
+						continue ;
+					}
+
+					$("#userProfiles").append(userBlock(user)) ;
 				}
 
 				let ul = $('<ul class="pagination">') ;
