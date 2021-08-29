@@ -234,6 +234,7 @@ router.post('/edit', wrap(async function(req, res, next) {
         program.category = req.body.category ;
         program.email = req.body.email ;
         program.broadcastingURL = req.body.broadcastingURL ;
+        program.presentationURL = req.body.presentationURL ;
     }
 
     console.log(typeof(req.body.genreIds)) ;
