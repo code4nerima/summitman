@@ -66,6 +66,8 @@
 				for (let key in data.members) {
 					let member = data.members[key] ;
 					$("#members").append(memberBlock(member)) ;
+
+					$("#staffRole" + member.uid).val(member.staffRole != undefined ? member.staffRole : 0) ;
 				}
 
 				let searchWord = $("#searchWord").val() ;
@@ -114,6 +116,14 @@
 				reloadRequest("<%= program.programId %>") ;
 			}
 
+			async function onChangeStaffRoleSelect(uid) {
+				let staffRole = $("#staffRole" + uid).val() ;
+
+				let data = await fetch("/programMembers/changeStaffRole?uid=" + uid + "&programId=<%= program.programId %>&staffRole=" + staffRole).then(response => response.json()) ;
+				
+				reloadRequest("<%= program.programId %>") ;
+			}
+
 			function memberBlock(user) {
 				let photoURLString = user.photoURL ;
 
@@ -133,7 +143,12 @@
 												${user.name.ja}
 											</div>
 											<div class="col-sm">
-												
+												<select class="form-select" id="staffRole${user.uid}" name="staffRole" onchange="onChangeStaffRoleSelect('${user.uid}')" aria-label="<%- __("担当") %>">
+													<option value="0"><%- __("未定") %></option>
+													<option value="1"><%- __("Zoom担当") %></option>
+													<option value="2"><%- __("YouTube担当") %></option>
+													<option value="3"><%- __("UDトーク担当") %></option>
+												</select>
 											</div>
 											<div class="col-sm">
 												<button type="button" class="btn btn-danger" style="width: 100%;" onclick="onClickRemoveButton('${user.uid}');"><%- __("削除") %></button>

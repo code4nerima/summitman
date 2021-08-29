@@ -168,5 +168,9 @@
 	"検索": "Search",
 	"ユーザー名を入力": "Input username.",
 	"プログラム名を入力": "Input program title.",
-	"スタッフ一覧": "Staff List"
+	"スタッフ一覧": "Staff List",
+	"担当": "In charge of",
+	"Zoom担当": "In charge of Zoom",
+	"YouTube担当": "In charge of YouTube",
+	"UDトーク担当": "In charge of UD Talk"
 }
