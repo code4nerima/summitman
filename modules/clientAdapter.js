@@ -196,6 +196,14 @@ class clientAdapter {
         let currentUser = req.session.user ;
         let URL = this._URL + "UpdateProgramMembers" ;
 
+        let uids = [] ;
+        
+        for (let key in members) {
+            uids.push(members[key].uid) ;
+        }
+
+        members = uids ;
+        
         let data = {
             programId: programId,
             members: members,
