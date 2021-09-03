@@ -97,6 +97,24 @@
 				</div>
 			<% } %>
 			
+			<div class="row my-3">
+				<div class="col h3">
+					<span class="badge rounded-pill bg-success me-2"><% if (program.inputCompleted == 1) { %><%- __("入力完了") %><% } %></span>
+				</div>
+			</div>
+			
+			<div class="card my-3">
+				<div class="card-header h5 fw-bold">
+					<%- __("タイトル") %>
+				</div>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("日") %></span><%= program.title.ja %></li>
+					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("英") %></span><%= program.title.en %></li>
+					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("繁") %></span><%= program.title["zh-TW"] %></li>
+					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("簡") %></span><%= program.title["zh-CN"] %></li>
+				</ul>
+			</div>
+
 			<% if (isProgramOwner || isProgramMember || role == 1 || role == 2) { %>
 				<div class="card my-3">
 					<div class="card-header h5 fw-bold">
@@ -138,23 +156,6 @@
 				</div>
 			<% } %>
 
-			<div class="row my-3">
-				<div class="col h3">
-					<span class="badge rounded-pill bg-success me-2"><% if (program.inputCompleted == 1) { %><%- __("入力完了") %><% } %></span>
-				</div>
-			</div>
-
-			<div class="card my-3">
-				<div class="card-header h5 fw-bold">
-					<%- __("タイトル") %>
-				</div>
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("日") %></span><%= program.title.ja %></li>
-					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("英") %></span><%= program.title.en %></li>
-					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("繁") %></span><%= program.title["zh-TW"] %></li>
-					<li class="list-group-item"><span class="badge bg-secondary me-2"><%- __("簡") %></span><%= program.title["zh-CN"] %></li>
-				</ul>
-			</div>
 			<div class="card my-3">
 				<div class="card-header h5 fw-bold">
 					<%- __("詳細") %>

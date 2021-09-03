@@ -57,9 +57,9 @@
 					<%- __("UDトークを設定") %>
 				</div>
 				<ul class="list-group list-group-flush">
-					<li class="list-group-item"><div><%- __("ウェブで公開URL") %></div><%= track.udtalkWebURL %></li>
-					<li class="list-group-item"><div><%- __("トークの公開URL") %></div><%= track.udtalkAppURL %></li>
-					<li class="list-group-item"><div><%- __("トークの公開URL（音声認識用）") %></div><%= track.udtalkSrURL %></li>
+					<li class="list-group-item"><div><%- __("ウェブで公開URL") %></div><a href="<%= track.udtalkWebURL %>"><%= track.udtalkWebURL %></a></li>
+					<li class="list-group-item"><div><%- __("トークの公開URL") %></div><a href="<%= track.udtalkAppURL %>"><%= track.udtalkAppURL %></a></li>
+					<li class="list-group-item"><div><%- __("トークの公開URL（音声認識用）") %></div><a href="<%= track.udtalkSrURL %>"><%= track.udtalkSrURL %></a></li>
 				</ul>
 			</div>
 
@@ -69,6 +69,7 @@
 				</div>
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item"><%= track.station %></li>
+					<li class="list-group-item"><%= track.memo %></li>
 				</ul>
 			</div>
 
