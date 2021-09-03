@@ -57,8 +57,9 @@
 					<%- __("UDトークを設定") %>
 				</div>
 				<ul class="list-group list-group-flush">
-					<li class="list-group-item"><%= track.udtalkWebURL %></li>
-					<li class="list-group-item"><%= track.udtalkAppURL %></li>
+					<li class="list-group-item"><div><%- __("ウェブで公開URL") %></div><%= track.udtalkWebURL %></li>
+					<li class="list-group-item"><div><%- __("トークの公開URL") %></div><%= track.udtalkAppURL %></li>
+					<li class="list-group-item"><div><%- __("トークの公開URL（音声認識用）") %></div><%= track.udtalkSrURL %></li>
 				</ul>
 			</div>
 
