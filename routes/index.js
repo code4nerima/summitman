@@ -98,6 +98,7 @@ router.get('/data', wrap(async function(req, res, next) {
 		firebaseUser.email) ;
 
     let data = {
+		uid: currentUser.uid,
         lang: req.query.lang == undefined ? 'ja' : req.query.lang,
 		submittedPrograms: recv.data.submittedPrograms,
 		ownerOfPrograms: recv.data.ownerOfPrograms,

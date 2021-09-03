@@ -123,6 +123,12 @@
 						<input type="text" class="form-control" id="broadcastingURL" name="broadcastingURL" value="<%= program.broadcastingURL %>" <% if (role != 1) { %>disabled<% } %>>						
 					</div>
 				</div>
+				<div class="row mb-3">
+					<div class="col-sm">
+						<label for="broadcastingURL" class="form-label"><%- __("発表資料のURL") %></label>
+						<input type="text" class="form-control" id="presentationURL" name="presentationURL" value="<%= program.presentationURL %>" <% if (role != 1) { %>disabled<% } %>>						
+					</div>
+				</div>
 				<div class="row">
 					<h2><%- __("ジャンル") %></h2>
 				</div>

@@ -73,17 +73,26 @@
 				
 				for (let key in data.submittedPrograms) {
 					let program = data.submittedPrograms[key] ;
-					$("#submittedPrograms").append(programBlock(lang, program, data.trackIdMap)) ;
+					$("#submittedPrograms").append(programBlock(lang, program, data.trackIdMap, -1)) ;
 				}
 
 				for (let key in data.ownerOfPrograms) {
 					let program = data.ownerOfPrograms[key] ;
-					$("#ownerOfPrograms").append(programBlock(lang, program, data.trackIdMap)) ;
+					$("#ownerOfPrograms").append(programBlock(lang, program, data.trackIdMap, -1)) ;
 				}
 
 				for (let key in data.memberOfPrograms) {
 					let program = data.memberOfPrograms[key] ;
-					$("#memberOfPrograms").append(programBlock(lang, program, data.trackIdMap)) ;
+					let staffRole = 0 ;
+					
+					for (let key in program.members) {
+						if (program.members[key].uid == data.uid) {
+							staffRole = program.members[key].staffRole ;
+							break ;
+						}
+					}
+					
+					$("#memberOfPrograms").append(programBlock(lang, program, data.trackIdMap, staffRole)) ;
 				}
 
 				let ul = $('<ul class="pagination">') ;
@@ -104,7 +113,7 @@
 					.append('<ul class="pagination">').append(ul) ;
 			}
 
-			function programBlock(lang, program, trackIdMap) {
+			function programBlock(lang, program, trackIdMap, staffRole) {
 
 				let timeString = '' ;
 
@@ -127,11 +136,28 @@
 					categoryString = "ワークショップ" ;
 				}
 
+				let staffRoleString = "" ;
+
+				if (staffRole >= 0 || staffRole == undefined) {
+					if (staffRole == undefined || staffRole == 0) {
+						staffRole = "未定" ;
+					} else if (staffRole == 1) {
+						staffRole = "Zoom担当" ;
+					} else if (staffRole == 2) {
+						staffRole = "YouTube担当" ;
+					} else if (staffRole == 3) {
+						staffRole = "UDトーク担当" ;
+					}
+
+					staffRoleString = '<li class="list-group-item"><div class="row"><div class="col-sm">' + staffRole + '</div></div></li>' ;
+				}
+
 				return `<div class="card my-3">
 							<div class="card-header h5 fw-bold">
 								<a href="/programs/view?programId=${program.programId}">${program.title[lang]}</a>
 							</div>
 							<ul class="list-group list-group-flush">
+								${staffRoleString}
 								<li class="list-group-item">
 									<div class="row">
 										<div class="col-sm">

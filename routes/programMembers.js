@@ -78,10 +78,37 @@ router.get('/add', wrap(async function(req, res, next) {
     for (let key in members) {
         let member = members[key] ;
 
-        uids.push(member.uid) ;
+        uids.push({uid: member.uid, staffRole: member.staffRole}) ;
     }
 
-    uids.push(req.query.uid) ;
+    uids.push({uid: req.query.uid, staffRole: 0}) ;
+
+    await clientAdapter.updateProgramMembers(req, req.query.programId, uids) ;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify({}));
+})) ;
+
+router.get('/changeStaffRole', wrap(async function(req, res, next) {
+    let members ;
+
+    {
+        let recv = await clientAdapter.getProgramMembers(req, req.query.programId) ;
+
+        members = recv.data.members ;
+    }
+
+    let uids = [] ;
+
+    for (let key in members) {
+        let member = members[key] ;
+
+        if (req.query.uid != member.uid) {
+            uids.push({uid: member.uid, staffRole: member.staffRole}) ;
+        }
+    }
+
+    uids.push({uid: req.query.uid, staffRole: req.query.staffRole}) ;
 
     await clientAdapter.updateProgramMembers(req, req.query.programId, uids) ;
 
@@ -104,7 +131,7 @@ router.get('/remove', wrap(async function(req, res, next) {
         let member = members[key] ;
 
         if (req.query.uid != member.uid) {
-            uids.push(member.uid) ;
+            uids.push({uid: member.uid, staffRole: member.staffRole}) ;
         }
     }
 

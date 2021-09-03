@@ -16,6 +16,19 @@
 				</div>
 			</form>
 
+			<div class="row mb-3">
+				<div class="col-sm">
+					<select class="form-select" name="role" id="role" aria-label="<%- __("役割") %>">
+						<option value="-1"><%- __("すべて") %></option>
+						<option value="0"><%- __("参加者") %></option>
+						<option value="1"><%- __("管理者") %></option>
+						<option value="2"><%- __("配信担当") %></option>
+						<option value="3"><%- __("翻訳担当") %></option>
+						<option value="4"><%- __("グラレコ担当") %></option>
+					</select>
+				</div>
+			</div>
+
 			<div id="users"></div>
 		</div>
 		
@@ -27,6 +40,10 @@
 					reloadRequest(0) ;
 					return false ;
 				}) ;
+
+				$('#role').change(function() {
+					reloadRequest(0) ;
+				})
 			}) ;
 
 			async function reloadRequest(page) {
@@ -43,6 +60,7 @@
 				$("#pagenation").empty() ;
 				
 				let searchWord = $("#searchWord").val() ;
+				let searchRole = $("#role").val() ;
 
 				for (let key in data.users) {
 					let user = data.users[key] ;
@@ -53,6 +71,12 @@
 						user.name["zh-TW"].indexOf(searchWord) == -1 &&
 						user.name["zh-CN"].indexOf(searchWord) == -1)) {
 						continue ;
+					}
+
+					if (searchRole >= 0) {
+						if (searchRole != user.role) {
+							continue ;
+						}
 					}
 
 					$("#users").append(userBlock(user)) ;
