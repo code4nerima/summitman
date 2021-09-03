@@ -92,6 +92,10 @@
 						<div class="mb-3">
 							<label for="udtalkAppURL" class="form-label"><%- __("トークの公開URL") %></label>
 							<input type="text" class="form-control" id="udtalkAppURL" name="udtalkAppURL" value="<%= track.udtalkAppURL %>">
+						</div>	
+						<div class="mb-3">
+							<label for="udtalkAppURL" class="form-label"><%- __("トークの公開URL（音声認識用）") %></label>
+							<input type="text" class="form-control" id="udtalkAppURL" name="udtalkSrURL" value="<%= track.udtalkSrURL %>">
 						</div>						
 					</div>
 				</div>
@@ -102,6 +106,14 @@
 						<div class="mb-3">
 							<label for="station" class="form-label"><%- __("担当拠点") %></label>
 							<input type="text" class="form-control" id="station" name="station" value="<%= track.station %>">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm">
+						<div class="mb-3">
+							<label for="memo" class="form-label"><%- __("メモ") %></label>
+							<textarea maxlength="1000" class="form-control" style="height: 300px;" id="memo" name="memo" placeholder=""><%= track.memo %></textarea>
 						</div>
 					</div>
 				</div>

@@ -139,6 +139,10 @@ router.get('/edit', wrap(async function(req, res, next) {
         program.urls = [{title: {}, sortOrder: 0, url: ''}] ;
     }
 
+    if (program.urls.length < 2) {
+        program.urls.push({title: {}, sortOrder: 1, url: ''}) ;
+    }
+
     {
         let user = (await clientAdapter.getUserProfile(req, uid)).data ;
 
@@ -262,6 +266,16 @@ router.post('/edit', wrap(async function(req, res, next) {
         }, 
         sortOrder: 0, 
         url: req.body.linkURL,
+    },
+    {
+        title: {
+            'ja': req.body.ja_grarecoLinkTitle,
+            'en': req.body.en_grarecoLinkTitle,
+            'zh-TW': req.body['zh-TW_grarecoLinkTitle'],
+            'zh-CN': req.body['zh-CN_grarecoLinkTitle'],
+        }, 
+        sortOrder: 1, 
+        url: req.body.grarecoLinkURL,
     }] ;
 
     //program.inputCompleted = req.body.inputCompleted != undefined ? "1" : "0" ;

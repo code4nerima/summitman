@@ -168,5 +168,8 @@
 	"検索": "Search",
 	"ユーザー名を入力": "Input username.",
 	"プログラム名を入力": "Input program title.",
-	"スタッフ一覧": "Staff List"
+	"スタッフ一覧": "Staff List",
+	"グラレコトラックURL": "Graphic Recording URL",
+	"トークの公開URL（音声認識用）": "URL published for Speech Recognition",
+	"メモ": "Memo"
 }

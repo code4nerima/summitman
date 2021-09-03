@@ -105,6 +105,8 @@ router.post('/edit', wrap(async function(req, res, next) {
         udtalkWebURL: req.body.udtalkWebURL,
         udtalkAppURL: req.body.udtalkAppURL,
         station: req.body.station,
+        memo: req.body.memo,
+        udtalkSrURL: req.body.udtalkSrURL,
     } ;
 
     console.log(track) ;
