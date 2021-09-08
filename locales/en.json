@@ -178,5 +178,6 @@
 	"役割": "Role",
 	"グラレコトラックURL": "Graphic Recording URL",
 	"トークの公開URL（音声認識用）": "URL published for Speech Recognition",
-	"メモ": "Memo"
+	"メモ": "Memo",
+	"YouTubeの配信URL": "YouTube URL"
 }
