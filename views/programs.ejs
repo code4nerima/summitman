@@ -145,6 +145,7 @@
 					return false ;
 				}) ;
 			}) ;
+			let data = null ;
 
 			async function reloadRequest(lang, page, isScrolling) {
 				
@@ -170,7 +171,9 @@
 				$("#programs").append(spinner) ;
 				$("#pagenation").empty() ;
 				
-				let data = await fetch("/programs/data?page=" + page).then(response => response.json()) ;
+				if (data == null) {
+					data = await fetch("/programs/data?page=" + page).then(response => response.json()) ;
+				}
 				
 				$("#programs").empty() ;
 				$("#pagenation").empty() ;

@@ -46,6 +46,8 @@
 				})
 			}) ;
 
+			let data = null ;
+
 			async function reloadRequest(page) {
 				
 				let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border my-3" role="status"><span class="visually-hidden">Loading...</span></div></div>' ;
@@ -54,7 +56,9 @@
 				$("#users").append(spinner) ;
 				$("#pagenation").empty() ;
 				
-				let data = await fetch("/users/data?page=" + page).then(response => response.json()) ;
+				if (data == null) {
+					data = await fetch("/users/data?page=" + page).then(response => response.json()) ;
+				}
 				
 				$("#users").empty() ;
 				$("#pagenation").empty() ;

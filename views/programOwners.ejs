@@ -40,33 +40,27 @@
 		<script>
 			$(function () {
 				reloadRequest("<%= program.programId %>") ;
+				reloadUserProfiles("<%= program.programId %>") ;
 
 				$("#search").on("submit", (e) => {
-					reloadRequest("<%= program.programId %>") ;
+					reloadUserProfiles("<%= program.programId %>") ;
 					return false ;
 				}) ;
 			}) ;
 
-			async function reloadRequest(programId) {
-				
+			let data = null ;
+
+			async function reloadUserProfiles(programId) {
 				let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border my-3" role="status"><span class="visually-hidden">Loading...</span></div></div>' ;
 				
-				$("#owners").empty() ;
-				$("#owners").append(spinner) ;
 				$("#userProfiles").empty() ;
 				$("#userProfiles").append(spinner) ;
-				$("#pagenation").empty() ;
-				
-				let data = await fetch("/programOwners/data?programId=" + programId).then(response => response.json()) ;
-				
-				$("#owners").empty() ;
-				$("#userProfiles").empty() ;
-				$("#pagenation").empty() ;
-				
-				for (let key in data.owners) {
-					let owner = data.owners[key] ;
-					$("#owners").append(ownerBlock(owner)) ;
+
+				if (data == null) {
+					data = await fetch("/programMembers/users?programId=" + programId).then(response => response.json()) ;
 				}
+
+				$("#userProfiles").empty() ;
 
 				let searchWord = $("#searchWord").val() ;
 
@@ -82,6 +76,25 @@
 					}
 
 					$("#userProfiles").append(userBlock(user)) ;
+				}
+			}
+
+			async function reloadRequest(programId) {
+				
+				let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border my-3" role="status"><span class="visually-hidden">Loading...</span></div></div>' ;
+				
+				$("#owners").empty() ;
+				$("#owners").append(spinner) ;
+				$("#pagenation").empty() ;
+				
+				let data = await fetch("/programOwners/data?programId=" + programId).then(response => response.json()) ;
+				
+				$("#owners").empty() ;
+				$("#pagenation").empty() ;
+				
+				for (let key in data.owners) {
+					let owner = data.owners[key] ;
+					$("#owners").append(ownerBlock(owner)) ;
 				}
 
 				let ul = $('<ul class="pagination">') ;

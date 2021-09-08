@@ -40,35 +40,27 @@
 		<script>
 			$(function () {
 				reloadRequest("<%= program.programId %>") ;
+				reloadUserProfiles("<%= program.programId %>") ;
 
 				$("#search").on("submit", (e) => {
-					reloadRequest("<%= program.programId %>") ;
+					reloadUserProfiles("<%= program.programId %>") ;
 					return false ;
 				}) ;
 			}) ;
 
-			async function reloadRequest(programId) {
-				
+			let data = null ;
+
+			async function reloadUserProfiles(programId) {
 				let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border my-3" role="status"><span class="visually-hidden">Loading...</span></div></div>' ;
 				
-				$("#members").empty() ;
-				$("#members").append(spinner) ;
 				$("#userProfiles").empty() ;
 				$("#userProfiles").append(spinner) ;
-				$("#pagenation").empty() ;
-				
-				let data = await fetch("/programMembers/data?programId=" + programId).then(response => response.json()) ;
-				
-				$("#members").empty() ;
-				$("#userProfiles").empty() ;
-				$("#pagenation").empty() ;
-				
-				for (let key in data.members) {
-					let member = data.members[key] ;
-					$("#members").append(memberBlock(member)) ;
 
-					$("#staffRole" + member.uid).val(member.staffRole != undefined ? member.staffRole : 0) ;
+				if (data == null) {
+					data = await fetch("/programMembers/users?programId=" + programId).then(response => response.json()) ;
 				}
+
+				$("#userProfiles").empty() ;
 
 				let searchWord = $("#searchWord").val() ;
 
@@ -84,6 +76,27 @@
 					}
 
 					$("#userProfiles").append(userBlock(user)) ;
+				}
+			}
+
+			async function reloadRequest(programId) {
+				
+				let spinner = '<div class="d-flex justify-content-center"><div class="spinner-border my-3" role="status"><span class="visually-hidden">Loading...</span></div></div>' ;
+				
+				$("#members").empty() ;
+				$("#members").append(spinner) ;
+				$("#pagenation").empty() ;
+				
+				let data = await fetch("/programMembers/data?programId=" + programId).then(response => response.json()) ;
+				
+				$("#members").empty() ;
+				$("#pagenation").empty() ;
+				
+				for (let key in data.members) {
+					let member = data.members[key] ;
+					$("#members").append(memberBlock(member)) ;
+
+					$("#staffRole" + member.uid).val(member.staffRole != undefined ? member.staffRole : 0) ;
 				}
 
 				let ul = $('<ul class="pagination">') ;

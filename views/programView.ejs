@@ -146,6 +146,14 @@
 					</ul>
 
 					<div class="card-header h5 fw-bold">
+						<%- __("YouTube配信URL") %>
+					</div>
+
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item"><a href="<%= program.broadcastingURL %>" target="_blank"><%= program.broadcastingURL %></a></li>
+					</ul>
+
+					<div class="card-header h5 fw-bold">
 						<%- __("発表資料のURL") %>
 					</div>
 
@@ -153,10 +161,42 @@
 						<li class="list-group-item"><a href="<%= program.presentationURL %>" target="_blank"><%= program.presentationURL %></a></li>
 					</ul>
 
+					<div class="card-header h5 fw-bold">
+						<%- __("スタッフ") %>
+					</div>
+
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">
+							<div class="row row-cols-2 row-cols-md-2 g-2">
+								<% for (let key in program.members) { %>
+									<% let staffRole = program.members[key].staffRole ; %>
+									<% if (staffRole >= 0 || staffRole == undefined) { %>
+										<% if (staffRole == undefined || staffRole == 0) { %>
+											<% 	staffRole = "未定" ; %>
+										<% } else if (staffRole == 1) { %>
+											<% 	staffRole = "Zoom担当" ; %>
+										<% } else if (staffRole == 2) { %>
+											<% 	staffRole = "YouTube担当" ; %>
+										<% } else if (staffRole == 3) { %>
+											<% 	staffRole = "UDトーク担当" ; %>
+										<% } else if (staffRole == 4) { %>
+											<% 	staffRole = "グラレコ担当" ; %>
+										<% } %>
+									<% } %>
+									
+									<div class="col-sm">
+										<div class="fw-bold"><%= program.members[key].name.ja %>（<%= program.members[key].name.ja_kana %>）</div>
+										<div class="ms-3"><%= staffRole %></div>
+									</div>
+								<% } %>
+							</div>
+						</li>
+					</ul>
+
 				</div>
 			<% } %>
 
-			<div class="card my-3">
+			<div class="card mt-5 mb-3">
 				<div class="card-header h5 fw-bold">
 					<%- __("詳細") %>
 				</div>

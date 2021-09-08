@@ -32,6 +32,30 @@ router.get('/', wrap(async function(req, res, next) {
     res.render('programMembers', {program: program});		 
 })) ;
 
+router.get('/users', wrap(async function(req, res, next) {
+
+    if (!req.headers.referer.startsWith(process.env.ROOT_URL)) {
+		res.setHeader('Content-Type', 'application/json');
+		res.end(JSON.stringify({}));
+		return ;
+	}
+    
+    let userProfiles ;
+
+    {
+        let recv = await clientAdapter.listUserProfile(req, 0, -1) ;
+
+        userProfiles = recv.data.userProfiles ;
+    }
+
+    let data = {
+        userProfiles: userProfiles,
+    } ;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(data));
+})) ;
+
 router.get('/data', wrap(async function(req, res, next) {
 
     if (!req.headers.referer.startsWith(process.env.ROOT_URL)) {
@@ -41,7 +65,6 @@ router.get('/data', wrap(async function(req, res, next) {
 	}
     
     let members ;
-    let userProfiles ;
 
     {
         let recv = await clientAdapter.getProgramMembers(req, req.query.programId) ;
@@ -49,15 +72,8 @@ router.get('/data', wrap(async function(req, res, next) {
         members = recv.data.members ;
     }
 
-    {
-        let recv = await clientAdapter.listUserProfile(req, 0, -1) ;
-
-        userProfiles = recv.data.userProfiles ;
-    }
-
     let data = {
         members: members ,
-        userProfiles: userProfiles,
     } ;
 
     res.setHeader('Content-Type', 'application/json');
