@@ -57,6 +57,10 @@ app.use(function (req, res, next) {
 
 require('dotenv').config();
 
+var secure = require('ssl-express-www');
+
+app.use(secure);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
