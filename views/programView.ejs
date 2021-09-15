@@ -162,6 +162,21 @@
 					</ul>
 
 					<div class="card-header h5 fw-bold">
+						<%- __("プログラムオーナー") %>
+					</div>
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">
+							<div class="row row-cols-2 row-cols-md-2 g-2">
+								<% for (let key in program.owners) { %>
+									<div class="col-sm">
+										<div class="fw-bold"><%= program.owners[key].name.ja %>（<%= program.owners[key].name.ja_kana %>）</div>
+									</div>
+								<% } %>
+							</div>
+						</li>
+					</ul>
+
+					<div class="card-header h5 fw-bold">
 						<%- __("スタッフ") %>
 					</div>
 

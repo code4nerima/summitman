@@ -317,6 +317,31 @@ router.get('/view', wrap(async function(req, res, next) {
         res.redirect("/programs") ;
     }
 
+    if (program.email != null) {
+        let firebaseUser = null ;
+
+        try {
+            firebaseUser = await admin.auth().getUserByEmail(program.email) ;
+
+            let currentUserProfile = (await clientAdapter.getUserProfile(req, firebaseUser.uid)).data ;
+
+            for (let key in program.owners) {
+                let owner = program.owners[key] ;
+
+                if (owner.uid == currentUserProfile.uid) {
+                    currentUserProfile = null ;
+                    break ;
+                }
+            }
+
+            if (currentUserProfile != null) {
+                program.owners.push(currentUserProfile) ;
+            }
+        } catch (error) {
+            
+        }
+    }
+
     let trackIdMap = {} ;
 
     {
