@@ -239,6 +239,7 @@ router.post('/edit', wrap(async function(req, res, next) {
         program.email = req.body.email ;
         program.broadcastingURL = req.body.broadcastingURL ;
         program.presentationURL = req.body.presentationURL ;
+        program.grarecoWorkingURL = req.body.grarecoWorkingURL ;
     }
 
     console.log(typeof(req.body.genreIds)) ;

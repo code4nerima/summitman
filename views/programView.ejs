@@ -161,6 +161,15 @@
 						<li class="list-group-item"><a href="<%= program.presentationURL %>" target="_blank"><%= program.presentationURL %></a></li>
 					</ul>
 
+					<% if (role == 1 || role == 4) { %>
+						<div class="card-header h5 fw-bold">
+							<%- __("グラレコのURL") %>
+						</div>
+
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item"><a href="<%= program.grarecoWorkingURL %>" target="_blank"><%= program.grarecoWorkingURL %></a></li>
+						</ul>
+					<% } %>
 					<div class="card-header h5 fw-bold">
 						<%- __("プログラムオーナー") %>
 					</div>
