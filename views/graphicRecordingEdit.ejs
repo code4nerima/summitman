@@ -72,7 +72,7 @@
 						for (let key in fileList) {
 							let file = fileList[key] ;
 		
-							if (file.size > 1024 * 1024) {
+							if (file.size > 1024 * 1024 * 5) {
 								alert("ファイルサイズは1MB以内のものを選んでください") ;
 								return ;
 							}
