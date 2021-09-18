@@ -128,13 +128,18 @@
 					</ul>
 			
 					<div class="card-header h5 fw-bold">
-						<%- __("Zoomミーティング情報") %>
+						<div><%- __("Zoomミーティング情報") %></div>
 					</div>
 
 					<ul class="list-group list-group-flush">
+						<li class="list-group-item">						
+							<div>登壇者の方は開始10分前の休憩時間中にZoomに入室してください。他の方がセッション中はロックがかかっています。</div>
+							<div>またブレイクアウトルームに「控室」を作っておきますで休憩中に登壇者でお話をしたいときはご利用ください。</div>
+							<div>休憩時間中もYouTubeに配信されているのでマイクとビデオの操作をよろしくお願いします。</div>
+						</li>
 						<li class="list-group-item"><a href="<%= track.meetingURL %>" target="_blank"><%= track.meetingURL %></a></li>
-						<li class="list-group-item"><%= track.meetingId %></li>
-						<li class="list-group-item"><%= track.meetingPasscode %></li>
+						<li class="list-group-item"><%- __("ミーティングID：") %><%= track.meetingId %></li>
+						<li class="list-group-item"><%- __("パスコード：") %><%= track.meetingPasscode %></li>
 					</ul>
 
 					<div class="card-header h5 fw-bold">
